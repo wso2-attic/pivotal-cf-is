@@ -1,0 +1,127 @@
+#!/bin/bash
+set +e
+set -xv
+
+<%
+  def discover_external_ip
+    networks = spec.networks.marshal_dump
+    _, network = networks.find do |_name, network_spec|
+      network_spec.default
+    end
+    if !network
+      _, network = networks.first
+    end
+    if !network
+      raise "Could not determine IP via network spec: #{networks}"
+    end
+    network.ip
+  end
+  my_ip = discover_external_ip
+%>
+
+SCRIPT_DIR=$(dirname $0  )
+JOB_DIR=$SCRIPT_DIR/..
+
+RUN_DIR=/var/vcap/sys/run/wso2is
+LOG_DIR=/var/vcap/sys/log/wso2is
+PIDFILE=${RUN_DIR}/pid
+
+
+mkdir -p $RUN_DIR $LOG_DIR
+chown -R vcap:vcap $RUN_DIR $LOG_DIR
+
+mkdir -p /var/vcap/store/wso2is/data
+export WSO2_IS_DATA_DIR=/var/vcap/store/wso2is/data/wso2is
+
+export JDK_HOME=/var/vcap/packages/oraclejdk/
+export WSO2_IS_PKG_HOME=/var/vcap/packages/wso2is/
+export WSO2_IS_SERVER_PACKAGE=/var/vcap/packages/wso2is/
+export WSO2_IS_CONFIG=/var/vcap/packages/config/
+
+# Not relying on network name to arrive at hostip
+# Set the ip to HOSTNAME to avoid listener getting bound to some internal only hostname
+export HOSTNAME=<%="#{my_ip}"%>
+export WSO2_IS_HOST=<%="#{my_ip}"%>
+
+# Here set any environment variables for your software
+export WSO2_IS_SERVER_PORT=<%=properties.wso2is.listen_port %>
+export WSO2_IS_SERVER_RUN_SCRIPT=<%=properties.wso2is.run_script %>
+export MIN_HEAP=<%=properties.wso2is.memory.min_heap %>
+export MAX_HEAP=<%=properties.wso2is.memory.max_heap %>
+export MAX_PERMGEN=<%=properties.wso2is.memory.max_permgen %>
+export JAVA_OPTS=" -Xmx${MAX_HEAP}m -Xms${MIN_HEAP}m -XX:MaxPermSize=${MAX_PERMGEN}m"
+
+export DEBUG_LOG=$LOG_DIR/wso2is.log
+
+touch $DEBUG_LOG
+chmod -R 755 /var/vcap/sys
+chmod 777 $DEBUG_LOG
+
+function log_debug() {
+  echo `date` $1 >> $DEBUG_LOG
+}
+
+log_debug "Kicking off ctl script as `whoami` with $1"
+
+case $1 in
+
+  start)
+    # Kill the previously running instance if any
+    kill -9 `cat $PIDFILE`
+
+    pushd ${JDK_HOME}
+    archive=`ls jdk*gz`
+    tar -zxvf $archive
+    export JAVA_HOME=`pwd`/jdk1.8.0_144/
+    export JAVA_BINARY=${JAVA_HOME}/bin/java
+
+    log_debug "JAVA_HOME: ${JAVA_HOME}"
+    log_debug "JAVA_BINARY: ${JAVA_BINARY}"
+
+    pushd ${WSO2_IS_PKG_HOME}
+    archive=`ls wso2is*zip`
+    unzip $archive
+    cd wso2is*
+    WSO2_IS_HOME=`pwd`
+
+    # Here copy all the configurations needs to be replaces the application for ex:lib, conf files
+#conf_file=`ls $JOB_DIR/config/*`
+cp -r ${WSO2_IS_CONFIG}/* ${WSO2_IS_HOME}/
+
+    # Here add any database driver your application needs for ex:
+    # pushd ${POSTGRES_DRIVER_HOME}
+    # driver_file=`ls postgres*.jar`
+    # cp ${driver_file} ${WSO2_IS_HOME}/lib
+
+export local_docker_ip=$(ip route get 1 | awk '{print $NF;exit}')
+   axi2_xml_location=${WSO2_IS_HOME}/repository/conf/axis2/axis2.xml
+if [[ ! -z ${local_docker_ip} ]]; then
+   sed -i "s#<parameter\ name=\"localMemberHost\".*#<parameter\ name=\"localMemberHost\">${local_docker_ip}<\/parameter>#" "${axi2_xml_location}"
+   if [[ $? == 0 ]]; then
+      echo "Successfully updated localMemberHost with ${local_docker_ip}"
+   else
+      echo "Error occurred while updating localMemberHost with ${local_docker_ip}"
+   fi
+fi
+
+
+
+    $WSO2_IS_HOME/bin/wso2server.sh start
+
+    # Sleep for a little while so the server comes up
+    sleep 20
+    WSO2_IS_PID=`ps -ef | grep java | grep -v grep | awk '{print $2}' `
+    echo $WSO2_IS_PID > $PIDFILE
+
+    ;;
+
+  stop)
+
+    kill -9 `cat $PIDFILE`
+    rm -f $PIDFILE
+    ;;
+
+  *)
+    echo "Usage: ctl {start|stop}" ;;
+
+esac

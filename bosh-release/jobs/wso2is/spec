@@ -1,0 +1,43 @@
+---
+name: wso2is
+templates:
+  ctl.erb: bin/ctl
+
+
+packages:
+- oraclejdk
+- wso2is
+- common
+- config
+properties:
+  wso2is.listen_port:
+    description: "Listen Port of the Tomcat instance"
+    default: 8080
+  wso2is.memory.min_heap:
+    description: "Min Heap in MB"
+    default: 2048
+  wso2is.memory.max_heap:
+    description: "Max Heap in MB"
+    default: 2048
+  wso2is.memory.max_permgen:
+    description: "Max permgen in MB"
+    default: 1024
+
+  wso2is.password:
+    description: wso2is password
+  wso2is.username:
+    description: wso2is username
+  wso2is.address:
+    description: wso2is address
+
+
+  cf.apps_domain:
+    description: Domain shared by the UAA and CF API eg 'bosh-lite.com'
+  cf.nats.host:
+    description: Hostname/IP of NATS
+  cf.nats.port:
+    description: Port that NATS listens on
+  cf.nats.username:
+    description: The user to use when authenticating with NATS
+  cf.nats.password:
+    description: The password to use when authenticating with NATS

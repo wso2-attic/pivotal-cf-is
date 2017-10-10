@@ -1,0 +1,6 @@
+---
+blobstore:
+  provider: local
+  options:
+    blobstore_path: /tmp/wso2is-release-blobs
+final_name: wso2is-release
