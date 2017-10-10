@@ -1,0 +1,16 @@
+config/dev.yml
+config/private.yml
+releases/*.tgz
+releases/**/*.tgz
+
+.blobs
+blobs
+.dev_builds
+dev_releases
+
+.idea
+
+tile/resources/*.tgz
+tile/product
+*.tar.gz
+*.zip

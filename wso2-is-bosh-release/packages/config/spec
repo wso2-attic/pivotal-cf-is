@@ -1,0 +1,16 @@
+---
+name: config
+
+dependencies: []
+
+files:
+- config/repository/conf/axis2/axis2.xml
+- config/repository/conf/carbon.xml
+- config/repository/conf/datasources/master-datasources.xml
+- config/repository/conf/identity/embedded-ldap.xml
+- config/repository/conf/identity/identity.xml
+- config/repository/conf/registry.xml
+- config/repository/conf/tomcat/carbon/WEB-INF/web.xml
+- config/repository/conf/tomcat/catalina-server.xml
+- config/repository/conf/user-mgt.xml
+- config/repository/components/lib/mysql-connector-java-5.1.36.jar

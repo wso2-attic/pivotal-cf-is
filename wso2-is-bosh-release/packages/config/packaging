@@ -1,0 +1,4 @@
+# abort script on any command that exit with a non zero value
+set -e -x
+
+cp -r config/* ${BOSH_INSTALL_TARGET}     
