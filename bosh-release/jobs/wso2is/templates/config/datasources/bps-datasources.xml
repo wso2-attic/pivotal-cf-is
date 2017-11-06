@@ -1,0 +1,32 @@
+<datasources-configuration>
+
+    <providers>
+        <provider>org.wso2.carbon.ndatasource.rdbms.RDBMSDataSourceReader</provider>
+    </providers>
+
+    <datasources>
+        <datasource>
+            <name>BPS_DS</name>
+            <description></description>
+            <jndiConfig>
+                <name>bpsds</name>
+            </jndiConfig>
+            <definition type="RDBMS">
+                <configuration>
+                    <url>jdbc:mysql://<%=properties.wso2is.mysql.hostname%>:3306/<%=properties.wso2is.mysql.bps_db%></url>
+                    <username><%=properties.wso2is.bps_db.username%></username>
+                    <password><%=properties.wso2is.bps_db.password%></password>
+                    <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                    <maxActive>100</maxActive>
+                    <maxWait>10000</maxWait>
+                    <maxIdle>20</maxIdle>
+                    <testOnBorrow>true</testOnBorrow>
+                    <validationQuery>SELECT 1</validationQuery>
+                    <validationInterval>30000</validationInterval>
+                    <useDataSourceFactory>false</useDataSourceFactory>
+                    <defaultAutoCommit>false</defaultAutoCommit>
+                </configuration>
+            </definition>
+        </datasource>
+    </datasources>
+</datasources-configuration>

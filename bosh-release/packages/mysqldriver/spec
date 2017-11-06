@@ -1,0 +1,7 @@
+---
+name: mysqldriver
+
+dependencies: []
+
+files:
+- mysqldriver/mysql-connector-java-5.1.44-bin.jar

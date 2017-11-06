@@ -26,7 +26,7 @@ iaas_settings:
       - 10.244.15.2 - 10.244.15.21
   watch_time: 10000-120000
 jobs:
-- instances: 2
+- instances: 1
   name: wso2is
   networks:
   - name: wso2is_network
