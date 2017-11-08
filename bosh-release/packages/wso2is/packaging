@@ -4,9 +4,9 @@ set -e
 archive=`echo wso2is/wso2is-5.3.0.zip`
 
 if [[ -f $archive ]] ; then
-  echo "Archive found"
+  echo "wso2is-5.3.0 archive found"
 else
-  echo "Archive not found"
+  echo "wso2is-5.3.0 archive not found"
   exit 1
 fi
 

@@ -4,9 +4,9 @@ set -e
 jar=`echo mysqldriver/mysql-connector-java-5.1.44-bin.jar`
 
 if [[ -f $jar ]] ; then
-  echo "Jar found"
+  echo "Jar: mysql-connector-java-5.1.44-bin.jar found"
 else
-  echo "Jar not found"
+  echo "Jar: mysql-connector-java-5.1.44-bin.jar not found"
   exit 1
 fi
 
