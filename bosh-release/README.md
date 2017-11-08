@@ -8,7 +8,7 @@ MySQL datasource on BOSH Director.
 1. Linux/Unix environment
 2. Install [BOSH Lite](https://bosh.io/docs/bosh-lite.html#install)
 3. Install [Docker](https://docs.docker.com/engine/installation/)
-4. (Optional)Install [WSO2 Update Manager](http://wso2.com/wum)
+4. Install [WSO2 Update Manager](http://wso2.com/wum)
 
 ## Quick Start Guide
 
@@ -20,19 +20,18 @@ MySQL datasource on BOSH Director.
 2. Navigate to the workspace directory and clone this repository
     ```
     cd wso2-is-bosh-workspace
-    git clone https://github.com/wso2/pivotal-cf-is --depth 1
+    git clone https://github.com/wso2/pivotal-cf-is
     ```
 
 3. Download JDK jdk-8u144-linux-x64.tar.gz binary and copy that to the workspace directory
 
 4. Download MySQL JDBC driver mysql-connector-java-5.1.44-bin.jar binary and copy that to the workspace directory
 
-5. Get the WSO2 Identity Server 5.3.0 WUM updated distribution or the released [distribution](https://wso2.com/identity-and-access-management) and copy that to the workspace directory.
+5. Get the WSO2 Identity Server 5.3.0 WUM updated distribution and copy that to the workspace directory.
 
-6. Give execute permissions to the wso2-is-bosh-release\setup.sh file within your worspace directory and execute
+6. Navigate to the pivotal-cf-is/bosh-release directory within your workspace and execute setup.sh
    ```
    cd pivotal-cf-is/bosh-release
-   chmod +x setup.sh
    ./setup.sh
    ```
    Executing this script will setup MySQL, BOSH environment and will deploy WSO2 IS 5.3.0 on BOSH director
