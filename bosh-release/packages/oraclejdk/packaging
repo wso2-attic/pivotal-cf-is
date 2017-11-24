@@ -4,9 +4,9 @@ set -e
 archive=`echo oraclejdk/jdk-8*.tar.gz`
 
 if [[ -f $archive ]] ; then
-  echo "Archive found"
+  echo "Oracle JDK archive found"
 else
-  echo "Archive not found"
+  echo "Oracle JDK archive not found"
   exit 1
 fi
 
