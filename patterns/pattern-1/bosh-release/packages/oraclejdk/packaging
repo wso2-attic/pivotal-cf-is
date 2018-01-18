@@ -1,0 +1,13 @@
+# abort script on any command that exit with a non zero value
+set -e
+
+archive=`echo oraclejdk/jdk-8*.tar.gz`
+
+if [[ -f $archive ]] ; then
+  echo "Oracle JDK archive found"
+else
+  echo "Oracle JDK archive not found"
+  exit 1
+fi
+
+cp -r $archive ${BOSH_INSTALL_TARGET}

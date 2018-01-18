@@ -1,0 +1,13 @@
+# abort script on any command that exit with a non zero value
+set -e
+
+jar=`echo mysqldriver/mysql-connector-java-5.1.44-bin.jar`
+
+if [[ -f $jar ]] ; then
+  echo "Jar: mysql-connector-java-5.1.44-bin.jar found"
+else
+  echo "Jar: mysql-connector-java-5.1.44-bin.jar not found"
+  exit 1
+fi
+
+cp -r $jar ${BOSH_INSTALL_TARGET}

@@ -1,0 +1,111 @@
+#!/bin/bash
+# ----------------------------------------------------------------------------
+#
+# Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+#
+# WSO2 Inc. licenses this file to you under the Apache License,
+# Version 2.0 (the "License"); you may not use this file except
+# in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+# ----------------------------------------------------------------------------
+
+set +e
+
+SCRIPT_DIR=$(dirname $0)
+JOB_DIR=$SCRIPT_DIR/..
+
+RUN_DIR=/var/vcap/sys/run/wso2is
+LOG_DIR=/var/vcap/sys/log/wso2is
+PIDFILE=${RUN_DIR}/pid
+
+mkdir -p $RUN_DIR $LOG_DIR
+chown -R vcap:vcap $RUN_DIR $LOG_DIR
+
+mkdir -p /var/vcap/store/wso2is/data
+export WSO2_IS_DATA_DIR=/var/vcap/store/wso2is/data/wso2is
+
+export JDK_HOME=/var/vcap/packages/oraclejdk/
+export WSO2_IS_PKG_HOME=/var/vcap/packages/wso2is/
+export WSO2_IS_SERVER_PACKAGE=/var/vcap/packages/wso2is/
+export WSO2_IS_CONFIG=/var/vcap/packages/config/
+
+# Here set any environment variables for your software
+export WSO2_IS_SERVER_PORT=<%=properties.wso2is.listen_port %>
+export WSO2_IS_SERVER_RUN_SCRIPT=<%=properties.wso2is.run_script %>
+export MIN_HEAP=<%=properties.wso2is.memory.min_heap %>
+export MAX_HEAP=<%=properties.wso2is.memory.max_heap %>
+export MAX_PERMGEN=<%=properties.wso2is.memory.max_permgen %>
+export JAVA_OPTS=" -Xmx${MAX_HEAP}m -Xms${MIN_HEAP}m -XX:MaxPermSize=${MAX_PERMGEN}m"
+
+export DEBUG_LOG=$LOG_DIR/wso2is.log
+
+touch $DEBUG_LOG
+chmod -R 755 /var/vcap/sys
+chmod 777 $DEBUG_LOG
+
+function log_debug() {
+  echo `date` $1 >> $DEBUG_LOG
+}
+
+log_debug "Kicking off ctl script as `whoami` with $1"
+
+case $1 in
+
+  start)
+    # Kill the previously running instance if any
+    kill -9 `cat $PIDFILE`
+
+    pushd ${JDK_HOME}
+    archive=`ls jdk*gz`
+    tar -zxvf $archive
+    export JAVA_HOME=`pwd`/jdk1.8.0_144/
+    export JAVA_BINARY=${JAVA_HOME}/bin/java
+
+    log_debug "JAVA_HOME: ${JAVA_HOME}"
+    log_debug "JAVA_BINARY: ${JAVA_BINARY}"
+
+    pushd ${WSO2_IS_PKG_HOME}
+    archive=`ls wso2is*zip`
+    unzip $archive
+    cd wso2is*
+    WSO2_IS_HOME=`pwd`
+
+    log_debug "WSO2_IS_HOME: ${WSO2_IS_HOME}"
+
+    # Here copy all the configurations needs to be replaces the application for ex:lib, conf files
+    cp -r -v $JOB_DIR/config/* ${WSO2_IS_HOME}/repository/conf/
+
+    # Here add any libraries your application needs:
+    cp -v /var/vcap/packages/mysqldriver/* ${WSO2_IS_HOME}/repository/components/lib/
+
+    ${WSO2_IS_HOME}/bin/wso2server.sh start
+
+    # Sleep for a little while so the server comes up
+    sleep 20
+    WSO2_IS_PID=`ps -ef | grep java | grep -v grep | awk '{print $2}' `
+    echo $WSO2_IS_PID > $PIDFILE
+
+    cat $PIDFILE
+
+    ;;
+
+  stop)
+
+    kill -9 `cat $PIDFILE`
+    rm -f $PIDFILE
+    ;;
+
+  *)
+    echo "Usage: ctl {start|stop}" ;;
+
+esac
