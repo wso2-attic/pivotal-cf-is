@@ -42,21 +42,12 @@ properties:
   wso2is.mysql.identity_db:
     description: wso2is mysql identity and config registry database name
     default: WSO2_IDENTITY_DB
-  wso2is.mysql.bps_db:
-    description: wso2is mysql bps database name
-    default: WSO2_BPS_DB
   wso2is.identity_db.username:
     description: wso2is mysql identity_db username
     default: wso2identityuser
   wso2is.identity_db.password:
     description: wso2is mysql identity_db password
     default: wso2identityuser
-  wso2is.bps_db.username:
-    description: wso2is mysql bps_db username
-    default: wso2bpsuser
-  wso2is.bps_db.password:
-    description: wso2is mysql bps_db password
-    default: wso2bpsuser
 
 cf.apps_domain:
     description: Domain shared by the UAA and CF API eg 'bosh-lite.com'

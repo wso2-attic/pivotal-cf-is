@@ -43,11 +43,9 @@ mysql_host="127.0.0.1"
 
 # MySQL databases
 identity_db="WSO2_IDENTITY_DB"
-bps_db="WSO2_BPS_DB"
 
 # MySQL database users
 identity_user="wso2identityuser"
-bps_user="wso2bpsuser"
 
 # check the availability of required utility software, product packs and distributions
 
@@ -108,16 +106,16 @@ fi
 docker ps -a
 
 echo -e "---> Creating databases..."
-docker exec -it ${mysql_docker_container} mysql -h${mysql_host} -u${mysql_root_username} -p${mysql_root_password} -e "DROP DATABASE IF EXISTS "${identity_db}"; DROP DATABASE IF EXISTS "${bps_db}"; CREATE DATABASE "${identity_db}"; CREATE DATABASE "${bps_db}";"
+docker exec -it ${mysql_docker_container} mysql -h${mysql_host} -u${mysql_root_username} -p${mysql_root_password} -e "DROP DATABASE IF EXISTS "${identity_db}"; CREATE DATABASE "${identity_db}";"
 
 echo -e "---> Creating users..."
-docker exec -it ${mysql_docker_container} mysql -h${mysql_host} -u${mysql_root_username} -p${mysql_root_password} -e "DROP USER IF EXISTS '${identity_user}'@'%'; DROP USER IF EXISTS '${bps_user}'@'%'; FLUSH PRIVILEGES; CREATE USER '${identity_user}'@'%' IDENTIFIED BY '${identity_user}'; CREATE USER '${bps_user}'@'%' IDENTIFIED BY '${bps_user}';"
+docker exec -it ${mysql_docker_container} mysql -h${mysql_host} -u${mysql_root_username} -p${mysql_root_password} -e "DROP USER IF EXISTS '${identity_user}'@'%'; FLUSH PRIVILEGES; CREATE USER '${identity_user}'@'%' IDENTIFIED BY '${identity_user}';"
 
 echo -e "---> Grant access for users..."
-docker exec -it ${mysql_docker_container} mysql -h${mysql_host} -u${mysql_root_username} -p${mysql_root_password} -e "GRANT ALL PRIVILEGES ON ${identity_db}.* TO '${identity_user}'@'%'; GRANT ALL PRIVILEGES ON ${bps_db}.* TO '${bps_user}'@'%'; FLUSH PRIVILEGES;"
+docker exec -it ${mysql_docker_container} mysql -h${mysql_host} -u${mysql_root_username} -p${mysql_root_password} -e "GRANT ALL PRIVILEGES ON ${identity_db}.* TO '${identity_user}'@'%'; FLUSH PRIVILEGES;"
 
 echo -e "---> Creating tables..."
-docker exec -it ${mysql_docker_container} mysql -h${mysql_host} -u${mysql_root_username} -p${mysql_root_password} -e "USE "${identity_db}"; SOURCE /dbscripts/identity-mysql.sql; SOURCE /dbscripts/um-mysql.sql; USE "${bps_db}"; SOURCE /dbscripts/bps-mysql.sql;"
+docker exec -it ${mysql_docker_container} mysql -h${mysql_host} -u${mysql_root_username} -p${mysql_root_password} -e "USE "${identity_db}"; SOURCE /dbscripts/identity-mysql.sql; SOURCE /dbscripts/um-mysql.sql; SOURCE /dbscripts/bps-mysql.sql;"
 
 cd ${distributions}
 

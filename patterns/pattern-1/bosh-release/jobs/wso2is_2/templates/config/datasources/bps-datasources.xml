@@ -31,9 +31,9 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%=properties.wso2is.mysql.hostname%>:3306/<%=properties.wso2is.mysql.bps_db%></url>
-                    <username><%=properties.wso2is.bps_db.username%></username>
-                    <password><%=properties.wso2is.bps_db.password%></password>
+                    <url>jdbc:mysql://<%=properties.wso2is.mysql.hostname%>:3306/<%=properties.wso2is.mysql.identity_db%></url>
+                    <username><%=properties.wso2is.identity_db.username%></username>
+                    <password><%=properties.wso2is.identity_db.password%></password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
                     <maxActive>100</maxActive>
                     <maxWait>10000</maxWait>
