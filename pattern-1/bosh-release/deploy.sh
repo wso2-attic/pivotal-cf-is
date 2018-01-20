@@ -80,7 +80,7 @@ echo "---> Creating tables..."
 docker exec -it ${mysql_docker_container} mysql -h${mysql_host} -u${mysql_root_username} -p${mysql_root_password} -e "USE "${product_db}"; SOURCE /dbscripts/mysql.sql;"
 
 # create the BOSH release
-./create-release.sh "$1"
+./create.sh "$1"
 
 # upload the BOSH release to the BOSH Director
 echo "---> Uploading BOSH release..."
