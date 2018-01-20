@@ -16,15 +16,16 @@
   ~  under the License.
   -->
 
-<datasources-configuration>
+<datasources-configuration xmlns:svns="http://org.wso2.securevault/configuration">
 
     <providers>
         <provider>org.wso2.carbon.ndatasource.rdbms.RDBMSDataSourceReader</provider>
     </providers>
 
     <datasources>
+
         <datasource>
-            <name>WSO2_CARBON_DB</name>
+            <name>REGISTRY_LOCAL_1</name>
             <description>The datasource used for registry and user manager</description>
             <jndiConfig>
                 <name>jdbc/WSO2CarbonDB</name>
@@ -46,72 +47,82 @@
         </datasource>
 
         <datasource>
-            <name>WSO2_UM_DB</name>
-            <description>The datasource used for user manager</description>
+            <name>WSO2_USER_DB</name>
+            <description>The datasource used for registry and user manager</description>
             <jndiConfig>
-                <name>jdbc/WSO2_UM_DB</name>
+                <name>jdbc/WSO2UMDB</name>
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%=properties.wso2is.mysql.hostname%>:3306/<%=properties.wso2is.mysql.um_db%></url>
-                    <username><%=properties.wso2is.um_db.username%></username>
-                    <password><%=properties.wso2is.um_db.password%></password>
+                    <url>jdbc:mysql://<%=properties.wso2is.mysql.hostname%>:3306/<%=properties.wso2is.mysql.product_db%>?autoReconnect=true</url>
+                    <username><%=properties.wso2is.product_db.username%></username>
+                    <password><%=properties.wso2is.product_db.password%></password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
-                    <maxActive>80</maxActive>
+                    <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
-                    <minIdle>5</minIdle>
                     <testOnBorrow>true</testOnBorrow>
                     <validationQuery>SELECT 1</validationQuery>
                     <validationInterval>30000</validationInterval>
-                    <defaultAutoCommit>false</defaultAutoCommit>
                 </configuration>
             </definition>
         </datasource>
 
         <datasource>
-            <name>WSO2_GOV_REG_DB</name>
-            <description>The datasource used for governance registry</description>
+            <name>IDENTITY_DB</name>
+            <description>The datasource used for identity data</description>
             <jndiConfig>
-                <name>jdbc/WSO2_GOV_REG_DB</name>
+                <name>jdbc/WSO2IDENTITYDB</name>
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%=properties.wso2is.mysql.hostname%>:3306/<%=properties.wso2is.mysql.reg_db%></url>
-                    <username><%=properties.wso2is.reg_db.username%></username>
-                    <password><%=properties.wso2is.reg_db.password%></password>
+                    <url>jdbc:mysql://<%=properties.wso2is.mysql.hostname%>:3306/<%=properties.wso2is.mysql.product_db%>?autoReconnect=true</url>
+                    <username><%=properties.wso2is.product_db.username%></username>
+                    <password><%=properties.wso2is.product_db.password%></password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
-                    <maxActive>80</maxActive>
+                    <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
-                    <minIdle>5</minIdle>
                     <testOnBorrow>true</testOnBorrow>
                     <validationQuery>SELECT 1</validationQuery>
                     <validationInterval>30000</validationInterval>
-                    <defaultAutoCommit>false</defaultAutoCommit>
                 </configuration>
             </definition>
         </datasource>
 
-        <datasource>
-            <name>WSO2_IDENTITY_DB</name>
-            <description>The datasource used for config registry and identity</description>
+        <!-- For an explanation of the properties, see: http://people.apache.org/~fhanik/jdbc-pool/jdbc-pool.html -->
+        <!--datasource>
+            <name>SAMPLE_DATA_SOURCE</name>
             <jndiConfig>
-                <name>jdbc/WSO2_IDENTITY_DB</name>
+                <name></name>
+                <environment>
+                    <property name="java.naming.factory.initial"></property>
+                    <property name="java.naming.provider.url"></property>
+                </environment>
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%=properties.wso2is.mysql.hostname%>:3306/<%=properties.wso2is.mysql.identity_db%></url>
-                    <username><%=properties.wso2is.identity_db.username%></username>
-                    <password><%=properties.wso2is.identity_db.password%></password>
-                    <driverClassName>com.mysql.jdbc.Driver</driverClassName>
-                    <maxActive>80</maxActive>
-                    <maxWait>60000</maxWait>
-                    <minIdle>5</minIdle>
-                    <testOnBorrow>true</testOnBorrow>
-                    <validationQuery>SELECT 1</validationQuery>
-                    <validationInterval>30000</validationInterval>
-                    <defaultAutoCommit>false</defaultAutoCommit>
+
+                    <defaultAutoCommit></defaultAutoCommit>
+                    <defaultReadOnly></defaultReadOnly>
+                    <defaultTransactionIsolation>NONE|READ_COMMITTED|READ_UNCOMMITTED|REPEATABLE_READ|SERIALIZABLE</defaultTransactionIsolation>
+                    <defaultCatalog></defaultCatalog>
+                    <username></username>
+                    <password svns:secretAlias="WSO2.DB.Password"></password>
+                    <maxActive></maxActive>
+                    <maxIdle></maxIdle>
+                    <initialSize></initialSize>
+                    <maxWait></maxWait>
+
+                    <dataSourceClassName>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</dataSourceClassName>
+                    <dataSourceProps>
+                        <property name="url">jdbc:mysql://localhost:3306/Test1</property>
+                        <property name="user">root</property>
+                        <property name="password">123</property>
+                    </dataSourceProps>
+
                 </configuration>
             </definition>
-        </datasource>
+        </datasource-->
+
     </datasources>
+
 </datasources-configuration>

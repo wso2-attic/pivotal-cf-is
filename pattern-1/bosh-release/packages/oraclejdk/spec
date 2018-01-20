@@ -4,4 +4,4 @@ name: oraclejdk
 dependencies: []
 
 files:
-- oraclejdk/jdk-8u144-linux-x64.tar.gz
+- oraclejdk/jdk-8u*-linux-x64.tar.gz

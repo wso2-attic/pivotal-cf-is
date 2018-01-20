@@ -23,6 +23,7 @@ hs_err_pid*
 
 .idea/
 **/.dev_builds/
-**/blobs
+**/blobs/
 **/dev_releases/
 **/deployment/*
+**/dist/*

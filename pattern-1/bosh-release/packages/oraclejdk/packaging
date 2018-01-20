@@ -1,7 +1,7 @@
 # abort script on any command that exit with a non zero value
 set -e
 
-archive=`echo oraclejdk/jdk-8*.tar.gz`
+archive=`echo oraclejdk/jdk-8u*-linux-x64.tar.gz`
 
 if [[ -f $archive ]] ; then
   echo "Oracle JDK archive found"
