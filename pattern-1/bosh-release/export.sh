@@ -19,6 +19,7 @@
 #
 # ----------------------------------------------------------------------------
 
+# exit immediately if a command exits with a non-zero status
 set -e
 
 echo "Exporting WSO2 IS bosh release..."
