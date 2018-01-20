@@ -27,6 +27,8 @@ export wso2_product="wso2is"
 export wso2_product_version="5.4.0"
 export wso2_product_pack_identifier="${wso2_product}-${wso2_product_version}"
 export wso2_product_distribution=${wso2_product_pack_identifier}"*.zip"
+export wso2_product_analytics_pack_identifier="${wso2_product}-analytics-${wso2_product_version}"
+export wso2_product_analytics_distribution=${wso2_product_analytics_pack_identifier}"*.zip"
 export jdk_distribution="jdk-8u*-linux-x64.tar.gz"
 export mysql_driver="mysql-connector-java-5.1.*-bin.jar"
 
@@ -47,25 +49,25 @@ product_db="WSO2_IS_DB"
 
 # check if Docker has been installed
 if [ ! -x "$(command -v docker)" ]; then
-    echo "---> Please install Docker."
+    echo -e "---> Please install Docker."
     exit 1
 fi
 
 # start the MySQL Docker container service
 if [ ! "$(docker ps -q -f name=${mysql_docker_container})" ]; then
-    echo "---> Starting MySQL Docker container..."
+    echo -e "---> Starting MySQL Docker container..."
     container_id=$(docker run -d --name ${mysql_docker_container} -p 3306:3306 -e MYSQL_ROOT_PASSWORD=${mysql_root_password} -v ${PWD}/dbscripts/:/dbscripts/ mysql:5.7.19)
 
-    echo "---> Waiting for MySQL service to start..."
+    echo -e "---> Waiting for MySQL service to start..."
 
     while [ $(docker logs ${mysql_docker_container} 2>&1 | grep "mysqld: ready for connections" | wc -l) -ne 2 ]; do
         printf '.'
         sleep 1
     done
     echo ""
-    echo "---> MySQL service started."
+    echo -e "---> MySQL service started."
 else
-    echo "---> MySQL service is already running..."
+    echo -e "---> MySQL service is already running..."
 fi
 
 # print out the information of the created Docker container

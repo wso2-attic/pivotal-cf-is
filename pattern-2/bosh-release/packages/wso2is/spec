@@ -1,0 +1,7 @@
+---
+name: wso2is
+
+dependencies: []
+
+files:
+- wso2is/wso2is-5.4.0.zip
