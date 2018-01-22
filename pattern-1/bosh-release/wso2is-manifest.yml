@@ -1,0 +1,110 @@
+# ----------------------------------------------------------------------------
+#
+# Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+#
+# WSO2 Inc. licenses this file to you under the Apache License,
+# Version 2.0 (the "License"); you may not use this file except
+# in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+# ----------------------------------------------------------------------------
+compilation:
+  cloud_properties: {}
+  network: wso2is_network
+  reuse_compilation_vms: true
+  workers: 4
+director_uuid: <%= `bosh target > /dev/null 2>&1 && bosh status --uuid` %>
+iaas_settings:
+  compilation_cloud_properties: {}
+  resource_pool_cloud_properties:
+  - cloud_properties: {}
+    name: wso2is_z1
+  - cloud_properties: {}
+    name: errands_z1
+  stemcell:
+    name: bosh-warden-boshlite-ubuntu-trusty-go_agent
+    version: latest
+  subnet_configs:
+  - name: wso2is_z1
+    subnets:
+    - cloud_properties:
+        name: random
+      range: 10.244.15.0/24
+      reserved:
+      - 10.244.15.1
+      static:
+      - 10.244.15.2 - 10.244.15.21
+  watch_time: 10000-120000
+jobs:
+- instances: 1
+  name: wso2is_1
+  networks:
+  - name: wso2is_network
+    static_ips: [10.244.15.2]
+  resource_pool: wso2is-resource-pool
+  templates:
+  - name: wso2is_1
+- instances: 1
+  name: wso2is_2
+  networks:
+  - name: wso2is_network
+    static_ips: [10.244.15.3]
+  resource_pool: wso2is-resource-pool
+  templates:
+  - name: wso2is_2
+meta:
+  director_uuid: <%= `bosh target > /dev/null 2>&1 && bosh status --uuid` %>
+name: wso2is
+networks:
+- name: wso2is_network
+  subnets:
+  - cloud_properties:
+      name: random
+    range: 10.244.15.0/24
+    reserved:
+    - 10.244.15.1
+    static:
+    - 10.244.15.2 - 10.244.15.20
+    type: manual
+properties:
+  nats:
+    machines:
+    - 10.244.0.6
+    port: 4222
+    user: nats
+    password: nats
+
+  wso2is:
+    address: wso2is
+    listen_port: 8080
+    username: admin
+    password: admin
+    memory:
+      max_heap: 1024
+      min_heap: 1024
+
+releases:
+- name: wso2is-release
+  version: latest
+resource_pools:
+- cloud_properties: {}
+  name: wso2is-resource-pool
+  network: wso2is_network
+  stemcell:
+    name: bosh-warden-boshlite-ubuntu-trusty-go_agent
+    version: latest
+update:
+  canaries: 1
+  canary_watch_time: 10000-120000
+  max_in_flight: 1
+  serial: true
+  update_watch_time: 10000-120000

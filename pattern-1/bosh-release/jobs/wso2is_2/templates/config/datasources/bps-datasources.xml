@@ -1,0 +1,50 @@
+<!--
+  ~ Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~  http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  -->
+
+<datasources-configuration xmlns:svns="http://org.wso2.securevault/configuration">
+
+    <providers>
+        <provider>org.wso2.carbon.ndatasource.rdbms.RDBMSDataSourceReader</provider>
+    </providers>
+
+    <datasources>
+        <datasource>
+            <name>BPS_DS</name>
+            <description></description>
+            <jndiConfig>
+                <name>bpsds</name>
+            </jndiConfig>
+            <definition type="RDBMS">
+                <configuration>
+                    <url>jdbc:mysql://<%=properties.wso2is.mysql.hostname%>:3306/<%=properties.wso2is.mysql.product_db%>?autoReconnect=true</url>
+                    <username><%=properties.wso2is.product_db.username%></username>
+                    <password><%=properties.wso2is.product_db.password%></password>
+                    <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                    <testOnBorrow>true</testOnBorrow>
+                    <validationQuery>SELECT 1</validationQuery>
+                    <validationInterval>30000</validationInterval>
+                    <useDataSourceFactory>false</useDataSourceFactory>
+                    <defaultAutoCommit>true</defaultAutoCommit>
+                    <maxActive>100</maxActive>
+                    <maxIdle>20</maxIdle>
+                    <maxWait>10000</maxWait>
+                </configuration>
+            </definition>
+        </datasource>
+    </datasources>
+</datasources-configuration>

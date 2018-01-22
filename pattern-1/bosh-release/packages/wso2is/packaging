@@ -1,0 +1,13 @@
+# abort script on any command that exit with a non zero value
+set -e
+
+archive=`echo wso2is/wso2is-5.4.0.zip`
+
+if [[ -f $archive ]] ; then
+  echo "wso2is-5.4.0 archive found"
+else
+  echo "wso2is-5.4.0 archive not found"
+  exit 1
+fi
+
+cp -r $archive ${BOSH_INSTALL_TARGET}
