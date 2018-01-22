@@ -1,6 +1,6 @@
-# BOSH release for WSO2 Identity Server deployment pattern 1
+# BOSH release for WSO2 Identity Server deployment pattern 2
 
-This repository includes a BOSH release that can be used to deploy WSO2 Identity Server 5.4.0 deployment pattern 1
+This repository includes a BOSH release that can be used to deploy WSO2 Identity Server 5.4.0 deployment pattern 2
 configured to use a MySQL database on BOSH Director.
 
 ## Prerequisites
@@ -20,7 +20,7 @@ Install the following software:
     git clone https://github.com/wso2/pivotal-cf-is
     ```
     
-2. Navigate to `pivotal-cf-is/patterns/pattern-1/bosh-release` directory.
+2. Navigate to `pivotal-cf-is/patterns/pattern-2/bosh-release` directory.
 
 3. Add the following software distributions to the `dist` folder.
 
@@ -30,29 +30,32 @@ Install the following software:
 
 - WSO2 Identity Server 5.4.0 WUM updated product distribution
 
+- WSO2 Identity Server Analytics 5.4.0 WUM updated product distribution
+
 4. Execute the deploy.sh script.
    ```
    ./deploy.sh
    ```
-   Executing this script will setup MySQL, BOSH environment and will deploy WSO2 IS 5.4.0 deployment pattern 1 on BOSH director.
+   Executing this script will setup MySQL, BOSH environment and will deploy WSO2 IS 5.4.0 deployment pattern 2 on BOSH director.
 
-5. Find the IP addresses of created VMs via the BOSH CLI and access the WSO2 Identity Server Store via a web browser.
+5. Find the IP addresses of created VMs via the BOSH CLI and access the WSO2 Identity Server and Analytics management consoles via a web browser.
     ```
     bosh -e vbox vms
     ...
     
     Deployment 'wso2is'
     
-    Instance                                       Process State  AZ  IPs          VM CID                                VM Type  
-    wso2is_1/b277265a-6f11-4b59-a82d-87e14b01f898  running        -   10.244.15.2  c5a75be1-8acd-4d09-7a99-4cec2795ed15  wso2is-resource-pool  
-    wso2is_2/1030d639-4b02-48e5-83b0-0ca6ed79fecb  running        -   10.244.15.3  f10c0fc0-7573-4fde-673f-9b6d25ef124c  wso2is-resource-pool  
+    Instance                                               Process State  AZ  IPs          VM CID                                VM Type  
+    wso2is_1/b107e62a-97b1-4d4f-bbbb-f9f6abdc6bfe          running        -   10.244.15.2  074f1216-060e-4415-63df-451ee1cd40f5  wso2is-resource-pool  
+    wso2is_2/d2757586-befb-4a31-8895-efe6f3a44b71          running        -   10.244.15.3  90823071-f5a7-4404-6d27-8c1a981ba142  wso2is-resource-pool  
+    wso2is_analytics/b90f2ad8-42a3-4cc1-ab54-bebb6b87a172  running        -   10.244.15.4  1f685899-a4ae-4375-5fb1-a5c49b962e22  wso2is-resource-pool  
     
-    2 vms
+    3 vms
     
     Succeeded
     ...
     ```
-    To ssh to the instance
+    To ssh into an instance
     ```
     bosh -e vbox -d wso2is ssh <instance_id>
     e.g. bosh -e vbox -d wso2is ssh wso2is_1/b107e62a-97b1-4d4f-bbbb-f9f6abdc6bfe
@@ -60,6 +63,7 @@ Install the following software:
     Access the management console with URL
     ```
     WSO2 Identity Server management console: https://10.244.15.2:9443/carbon/
+    WSO2 Identity Server Analytics management console: https://10.244.15.4:9444/carbon/
     ```
 
 ## Additional Info
