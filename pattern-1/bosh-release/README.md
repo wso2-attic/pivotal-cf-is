@@ -20,7 +20,7 @@ Install the following software:
     git clone https://github.com/wso2/pivotal-cf-is
     ```
     
-2. Navigate to `pivotal-cf-is/patterns/pattern-1/bosh-release` directory.
+2. Navigate to `pivotal-cf-is/pattern-1/bosh-release` directory.
 
 3. Add the following software distributions to the `dist` folder.
 

@@ -57,4 +57,4 @@ if [ "$1" == "--force" ]; then
 fi
 
 # remove the added route
-sudo route delete -net 10.244.0.0/16 gw 192.168.50.6
+sudo ip route del 10.244.0.0/16 via 192.168.50.6

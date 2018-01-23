@@ -33,16 +33,6 @@ iaas_settings:
   stemcell:
     name: bosh-warden-boshlite-ubuntu-trusty-go_agent
     version: latest
-  subnet_configs:
-  - name: wso2is_z1
-    subnets:
-    - cloud_properties:
-        name: random
-      range: 10.244.15.0/24
-      reserved:
-      - 10.244.15.1
-      static:
-      - 10.244.15.2 - 10.244.15.21
   watch_time: 10000-120000
 jobs:
 - instances: 1

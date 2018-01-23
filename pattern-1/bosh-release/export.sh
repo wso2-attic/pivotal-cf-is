@@ -22,6 +22,65 @@
 # exit immediately if a command exits with a non-zero status
 set -e
 
-echo "Exporting WSO2 IS bosh release..."
-bosh -e vbox create-release --force --tarball wso2is-bosh-release.tar.gz
-echo "DONE!"
+# deployment artifacts and versions
+wso2_product="wso2is"
+wso2_product_version="5.4.0"
+wso2_product_pack_identifier="${wso2_product}-${wso2_product_version}"
+wso2_product_distribution=${wso2_product_pack_identifier}"*.zip"
+jdk_distribution="jdk-8u*-linux-x64.tar.gz"
+mysql_driver="mysql-connector-java-5.1.*-bin.jar"
+
+# repository folder structure variables
+distributions="dist"
+
+# move to the directory containing the distributions
+cd ${distributions}
+
+# capture the exact product distribution identifiers
+mysql_driver=$(ls ${mysql_driver})
+jdk_distribution=$(ls ${jdk_distribution})
+
+# make copies of the WSO2 original product distributions with the generic WSO2 product identifiers
+if [ ! -f ${wso2_product_pack_identifier}.zip ]; then
+    cp ${wso2_product_distribution} ${wso2_product_pack_identifier}.zip
+fi
+
+# check the availability of required utility software, product packs and distributions
+
+# check if the WSO2 product distributions have been provided
+if [ ! -f ${wso2_product_pack_identifier}.zip ]; then
+    echo "---> WSO2 product distribution not found! Please add it to ${distributions} directory."
+    exit 1
+fi
+
+# check if the JDK distribution has been provided
+if [ ! -f ${jdk_distribution} ]; then
+    echo "---> Java Development Kit (JDK) distribution not found! Please add it to ${distributions} directory."
+    exit 1
+fi
+
+# check if the MySQL Connector has been provided
+if [ ! -f ${mysql_driver} ]; then
+    echo "---> MySQL Driver not found! Please add it to ${distributions} directory."
+    exit 1
+fi
+
+# check if Bosh CLI has been installed
+if [ ! -x "$(command -v bosh)" ]; then
+    echo "---> Please install Bosh CLI v2."
+    exit 1
+fi
+
+cd ..
+# add the locally available WSO2 product distribution(s) and dependencies as blobs to the BOSH Director
+echo "---> Adding blobs..."
+bosh -e $1 add-blob ${distributions}/${jdk_distribution} oraclejdk/${jdk_distribution}
+bosh -e $1 add-blob ${distributions}/${mysql_driver} mysqldriver/${mysql_driver}
+bosh -e $1 add-blob ${distributions}/${wso2_product_pack_identifier}.zip ${wso2_product}/${wso2_product_pack_identifier}.zip
+
+echo "---> Uploading blobs..."
+bosh -e $1 -n upload-blobs
+
+echo "Exporting WSO2 product BOSH release..."
+bosh -e $1 create-release --force --tarball wso2is-bosh-release.tar.gz
+echo "Successfully exported WSO2 product BOSH release!"
