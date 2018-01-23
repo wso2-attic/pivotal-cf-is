@@ -74,7 +74,9 @@ Structure of the files of this repository will be as below :
     ├── jobs
     ├── packages
     ├── src
+    ├── create.sh
     ├── deploy.sh
+    ├── export.sh
     ├── undeploy.sh
     ├── README.md
     └── wso2is-manifest.yml
