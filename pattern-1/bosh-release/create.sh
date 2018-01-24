@@ -143,9 +143,6 @@ bosh -e vbox add-blob ${distributions}/${jdk_distribution} oraclejdk/${jdk_distr
 bosh -e vbox add-blob ${distributions}/${mysql_driver} mysqldriver/${mysql_driver}
 bosh -e vbox add-blob ${distributions}/${wso2_product_distribution} wso2is/${wso2_product_pack_identifier}.zip
 
-echo "---> Uploading blobs..."
-bosh -e vbox -n upload-blobs
-
 # create the BOSH release
 echo "---> Creating bosh release..."
 bosh -e vbox create-release --force
