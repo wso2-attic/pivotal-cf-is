@@ -82,5 +82,5 @@ echo "---> Uploading blobs..."
 bosh -e $1 -n upload-blobs
 
 echo "Exporting WSO2 product BOSH release..."
-bosh -e $1 create-release --force --tarball wso2is-bosh-release.tar.gz
+bosh -e $1 create-release --force --tarball ${wso2_product}-bosh-release.tar.gz
 echo "Successfully exported WSO2 product BOSH release!"
