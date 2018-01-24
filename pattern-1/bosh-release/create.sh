@@ -34,29 +34,35 @@ set -e
 : ${distributions:="dist"}
 : ${deployment:="deployment"}
 
+# move to the directory containing the distributions
+cd ${distributions}
+
+# capture the exact product distribution identifiers
+mysql_driver=$(ls ${mysql_driver})
+jdk_distribution=$(ls ${jdk_distribution})
+
+# make copies of the WSO2 original product distributions with the generic WSO2 product identifiers
+if [ ! -f ${wso2_product_pack_identifier}.zip ]; then
+    cp ${wso2_product_distribution} ${wso2_product_pack_identifier}.zip
+fi
+
 # check the availability of required utility software, product packs and distributions
 
-# check if the WSO2 Identity Server product distribution has been provided
-if [ ! -f ${distributions}/${wso2_product_distribution} ]; then
-    echo "---> WSO2 Identity Server product distribution not found! Please add it to ${distributions} directory."
+# check if the WSO2 product distributions have been provided
+if [ ! -f ${wso2_product_pack_identifier}.zip ]; then
+    echo "---> WSO2 product distribution not found! Please add it to ${distributions} directory."
     exit 1
 fi
 
 # check if the JDK distribution has been provided
-if [ ! -f ${distributions}/${jdk_distribution} ]; then
+if [ ! -f ${jdk_distribution} ]; then
     echo "---> Java Development Kit (JDK) distribution not found! Please add it to ${distributions} directory."
     exit 1
 fi
 
 # check if the MySQL Connector has been provided
-if [ ! -f ${distributions}/${mysql_driver} ]; then
+if [ ! -f ${mysql_driver} ]; then
     echo "---> MySQL Driver not found! Please add it to ${distributions} directory."
-    exit 1
-fi
-
-# check if Git has been installed
-if [ ! -x "$(command -v git)" ]; then
-    echo "---> Please install Git client."
     exit 1
 fi
 
@@ -66,86 +72,16 @@ if [ ! -x "$(command -v bosh)" ]; then
     exit 1
 fi
 
-# move to the directory containing the distributions
-cd ${distributions}
-
-# capture the exact product distribution identifiers
-wso2_product_distribution=$(ls ${wso2_product_distribution})
-mysql_driver=$(ls ${mysql_driver})
-jdk_distribution=$(ls ${jdk_distribution})
-
-# make a copy of the WSO2 original product distribution with the generic WSO2 product identifier
-if [ ! -f ${wso2_product_pack_identifier}.zip ]; then
-    cp ${wso2_product_distribution} ${wso2_product_pack_identifier}.zip
-fi
-
-# move to the deployment directory
-cd ../${deployment}
-
-# Git clone the collection of BOSH manifests referenced by cloudfoundry/docs-bosh, required to create the BOSH environment
-if [ ! -d bosh-deployment ]; then
-    echo "---> Cloning https://github.com/cloudfoundry/bosh-deployment..."
-    git clone https://github.com/cloudfoundry/bosh-deployment bosh-deployment
-fi
-
-# create a directory to hold the configuration files for VirtualBox specific BOSH environment
-if [ ! -d vbox ]; then
-    echo "---> Creating environment directory..."
-    mkdir vbox
-fi
-
-# if forced, delete any existing BOSH environment
-if [ "$1" == "--force" ]; then
-    echo "---> Deleting existing BOSH environment..."
-    bosh delete-env bosh-deployment/bosh.yml \
-        --state vbox/state.json \
-        -o bosh-deployment/virtualbox/cpi.yml \
-        -o bosh-deployment/virtualbox/outbound-network.yml \
-        -o bosh-deployment/bosh-lite.yml \
-        -o bosh-deployment/bosh-lite-runc.yml \
-        -o bosh-deployment/jumpbox-user.yml \
-        --vars-store vbox/creds.yml \
-        -v director_name="Bosh Lite Director" \
-        -v internal_ip=192.168.50.6 \
-        -v internal_gw=192.168.50.1 \
-        -v internal_cidr=192.168.50.0/24 \
-        -v outbound_network_name=NatNetwork
-fi
-
-# create a new BOSH environment with BOSH Lite as the BOSH Director and VirtualBox as the IaaS
-echo "---> Creating the BOSH environment..."
-bosh create-env bosh-deployment/bosh.yml \
-    --state vbox/state.json \
-    -o bosh-deployment/virtualbox/cpi.yml \
-    -o bosh-deployment/virtualbox/outbound-network.yml \
-    -o bosh-deployment/bosh-lite.yml \
-    -o bosh-deployment/bosh-lite-runc.yml \
-    -o bosh-deployment/jumpbox-user.yml \
-    --vars-store vbox/creds.yml \
-    -v director_name="Bosh Lite Director" \
-    -v internal_ip=192.168.50.6 \
-    -v internal_gw=192.168.50.1 \
-    -v internal_cidr=192.168.50.0/24 \
-    -v outbound_network_name=NatNetwork
-
-# set an alias for the created BOSH environment
-echo "---> Setting alias for the environment..."
-bosh -e 192.168.50.6 alias-env vbox --ca-cert <(bosh int vbox/creds.yml --path /director_ssl/ca)
-
-# log into the created BOSH environment
-echo "---> Logging in..."
-bosh -e vbox login --client=admin --client-secret=$(bosh int vbox/creds.yml --path /admin_password)
-
 cd ..
-# add and upload the WSO2 product distribution(s) and dependencies as blobs to the BOSH Director
+# add the locally available WSO2 product distribution(s) and dependencies as blobs to the BOSH Director
 echo "---> Adding blobs..."
-bosh -e vbox add-blob ${distributions}/${jdk_distribution} oraclejdk/${jdk_distribution}
-bosh -e vbox add-blob ${distributions}/${mysql_driver} mysqldriver/${mysql_driver}
-bosh -e vbox add-blob ${distributions}/${wso2_product_distribution} wso2is/${wso2_product_pack_identifier}.zip
+bosh -e $1 add-blob ${distributions}/${jdk_distribution} oraclejdk/${jdk_distribution}
+bosh -e $1 add-blob ${distributions}/${mysql_driver} mysqldriver/${mysql_driver}
+bosh -e $1 add-blob ${distributions}/${wso2_product_pack_identifier}.zip ${wso2_product}/${wso2_product_pack_identifier}.zip
 
 echo "---> Uploading blobs..."
-bosh -e vbox -n upload-blobs
+bosh -e $1 -n upload-blobs
 
 # create the BOSH release
-echo "---> Creating bosh release..."
-bosh -e vbox create-release --force
+echo "---> Creating BOSH release..."
+bosh -e $1 create-release --force
