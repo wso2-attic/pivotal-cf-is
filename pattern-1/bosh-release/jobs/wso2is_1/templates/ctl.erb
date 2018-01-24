@@ -47,6 +47,7 @@ function log_debug() {
 
 log_debug "Kicking off ctl script as `whoami` with $1"
 
+# includes start command and stop commands
 case $1 in
 
   start)
@@ -55,34 +56,34 @@ case $1 in
 
     pushd /var/vcap/packages/oraclejdk/
     archive=`ls jdk*gz`
-    tar -zxvf $archive
+    tar -xf ${archive}
     export JAVA_HOME=`pwd`/jdk1.8.0_144/
 
     log_debug "JAVA_HOME: ${JAVA_HOME}"
 
-    pushd /var/vcap/packages/wso2is/
+    pushd /var/vcap/packages/${wso2_product}/
     archive=`ls wso2is*zip`
-    unzip $archive
+    unzip ${archive}
     cd wso2is*
-    WSO2_IS_HOME=`pwd`
+    wso2_is_home=`pwd`
 
-    log_debug "WSO2_IS_HOME: ${WSO2_IS_HOME}"
+    log_debug "WSO2_IS_HOME: ${wso2_is_home}"
 
-    # Here copy all the configurations needs to be replaces the application for ex:lib, conf files
-    cp -r -v $job_dir/config/* ${WSO2_IS_HOME}/repository/conf/
+    # copy all the configuration files that need to be replaced in <WSO2_PRODUCT_HOME>/repository/conf
+    cp -r -v ${job_dir}/config/* ${wso2_is_home}/repository/conf/
 
-    # Here add any libraries your application needs:
-    cp -v /var/vcap/packages/mysqldriver/* ${WSO2_IS_HOME}/repository/components/lib/
+    # add any external libraries required during runtime
+    cp -v /var/vcap/packages/mysqldriver/* ${wso2_is_home}/repository/components/lib/
 
-    ${WSO2_IS_HOME}/bin/wso2server.sh start
+    # start the WSO2 product server
+    ${wso2_is_home}/bin/wso2server.sh start
 
-    # Sleep for a little while so the server comes up
+    # sleep until the server starts up
     sleep 20
-    WSO2_IS_PID=`ps -ef | grep java | grep -v grep | awk '{print $2}' `
-    echo $WSO2_IS_PID > ${pid_file}
+    wso2_is_pid=`ps -ef | grep java | grep -v grep | awk '{print $2}' `
+    echo ${wso2_is_pid} > ${pid_file}
 
-    cat ${pid_file}
-
+    log_debug "Process ID: `cat ${pid_file}`"
     ;;
 
   stop)
