@@ -79,9 +79,6 @@ bosh -e $1 add-blob ${distributions}/${jdk_distribution} oraclejdk/${jdk_distrib
 bosh -e $1 add-blob ${distributions}/${mysql_driver} mysqldriver/${mysql_driver}
 bosh -e $1 add-blob ${distributions}/${wso2_product_pack_identifier}.zip ${wso2_product}/${wso2_product_pack_identifier}.zip
 
-echo "---> Uploading blobs..."
-bosh -e $1 -n upload-blobs
-
 # create the BOSH release
 echo "---> Creating BOSH release..."
 bosh -e $1 create-release --force
