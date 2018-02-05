@@ -2,12 +2,12 @@
 name: wso2is_1
 templates:
   ctl.erb: bin/ctl
-  config/axis2/axis2.xml: config/axis2/axis2.xml
-  config/identity/identity.xml: config/identity/identity.xml
-  config/identity/embedded-ldap.xml: config/identity/embedded-ldap.xml
-  config/datasources/master-datasources.xml: config/datasources/master-datasources.xml
-  config/datasources/bps-datasources.xml: config/datasources/bps-datasources.xml
-  config/user-mgt.xml: config/user-mgt.xml
+  config/axis2/axis2.erb: config/axis2/axis2.xml
+  config/identity/identity.erb: config/identity/identity.xml
+  config/identity/embedded-ldap.erb: config/identity/embedded-ldap.xml
+  config/datasources/master-datasources.erb: config/datasources/master-datasources.xml
+  config/datasources/bps-datasources.erb: config/datasources/bps-datasources.xml
+  config/user-mgt.erb: config/user-mgt.xml
 
 packages:
 - oraclejdk
