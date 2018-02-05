@@ -33,7 +33,7 @@ properties:
   wso2is.address:
     description: wso2is address
 
-  wso2is.mysql.hostname:
+  wso2is.mysql.host:
     description: wso2is mysql hostname
     default: 192.168.50.1
   wso2is.mysql.product_db:

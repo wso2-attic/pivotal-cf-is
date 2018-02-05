@@ -2,5 +2,5 @@
 
 This repository contains Pivotal Cloud Foundary resources for WSO2 Identity Server.
 
-* BOSH Releases for WSO2 Identity Server deployment patterns
+* BOSH releases for WSO2 Identity Server deployment patterns
 * Pivotal Cloud Foundry Tiles for WSO2 Identity Server deployment patterns

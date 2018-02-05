@@ -1,7 +1,7 @@
 # abort script on any command that exit with a non zero value
 set -e
 
-archive=`echo wso2is/wso2is-5.4.0.zip`
+archive=`echo wso2is/wso2is-5.4.0*.zip`
 
 if [[ -f $archive ]] ; then
   echo "wso2is-5.4.0 archive found"

@@ -33,17 +33,17 @@ properties:
   wso2is.address:
     description: wso2is address
 
-  wso2is.mysql.hostname:
-    description: wso2is mysql hostname
+  wso2is.mysql.host:
+    description: Hostname/IP of the MySQL server in which WSO2 Identity Server product database resides
     default: 192.168.50.1
   wso2is.mysql.product_db:
-    description: wso2is mysql identity and config registry database name
+    description: Name of the WSO2 Identity Server product database
     default: wso2is_db
   wso2is.product_db.username:
-    description: wso2is mysql username
+    description: Username of the WSO2 Identity Server product database user
     default: root
   wso2is.product_db.password:
-    description: wso2is mysql password
+    description: Password of the WSO2 Identity Server product database user
     default: root
 
 cf.apps_domain:
