@@ -26,4 +26,3 @@ hs_err_pid*
 **/blobs/
 **/dev_releases/
 **/.deployment/*
-**/dist/*
