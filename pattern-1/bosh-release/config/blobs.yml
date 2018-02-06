@@ -1,0 +1,9 @@
+mysqldriver/mysql-connector-java-5.1.34-bin.jar:
+  size: 960374
+  sha: 6df5bcec3970d71eaace2c5589077452c5e9ecfa
+oraclejdk/jdk-8u144-linux-x64.tar.gz:
+  size: 185515842
+  sha: d4c4f02908d39827393dd77f9eb8da348363efda
+wso2is/wso2is-5.4.0.zip:
+  size: 376088880
+  sha: 6f1ba157db5f73791fa862adc97586023ed31371
