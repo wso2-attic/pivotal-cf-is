@@ -17,7 +17,6 @@ packages:
 - oraclejdk
 - mysqldriver
 - wso2is
-- common
 
 properties:
   wso2is.listen_port:
