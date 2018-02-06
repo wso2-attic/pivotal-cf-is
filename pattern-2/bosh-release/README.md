@@ -123,7 +123,7 @@ In order to create the BOSH release for deployment pattern 2, you must follow th
       
    If you customize any of the above configurations in following steps, change the default property values to customized values in each job specification.
     
-   - Create the product database. For this purpose, execute the `<pivotal-cf-is>/pattern-1/bosh-release/dbscripts/mysql.sql` script.
+   - Create the product database. For this purpose, execute the `<pivotal-cf-is>/pattern-2/bosh-release/dbscripts/mysql.sql` script.
         
     ```
     DROP DATABASE IF EXISTS <wso2is.mysql.product_db>; CREATE DATABASE <wso2is.mysql.product_db>;
