@@ -70,10 +70,10 @@ case $1 in
     log_debug "WSO2_IS_HOME: ${wso2_is_home}"
 
     # copy all the configuration files that need to be replaced in <WSO2_PRODUCT_HOME>/repository/conf
-    cp -r -v ${job_dir}/config/* ${wso2_is_home}/repository/conf/
+    cp -r ${job_dir}/config/* ${wso2_is_home}/repository/conf/
 
     # add any external libraries required during runtime
-    cp -v /var/vcap/packages/mysqldriver/* ${wso2_is_home}/repository/components/lib/
+    cp /var/vcap/packages/mysqldriver/* ${wso2_is_home}/repository/components/lib/
 
     # start the WSO2 product server
     ${wso2_is_home}/bin/wso2server.sh start
