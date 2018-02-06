@@ -229,10 +229,9 @@ Structure of the directories and files of the BOSH release is as follows:
     ├── images
     ├── jobs
     ├── manifests
+        ├── wso2is-manifest.yml
     ├── packages
-    ├── src
-    ├── README.md
-    └── wso2is-manifest.yml
+    └── README.md
 ```
 
 ## References
