@@ -1,7 +1,7 @@
 # BOSH release for WSO2 Identity Server deployment pattern 1
 
 This directory contains the BOSH release implementation for WSO2 Identity Server 5.4.0
-[deployment pattern 1](https://docs.wso2.com/display/IS541/Deployment+Patterns#DeploymentPatterns-Pattern1-HAclustereddeploymentofWSO2IdentityServer).
+[deployment pattern 1](https://docs.wso2.com/display/IS540/Deployment+Patterns#DeploymentPatterns-Pattern1-HAclustereddeploymentofWSO2IdentityServer).
 
 ![WSO2 Identity Server 5.4.0 deployment pattern 1](images/pattern-1.png)
 
