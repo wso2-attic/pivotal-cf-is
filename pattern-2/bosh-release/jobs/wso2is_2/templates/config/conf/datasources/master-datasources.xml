@@ -29,17 +29,17 @@
         </datasource>
 
         <datasource>
-            <name>REGISTRY_DB</name>
-            <description>The datasource used for registry- config/governance</description>
+            <name>WSO2_USER_DS</name>
+            <description>The datasource used for user manager</description>
             <jndiConfig>
-                <name>jdbc/WSO2RegistryDB</name>
+                <name>jdbc/WSO2UMDS</name>
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%=properties.wso2is.mysql.hostname%>:3306/<%=properties.wso2is.mysql.product_db%>?autoReconnect=true</url>
-                    <username><%=properties.wso2is.product_db.username%></username>
-                    <password><%=properties.wso2is.product_db.password%></password>
-                    <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                    <url><%=properties.wso2is.user_ds.url%></url>
+                    <username><%=properties.wso2is.db.username%></username>
+                    <password><%=properties.wso2is.db.password%></password>
+                    <driverClassName><%=properties.wso2is.user_ds.driver%></driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>
@@ -50,17 +50,17 @@
         </datasource>
 
         <datasource>
-            <name>WSO2_USER_DB</name>
-            <description>The datasource used for registry and user manager</description>
+            <name>WSO2_REGISTRY_DS</name>
+            <description>The datasource used for registry</description>
             <jndiConfig>
-                <name>jdbc/WSO2UMDB</name>
+                <name>jdbc/WSO2RegistryDS</name>
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%=properties.wso2is.mysql.hostname%>:3306/<%=properties.wso2is.mysql.product_db%>?autoReconnect=true</url>
-                    <username><%=properties.wso2is.product_db.username%></username>
-                    <password><%=properties.wso2is.product_db.password%></password>
-                    <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                    <url><%=properties.wso2is.registry_ds.url%></url>
+                    <username><%=properties.wso2is.db.username%></username>
+                    <password><%=properties.wso2is.db.password%></password>
+                    <driverClassName><%=properties.wso2is.registry_ds.driver%></driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>
@@ -71,17 +71,17 @@
         </datasource>
 
         <datasource>
-            <name>IDENTITY_DB</name>
+            <name>WSO2_IDENTITY_DS</name>
             <description>The datasource used for identity data</description>
             <jndiConfig>
-                <name>jdbc/WSO2IDENTITYDB</name>
+                <name>jdbc/WSO2IdentityDS</name>
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%=properties.wso2is.mysql.hostname%>:3306/<%=properties.wso2is.mysql.product_db%>?autoReconnect=true</url>
-                    <username><%=properties.wso2is.product_db.username%></username>
-                    <password><%=properties.wso2is.product_db.password%></password>
-                    <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                    <url><%=properties.wso2is.identity_ds.url%></url>
+                    <username><%=properties.wso2is.db.username%></username>
+                    <password><%=properties.wso2is.db.password%></password>
+                    <driverClassName><%=properties.wso2is.identity_ds.driver%></driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>

@@ -32,11 +32,11 @@
     </dbConfig>
 
     <dbConfig name="govregistry">
-        <dataSource>jdbc/WSO2RegistryDB</dataSource>
+        <dataSource>jdbc/WSO2RegistryDS</dataSource>
     </dbConfig>
     <remoteInstance url="https://localhost:9443/registry">
         <id>gov</id>
-        <cacheId><%=properties.wso2is.product_db.username%>@jdbc:mysql://<%=properties.wso2is.mysql.hostname%>:3306/<%=properties.wso2is.mysql.product_db%>?autoReconnect=true</cacheId>
+        <cacheId><%=properties.wso2is.db.username%>@<%=properties.wso2is.user_ds.url%></cacheId>
         <dbConfig>govregistry</dbConfig>
         <readOnly>false</readOnly>
         <enableCache>true</enableCache>

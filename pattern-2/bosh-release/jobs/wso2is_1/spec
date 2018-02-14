@@ -18,9 +18,6 @@ packages:
 - wso2is
 
 properties:
-  wso2is.listen_port:
-    description: "Listen Port of the Tomcat instance"
-    default: 8080
   wso2is.memory.min_heap:
     description: "Min Heap in MB"
     default: 2048
@@ -31,33 +28,25 @@ properties:
     description: "Max permgen in MB"
     default: 1024
 
-  wso2is.password:
-    description: wso2is password
-  wso2is.username:
-    description: wso2is username
-  wso2is.address:
-    description: wso2is address
-
-  wso2is.mysql.hostname:
-    description: wso2is mysql hostname
-    default: 192.168.50.1
-  wso2is.mysql.product_db:
-    description: wso2is mysql identity and config registry database name
-    default: wso2is_db
-  wso2is.product_db.username:
-    description: wso2is mysql username
+  wso2is.user_ds.url:
+    description: Connection URL of the user data source
+  wso2is.user_ds.driver:
+    description: Database driver class name of the user data source
+  wso2is.identity_ds.url:
+    description: Connection URL of the identity data source
+  wso2is.identity_ds.driver:
+    description: Database driver class name of the identity data source
+  wso2is.bps_ds.url:
+    description: Connection URL of the BPS data source
+  wso2is.bps_ds.driver:
+    description: Database driver class name of the BPS data source
+  wso2is.registry_ds.url:
+    description: Connection URL of the Registry data source
+  wso2is.registry_ds.driver:
+    description: Database driver class name of the Registry data source
+  wso2is.db.username:
+    description: Username of the WSO2 Identity Server product database user
     default: root
-  wso2is.product_db.password:
-    description: wso2is mysql password
+  wso2is.db.password:
+    description: Password of the WSO2 Identity Server product database user
     default: root
-
-cf.apps_domain:
-    description: Domain shared by the UAA and CF API eg 'bosh-lite.com'
-cf.nats.host:
-    description: Hostname/IP of NATS
-cf.nats.port:
-    description: Port that NATS listens on
-cf.nats.username:
-    description: The user to use when authenticating with NATS
-cf.nats.password:
-    description: The password to use when authenticating with NATS
