@@ -5,9 +5,9 @@ templates:
   config/conf/axis2/axis2.xml: config/conf/axis2/axis2.xml
   config/conf/identity/identity.xml: config/conf/identity/identity.xml
   config/conf/identity/embedded-ldap.xml: config/conf/identity/embedded-ldap.xml
-  config/conf/datasources/master-datasources.xml: config/conf/datasources/master-datasources.xml
-  config/conf/datasources/bps-datasources.xml: config/conf/datasources/bps-datasources.xml
-  config/conf/registry.xml: config/conf/registry.xml
+  config/conf/datasources/master-datasources.erb: config/conf/datasources/master-datasources.xml
+  config/conf/datasources/bps-datasources.erb: config/conf/datasources/bps-datasources.xml
+  config/conf/registry.erb: config/conf/registry.xml
   config/conf/user-mgt.xml: config/conf/user-mgt.xml
   config/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-AuthenticationData.xml: config/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-AuthenticationData.xml
   config/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-SessionData.xml: config/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-SessionData.xml
