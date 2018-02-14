@@ -20,7 +20,7 @@
 compilation:
   network: wso2is_network
   reuse_compilation_vms: true
-  workers: 1
+  workers: 3
 director_uuid: <%= `bosh status --uuid` %>
 jobs:
 - instances: 1
@@ -63,13 +63,11 @@ properties:
     identity_ds:
       url: jdbc:mysql://192.168.50.1:3306/wso2is_db?autoReconnect=true
       driver: com.mysql.jdbc.Driver
-
 releases:
 - name: wso2is-release
   version: latest
 resource_pools:
-- cloud_properties: {}
-  name: wso2is-resource-pool
+- name: wso2is-resource-pool
   network: wso2is_network
   stemcell:
     name: bosh-warden-boshlite-ubuntu-trusty-go_agent
@@ -78,5 +76,4 @@ update:
   canaries: 1
   canary_watch_time: 10000-120000
   max_in_flight: 1
-  serial: true
   update_watch_time: 10000-120000
