@@ -223,11 +223,12 @@ Structure of the directories and files of the BOSH release is as follows:
 
 ```
 └── bosh-release
+    ├── .deployment
     ├── config
     ├── dbscripts
-    ├── deployment
     ├── images
     ├── jobs
+    ├── manifests
     ├── packages
     ├── src
     ├── README.md
