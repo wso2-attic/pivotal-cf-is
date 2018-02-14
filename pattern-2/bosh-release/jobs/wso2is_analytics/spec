@@ -38,7 +38,7 @@ properties:
     default: 192.168.50.1
   wso2is.mysql.product_db:
     description: wso2is mysql identity and config registry database name
-    default: WSO2_IS_DB
+    default: wso2is_db
   wso2is.product_db.username:
     description: wso2is mysql username
     default: root

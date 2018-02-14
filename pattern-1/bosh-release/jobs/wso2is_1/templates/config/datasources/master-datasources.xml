@@ -54,7 +54,7 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%=properties.wso2is.mysql.hostname%>:3306/<%=properties.wso2is.mysql.product_db%>?autoReconnect=true</url>
+                    <url>jdbc:mysql://<%=properties.wso2is.mysql.host%>:3306/<%=properties.wso2is.mysql.product_db%>?autoReconnect=true</url>
                     <username><%=properties.wso2is.product_db.username%></username>
                     <password><%=properties.wso2is.product_db.password%></password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
@@ -75,7 +75,7 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%=properties.wso2is.mysql.hostname%>:3306/<%=properties.wso2is.mysql.product_db%>?autoReconnect=true</url>
+                    <url>jdbc:mysql://<%=properties.wso2is.mysql.host%>:3306/<%=properties.wso2is.mysql.product_db%>?autoReconnect=true</url>
                     <username><%=properties.wso2is.product_db.username%></username>
                     <password><%=properties.wso2is.product_db.password%></password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
