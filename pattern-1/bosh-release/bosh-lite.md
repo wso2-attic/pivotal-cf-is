@@ -106,8 +106,11 @@ for creating a release with BOSH.
    wso2is.identity_ds.driver | Database driver class name of the identity data source. | -
    wso2is.db.username | Username of the WSO2 Identity Server product database user. | root
    wso2is.db.password | Password of the WSO2 Identity Server product database user. | root
-      
-   If you customize any of the above configurations in following steps, change the default property values to customized values in each job specification.
+   
+   Among the above, the properties with no default values **must** be set in the deployment manifest,
+   prior deployment of the release.
+   If you intend to customize any of the properties with default values, you may set the customized values
+   in the deployment manifest, prior to deployment of the release.
    
 2. Move to the root directory of deployment pattern 1 BOSH release.
 
@@ -161,6 +164,7 @@ To find the IP addresses of created instances via the BOSH CLI and access the WS
     ```
     https://10.244.15.2:9443/carbon/
     ```
+    
 ## Delete release Deployment
 
 1. Delete the deployment.

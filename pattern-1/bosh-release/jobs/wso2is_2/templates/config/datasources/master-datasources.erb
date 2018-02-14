@@ -25,7 +25,7 @@
     <datasources>
 
         <datasource>
-            <name>REGISTRY_LOCAL_1</name>
+            <name>REGISTRY_LOCAL</name>
             <description>The datasource used for registry and user manager</description>
             <jndiConfig>
                 <name>jdbc/WSO2CarbonDB</name>
@@ -54,10 +54,10 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%=properties.wso2is.mysql.host%>:3306/<%=properties.wso2is.mysql.product_db%>?autoReconnect=true</url>
-                    <username><%=properties.wso2is.product_db.username%></username>
-                    <password><%=properties.wso2is.product_db.password%></password>
-                    <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                    <url><%=properties.wso2is.user_ds.url%></url>
+                    <username><%=properties.wso2is.db.username%></username>
+                    <password><%=properties.wso2is.db.password%></password>
+                    <driverClassName><%=properties.wso2is.user_ds.driver%></driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>
@@ -75,10 +75,10 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%=properties.wso2is.mysql.host%>:3306/<%=properties.wso2is.mysql.product_db%>?autoReconnect=true</url>
-                    <username><%=properties.wso2is.product_db.username%></username>
-                    <password><%=properties.wso2is.product_db.password%></password>
-                    <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                    <url><%=properties.wso2is.registry_ds.url%></url>
+                    <username><%=properties.wso2is.db.username%></username>
+                    <password><%=properties.wso2is.db.password%></password>
+                    <driverClassName><%=properties.wso2is.registry_ds.driver%></driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>
