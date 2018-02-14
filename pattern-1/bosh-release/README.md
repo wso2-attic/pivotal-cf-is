@@ -17,7 +17,7 @@ For step-by-step guidelines to manage the BOSH release in specific environments,
 * [Create Release](#create-release)
 * [Deploy Release](#deploy-release)
 * [Output](#output)
-* [Delete Release Deployment](#delete-deployment)
+* [Delete Deployment](#delete-deployment)
 * [BOSH Release Structure](#bosh-release-structure)
 * [References](#references)
 
@@ -171,7 +171,7 @@ To find the IP addresses of created instances via the BOSH CLI and access the WS
     https://10.244.15.2:9443/carbon/
     ```
 
-## Delete release Deployment
+## Delete deployment
 
 1. Delete the deployment.
 
