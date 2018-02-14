@@ -47,10 +47,10 @@
         </datasource>
 
         <datasource>
-            <name>WSO2_USER_DB</name>
+            <name>WSO2_USER_DS</name>
             <description>The datasource used for registry and user manager</description>
             <jndiConfig>
-                <name>jdbc/WSO2UMDB</name>
+                <name>jdbc/WSO2UMDS</name>
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
@@ -68,10 +68,10 @@
         </datasource>
 
         <datasource>
-            <name>IDENTITY_DB</name>
-            <description>The datasource used for identity data</description>
+            <name>WSO2_REGISTRY_DS</name>
+            <description>The datasource used for configuration registry</description>
             <jndiConfig>
-                <name>jdbc/WSO2IDENTITYDB</name>
+                <name>jdbc/WSO2RegistryDS</name>
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
@@ -79,6 +79,27 @@
                     <username><%=properties.wso2is.db.username%></username>
                     <password><%=properties.wso2is.db.password%></password>
                     <driverClassName><%=properties.wso2is.registry_ds.driver%></driverClassName>
+                    <maxActive>50</maxActive>
+                    <maxWait>60000</maxWait>
+                    <testOnBorrow>true</testOnBorrow>
+                    <validationQuery>SELECT 1</validationQuery>
+                    <validationInterval>30000</validationInterval>
+                </configuration>
+            </definition>
+        </datasource>
+
+        <datasource>
+            <name>WSO2_IDENTITY_DS</name>
+            <description>The datasource used for identity data</description>
+            <jndiConfig>
+                <name>jdbc/WSO2IdentityDS</name>
+            </jndiConfig>
+            <definition type="RDBMS">
+                <configuration>
+                    <url><%=properties.wso2is.identity_ds.url%></url>
+                    <username><%=properties.wso2is.db.username%></username>
+                    <password><%=properties.wso2is.db.password%></password>
+                    <driverClassName><%=properties.wso2is.identity_ds.driver%></driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>

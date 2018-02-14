@@ -7,6 +7,7 @@ templates:
   config/identity/embedded-ldap.xml: config/identity/embedded-ldap.xml
   config/datasources/master-datasources.erb: config/datasources/master-datasources.xml
   config/datasources/bps-datasources.erb: config/datasources/bps-datasources.xml
+  config/registry.erb: config/registry.xml
   config/user-mgt.xml: config/user-mgt.xml
 
 packages:
