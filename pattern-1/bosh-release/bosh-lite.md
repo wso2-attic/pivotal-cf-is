@@ -152,17 +152,26 @@ To find the IP addresses of created instances via the BOSH CLI and access the WS
     ```
     
     ![Job instances](images/output.png)
-
+    
 2. SSH into an instance.
 
+    **e.g.** If the ID of the created instance is `wso2is_1/b549a7ef-75dd-44e2-9a58-3c3f3813bd96`,
+    
     ```
     bosh -e vbox -d wso2is-pattern-1 ssh wso2is_1/b549a7ef-75dd-44e2-9a58-3c3f3813bd96
     ```
     
-3. Access the WSO2 Identity Server management console URL.
+3. Access the WSO2 Identity Server management console URL using the static IPs of the created instances.
 
+    **e.g.** If the static IPs of the WSO2 Identity Server instances created are 10.244.15.2 and 10.244.15.3,
+    you may access the management console using either,
+    
     ```
-    https://10.244.15.2:9443/carbon/
+    https://10.244.15.2:9443/carbon
+    ```
+    or
+    ```
+    https://10.244.15.3:9443/carbon
     ```
     
 ## Delete deployment
