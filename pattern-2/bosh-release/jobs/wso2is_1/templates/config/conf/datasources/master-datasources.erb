@@ -7,7 +7,7 @@
     <datasources>
       
         <datasource>
-            <name>REGISTRY_LOCAL</name>
+            <name>WSO2_REGISTRY_LOCAL</name>
             <description>The datasource used for registry and user manager</description>
             <jndiConfig>
                 <name>jdbc/WSO2CarbonDB</name>
@@ -39,7 +39,7 @@
                     <url><%=properties.wso2is.user_ds.url%></url>
                     <username><%=properties.wso2is.db.username%></username>
                     <password><%=properties.wso2is.db.password%></password>
-                    <driverClassName><%=properties.wso2is.user_ds.driver%></driverClassName>
+                    <driverClassName><%=properties.wso2is.db.driver%></driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>
@@ -60,7 +60,7 @@
                     <url><%=properties.wso2is.registry_ds.url%></url>
                     <username><%=properties.wso2is.db.username%></username>
                     <password><%=properties.wso2is.db.password%></password>
-                    <driverClassName><%=properties.wso2is.registry_ds.driver%></driverClassName>
+                    <driverClassName><%=properties.wso2is.db.driver%></driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>
@@ -81,7 +81,7 @@
                     <url><%=properties.wso2is.identity_ds.url%></url>
                     <username><%=properties.wso2is.db.username%></username>
                     <password><%=properties.wso2is.db.password%></password>
-                    <driverClassName><%=properties.wso2is.identity_ds.driver%></driverClassName>
+                    <driverClassName><%=properties.wso2is.db.driver%></driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>

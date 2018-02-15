@@ -28,6 +28,8 @@ properties:
 
   wso2is.user_ds.url:
     description: Connection URL of the user data source
+  wso2is.bps_ds.url:
+    description: Connection URL of the BPS data source
   wso2is.registry_ds.url:
     description: Connection URL of the registry data source
   wso2is.identity_ds.url:

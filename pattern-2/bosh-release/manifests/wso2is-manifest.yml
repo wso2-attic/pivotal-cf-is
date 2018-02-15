@@ -74,34 +74,6 @@ properties:
     memory:
       max_heap: 1024
       min_heap: 1024
-    user_ds:
-      url: jdbc:mysql://192.168.50.1:3306/wso2um_db?autoReconnect=true
-      driver: com.mysql.jdbc.Driver
-    registry_ds:
-      url: jdbc:mysql://192.168.50.1:3306/wso2is_db?autoReconnect=true
-      driver: com.mysql.jdbc.Driver
-    identity_ds:
-      url: jdbc:mysql://192.168.50.1:3306/wso2is_db?autoReconnect=true
-      driver: com.mysql.jdbc.Driver
-    bps_ds:
-      url: jdbc:mysql://192.168.50.1:3306/wso2is_db?autoReconnect=true
-      driver: com.mysql.jdbc.Driver
-  wso2is_analytics:
-    memory:
-      max_heap: 1024
-      min_heap: 1024
-    user_ds:
-      url: jdbc:mysql://192.168.50.1:3306/wso2um_db?autoReconnect=true
-      driver: com.mysql.jdbc.Driver
-    registry_ds:
-      url: jdbc:mysql://192.168.50.1:3306/wso2is_analytics_db?autoReconnect=true
-      driver: com.mysql.jdbc.Driver
-    event_store_ds:
-      url: jdbc:mysql://192.168.50.1:3306/WSO2_ANALYTICS_EVENT_STORE_DB?autoReconnect=true
-      driver: com.mysql.jdbc.Driver
-    processed_data_store_ds:
-      url: jdbc:mysql://192.168.50.1:3306/WSO2_ANALYTICS_PROCESSED_DATA_STORE_DB?autoReconnect=true
-      driver: com.mysql.jdbc.Driver
 releases:
 - name: wso2is-release
   version: latest

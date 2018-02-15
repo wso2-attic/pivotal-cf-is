@@ -30,20 +30,14 @@ properties:
 
   wso2is.user_ds.url:
     description: Connection URL of the user data source
-  wso2is.user_ds.driver:
-    description: Database driver class name of the user data source
   wso2is.identity_ds.url:
     description: Connection URL of the identity data source
-  wso2is.identity_ds.driver:
-    description: Database driver class name of the identity data source
   wso2is.bps_ds.url:
     description: Connection URL of the BPS data source
-  wso2is.bps_ds.driver:
-    description: Database driver class name of the BPS data source
   wso2is.registry_ds.url:
     description: Connection URL of the Registry data source
-  wso2is.registry_ds.driver:
-    description: Database driver class name of the Registry data source
+  wso2is.db.driver:
+    description: Database driver class name of the data source
   wso2is.db.username:
     description: Username of the WSO2 Identity Server product database user
     default: root

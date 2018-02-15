@@ -71,7 +71,7 @@ case $1 in
     cd /var/vcap/packages/${wso2_product}/
     archive=`ls ${wso2_product}*zip`
     unzip ${archive}
-    cd wso2is*
+    cd ${wso2_product}*
     wso2_is_home=`pwd`
 
     log_debug "WSO2_IS_HOME: ${wso2_is_home}"
