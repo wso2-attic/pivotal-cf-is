@@ -1,0 +1,51 @@
+---
+name: wso2is_analytics_1
+templates:
+  ctl.erb: bin/ctl
+  config/bin/load-spark-env-vars.sh: config/bin/load-spark-env-vars.sh
+  config/repository/conf/analytics/spark/spark-defaults.conf: config/repository/conf/analytics/spark/spark-defaults.conf
+  config/repository/conf/axis2/axis2.xml: config/repository/conf/axis2/axis2.xml
+  config/repository/conf/datasources/analytics-datasources.erb: config/repository/conf/datasources/analytics-datasources.xml
+  config/repository/conf/datasources/master-datasources.erb: config/repository/conf/datasources/master-datasources.xml
+  config/repository/conf/event-processor.xml: config/repository/conf/event-processor.xml
+  config/repository/conf/registry.erb: config/repository/conf/registry.xml
+  config/repository/conf/user-mgt.xml: config/repository/conf/user-mgt.xml
+
+packages:
+- oraclejdk
+- mysqldriver
+- wso2is_analytics
+
+properties:
+  wso2is.memory.min_heap:
+    description: "Min Heap in MB"
+    default: 2048
+  wso2is.memory.max_heap:
+    description: "Max Heap in MB"
+    default: 2048
+  wso2is.memory.max_permgen:
+    description: "Max permgen in MB"
+    default: 1024
+
+  wso2is_analytics.user_ds.url:
+    description: Connection URL of the user data source
+  wso2is_analytics.user_ds.driver:
+    description: Database driver class name of the user data source
+  wso2is_analytics.registry_ds.url:
+    description: Connection URL of the Registry data source
+  wso2is_analytics.registry_ds.driver:
+    description: Database driver class name of the Registry data source
+  wso2is_analytics.event_store_ds.url:
+    description: Connection URL of the event store data source
+  wso2is_analytics.event_store_ds.driver:
+    description: Database driver class name of the event store data source
+  wso2is_analytics.processed_data_store_ds.url:
+    description: Connection URL of the processed data store data source
+  wso2is_analytics.processed_data_store_ds.driver:
+    description: Database driver class name of the processed data store data source
+  wso2is_analytics.db.username:
+    description: Username of the WSO2 Identity Server Analytics product database user
+    default: root
+  wso2is_analytics.db.password:
+    description: Password of the WSO2 Identity Server Analytics product database user
+    default: root

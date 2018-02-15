@@ -18,33 +18,27 @@
 #
 # ----------------------------------------------------------------------------
 compilation:
-  cloud_properties: {}
   network: wso2is_network
   reuse_compilation_vms: true
   workers: 4
-director_uuid: <%= `bosh target > /dev/null 2>&1 && bosh status --uuid` %>
-iaas_settings:
-  compilation_cloud_properties: {}
-  resource_pool_cloud_properties:
-  - cloud_properties: {}
-    name: wso2is_z1
-  - cloud_properties: {}
-    name: errands_z1
-  stemcell:
-    name: bosh-warden-boshlite-ubuntu-trusty-go_agent
-    version: latest
-  subnet_configs:
-  - name: wso2is_z1
-    subnets:
-    - cloud_properties:
-        name: random
-      range: 10.244.15.0/24
-      reserved:
-      - 10.244.15.1
-      static:
-      - 10.244.15.2 - 10.244.15.21
-  watch_time: 10000-120000
+director_uuid: <%= `bosh status --uuid` %>
 jobs:
+- instances: 1
+  name: wso2is_analytics_1
+  networks:
+  - name: wso2is_network
+    static_ips: [10.244.15.4]
+  resource_pool: wso2is-resource-pool
+  templates:
+  - name: wso2is_analytics_1
+- instances: 1
+  name: wso2is_analytics_2
+  networks:
+  - name: wso2is_network
+    static_ips: [10.244.15.5]
+  resource_pool: wso2is-resource-pool
+  templates:
+  - name: wso2is_analytics_2
 - instances: 1
   name: wso2is_1
   networks:
@@ -53,6 +47,8 @@ jobs:
   resource_pool: wso2is-resource-pool
   templates:
   - name: wso2is_1
+  update:
+    serial: true
 - instances: 1
   name: wso2is_2
   networks:
@@ -61,51 +57,56 @@ jobs:
   resource_pool: wso2is-resource-pool
   templates:
   - name: wso2is_2
-- instances: 1
-  name: wso2is_analytics
-  networks:
-  - name: wso2is_network
-    static_ips: [10.244.15.4]
-  resource_pool: wso2is-resource-pool
-  templates:
-  - name: wso2is_analytics
-meta:
-  director_uuid: <%= `bosh target > /dev/null 2>&1 && bosh status --uuid` %>
+  update:
+    serial: true
 name: wso2is-pattern-2
 networks:
 - name: wso2is_network
+  type: manual
   subnets:
-  - cloud_properties:
-      name: random
-    range: 10.244.15.0/24
+  - range: 10.244.15.0/24
     reserved:
     - 10.244.15.1
     static:
-    - 10.244.15.2 - 10.244.15.20
-    type: manual
+    - 10.244.15.2 - 10.244.15.5
 properties:
-  nats:
-    machines:
-    - 10.244.0.6
-    port: 4222
-    user: nats
-    password: nats
-
   wso2is:
-    address: wso2is
-    listen_port: 8080
-    username: admin
-    password: admin
     memory:
       max_heap: 1024
       min_heap: 1024
-
+    user_ds:
+      url: jdbc:mysql://192.168.50.1:3306/wso2um_db?autoReconnect=true
+      driver: com.mysql.jdbc.Driver
+    registry_ds:
+      url: jdbc:mysql://192.168.50.1:3306/wso2is_db?autoReconnect=true
+      driver: com.mysql.jdbc.Driver
+    identity_ds:
+      url: jdbc:mysql://192.168.50.1:3306/wso2is_db?autoReconnect=true
+      driver: com.mysql.jdbc.Driver
+    bps_ds:
+      url: jdbc:mysql://192.168.50.1:3306/wso2is_db?autoReconnect=true
+      driver: com.mysql.jdbc.Driver
+  wso2is_analytics:
+    memory:
+      max_heap: 1024
+      min_heap: 1024
+    user_ds:
+      url: jdbc:mysql://192.168.50.1:3306/wso2um_db?autoReconnect=true
+      driver: com.mysql.jdbc.Driver
+    registry_ds:
+      url: jdbc:mysql://192.168.50.1:3306/wso2is_analytics_db?autoReconnect=true
+      driver: com.mysql.jdbc.Driver
+    event_store_ds:
+      url: jdbc:mysql://192.168.50.1:3306/WSO2_ANALYTICS_EVENT_STORE_DB?autoReconnect=true
+      driver: com.mysql.jdbc.Driver
+    processed_data_store_ds:
+      url: jdbc:mysql://192.168.50.1:3306/WSO2_ANALYTICS_PROCESSED_DATA_STORE_DB?autoReconnect=true
+      driver: com.mysql.jdbc.Driver
 releases:
 - name: wso2is-release
   version: latest
 resource_pools:
-- cloud_properties: {}
-  name: wso2is-resource-pool
+- name: wso2is-resource-pool
   network: wso2is_network
   stemcell:
     name: bosh-warden-boshlite-ubuntu-trusty-go_agent
@@ -114,5 +115,5 @@ update:
   canaries: 1
   canary_watch_time: 10000-120000
   max_in_flight: 1
-  serial: true
+  serial: false
   update_watch_time: 10000-120000

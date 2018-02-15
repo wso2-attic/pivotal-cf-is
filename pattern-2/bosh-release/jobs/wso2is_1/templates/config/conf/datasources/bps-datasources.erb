@@ -13,10 +13,10 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%=properties.wso2is.mysql.hostname%>:3306/<%=properties.wso2is.mysql.product_db%>?autoReconnect=true</url>
-                    <username><%=properties.wso2is.product_db.username%></username>
-                    <password><%=properties.wso2is.product_db.password%></password>
-                    <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                    <url><%=properties.wso2is.bps_ds.url%></url>
+                    <username><%=properties.wso2is.db.username%></username>
+                    <password><%=properties.wso2is.db.password%></password>
+                    <driverClassName><%=properties.wso2is.bps_ds.driver%></driverClassName>
                     <testOnBorrow>true</testOnBorrow>
                     <validationQuery>SELECT 1</validationQuery>
                     <validationInterval>30000</validationInterval>

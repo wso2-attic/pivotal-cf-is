@@ -84,7 +84,8 @@ case $1 in
     log_debug "WSO2_IS_HOME: ${WSO2_IS_HOME}"
 
     # Here copy all the configurations needs to be replaces the application for ex:lib, conf files
-    cp -r -v $JOB_DIR/config/* ${WSO2_IS_HOME}/repository/conf/
+    cp -r -v $JOB_DIR/config/bin/* ${WSO2_IS_HOME}/bin/
+    cp -r -v $JOB_DIR/config/repository/conf/* ${WSO2_IS_HOME}/repository/conf/
 
     # Here add any libraries your application needs:
     cp -v /var/vcap/packages/mysqldriver/* ${WSO2_IS_HOME}/repository/components/lib/
