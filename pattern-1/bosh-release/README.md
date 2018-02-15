@@ -197,7 +197,6 @@ Structure of the directories and files of the BOSH release is as follows:
 └── bosh-release
     ├── .deployment
     ├── config
-    ├── dbscripts
     ├── images
     ├── jobs
     ├── manifests
@@ -209,4 +208,3 @@ Structure of the directories and files of the BOSH release is as follows:
 ## References
 
 * [BOSH CLI v2 commands](https://bosh.io/docs/cli-v2.html)
-
