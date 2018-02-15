@@ -2,12 +2,12 @@
 name: wso2is_2
 templates:
   ctl.erb: bin/ctl
-  config/axis2/axis2.xml: config/axis2/axis2.xml
-  config/identity/identity.xml: config/identity/identity.xml
-  config/identity/embedded-ldap.xml: config/identity/embedded-ldap.xml
-  config/datasources/master-datasources.xml: config/datasources/master-datasources.xml
-  config/datasources/bps-datasources.xml: config/datasources/bps-datasources.xml
-  config/user-mgt.xml: config/user-mgt.xml
+  config/axis2/axis2.erb: config/axis2/axis2.xml
+  config/identity/identity.erb: config/identity/identity.xml
+  config/identity/embedded-ldap.erb: config/identity/embedded-ldap.xml
+  config/datasources/master-datasources.erb: config/datasources/master-datasources.xml
+  config/datasources/bps-datasources.erb: config/datasources/bps-datasources.xml
+  config/user-mgt.erb: config/user-mgt.xml
 
 packages:
 - oraclejdk
@@ -34,16 +34,16 @@ properties:
     description: wso2is address
 
   wso2is.mysql.host:
-    description: wso2is mysql hostname
+    description: Hostname/IP of the MySQL server in which WSO2 Identity Server product database resides
     default: 192.168.50.1
   wso2is.mysql.product_db:
-    description: wso2is mysql identity and config registry database name
+    description: Name of the WSO2 Identity Server product database
     default: wso2is_db
   wso2is.product_db.username:
-    description: wso2is mysql username
+    description: Username of the WSO2 Identity Server product database user
     default: root
   wso2is.product_db.password:
-    description: wso2is mysql password
+    description: Password of the WSO2 Identity Server product database user
     default: root
 
 cf.apps_domain:
