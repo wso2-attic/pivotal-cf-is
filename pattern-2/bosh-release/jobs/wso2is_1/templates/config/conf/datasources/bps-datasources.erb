@@ -6,7 +6,7 @@
   
   <datasources>      
         <datasource>
-            <name>BPS_DS</name>
+            <name>WSO2_BPS_DS</name>
             <description></description>
             <jndiConfig>
                 <name>bpsds</name>
@@ -16,7 +16,7 @@
                     <url><%=properties.wso2is.bps_ds.url%></url>
                     <username><%=properties.wso2is.db.username%></username>
                     <password><%=properties.wso2is.db.password%></password>
-                    <driverClassName><%=properties.wso2is.bps_ds.driver%></driverClassName>
+                    <driverClassName><%=properties.wso2is.db.driver%></driverClassName>
                     <testOnBorrow>true</testOnBorrow>
                     <validationQuery>SELECT 1</validationQuery>
                     <validationInterval>30000</validationInterval>
