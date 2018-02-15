@@ -17,16 +17,6 @@ packages:
 - wso2is_analytics
 
 properties:
-  wso2is.memory.min_heap:
-    description: "Min Heap in MB"
-    default: 2048
-  wso2is.memory.max_heap:
-    description: "Max Heap in MB"
-    default: 2048
-  wso2is.memory.max_permgen:
-    description: "Max permgen in MB"
-    default: 1024
-
   wso2is_analytics.user_ds.url:
     description: Connection URL of the user data source
   wso2is_analytics.registry_ds.url:

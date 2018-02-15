@@ -1,15 +1,9 @@
-# BOSH release for WSO2 Identity Server deployment pattern 2
+# Managing BOSH Release for WSO2 Identity Server deployment pattern 2 locally (BOSH Lite)
 
-This directory contains the BOSH release implementation for WSO2 Identity Server 5.4.0
-[deployment pattern 2](https://docs.wso2.com/display/IS540/Deployment+Patterns#DeploymentPatterns-Pattern2-HAclustereddeploymentofWSO2IdentityServerwithWSO2IdentityAnalytics).
+The following sections provide step-by-step guidelines for managing the WSO2 Identity Server 5.4.0 deployment pattern 2
+BOSH release locally ([BOSH Lite](https://bosh.io/docs/bosh-lite)).
 
 ![WSO2 Identity Server 5.4.0 deployment pattern 2](images/pattern-2.png)
-
-The following sections provide general steps required for managing the WSO2 Identity Server 5.4.0 deployment pattern 2
-BOSH release in a BOSH environment deployed in the desired IaaS.
-
-For step-by-step guidelines to manage the BOSH release in specific environments, refer the following:
-   - [In a local environment](bosh-lite.md) (using BOSH Lite)
 
 ## Contents
 
@@ -18,7 +12,6 @@ For step-by-step guidelines to manage the BOSH release in specific environments,
 * [Deploy Release](#deploy-release)
 * [Output](#output)
 * [Delete Deployment](#delete-deployment)
-* [BOSH Release Structure](#bosh-release-structure)
 * [References](#references)
 
 ## Prerequisites
@@ -28,12 +21,11 @@ For step-by-step guidelines to manage the BOSH release in specific environments,
     - [BOSH Command Line Interface (CLI) v2+](https://bosh.io/docs/cli-v2.html)
     - [WSO2 Update Manager (WUM)](http://wso2.com/wum)
     - [Git client](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-    - Software requirements specific to the IaaS
+    - [Oracle VM VirtualBox](https://www.virtualbox.org/manual/ch02.html)
     
 2. Obtain the following software distributions.
 
     - WSO2 Identity Server 5.4.0 WUM updated product distribution
-    - WSO2 Identity Server Analytics 5.4.0 WUM updated product distribution
     - [Java Development Kit (JDK) 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
     - Relevant Java Database Connectivity (JDBC) connector (e.g. [MySQL JDBC driver](https://dev.mysql.com/downloads/connector/j/5.1.html)
     if the external database used is MySQL)
@@ -46,9 +38,10 @@ For step-by-step guidelines to manage the BOSH release in specific environments,
     
    **Note**: In the remaining sections, the project root directory has been referred to as, **pivotal-cf-is**.
 
-## Create release
+## Create Release
 
-In order to create the BOSH release for deployment pattern 2, you must follow the standard steps for creating a release with BOSH.
+In order to create the BOSH release for deployment pattern 2 using BOSH Lite, you must follow the standard steps
+for creating a release with BOSH.
  
 1. Move to `.deployment` directory of the deployment pattern 2 BOSH release.
 
@@ -56,9 +49,13 @@ In order to create the BOSH release for deployment pattern 2, you must follow th
     cd <pivotal-cf-is>/pattern-2/bosh-release/.deployment
     ```   
     
-2. Create a BOSH environment and login to it.
+2. Create the local BOSH environment and login to it.
 
-    Please refer the [BOSH documentation](http://bosh.io/docs/init.html) for instructions on creating a BOSH environment in the desired IaaS.
+    Steps to create a BOSH environment with BOSH Lite as Director VM and login to it, can be found from
+    [here](http://bosh.io/docs/bosh-lite.html#install). Once you setup the BOSH Lite environment, visit the
+    VirtualBox application to confirm a new VM has been created.
+    
+    ![BOSH Lite VM](images/bosh-lite.png)
 
 3. Move back to the root directory of deployment pattern 2 BOSH release (`<pivotal-cf-is>/pattern-2/bosh-release`).
 
@@ -67,38 +64,27 @@ In order to create the BOSH release for deployment pattern 2, you must follow th
     ```
 
 4. Add the WSO2 Identity Server 5.4.0 and Identity Server Analytics 5.4.0 WUM updated product distributions, JDK distribution and MySQL JDBC driver
-in the form of release blobs.
+   in the form of release blobs.
+   
+    Assuming that,
 
-    Here, the **environment-alias** refers to the alias provided when saving the created environment, in step 2.
-
+   - the created BOSH environment (with BOSH Lite as the Director) was saved with alias `vbox`, in step 2
+   - the required binaries reside within `~/Downloads` directory
+    
     ```
-    bosh -e <environment-alias> add-blob <local_system_path_to_JDK_distribution> oraclejdk/jdk-8u<update-version>-linux-x64.tar.gz
-    bosh -e <environment-alias> add-blob <local_system_path_to_MySQL_driver> mysqldriver/mysql-connector-java-<version>-bin.jar
-    bosh -e <environment-alias> add-blob <local_system_path_to_WSO2_IS_distribution> wso2is/wso2is-<version>.zip
-    bosh -e <environment-alias> add-blob <local_system_path_to_WSO2_IS_Analytics_distribution> wso2is_analytics/wso2is-analytics-<version>.zip
-    ```
-
-5. **[Optional]** If the BOSH release is a final release, upload the blobs (added in step 4). Please refer
-[BOSH documentation](https://bosh.io/docs/create-release.html#upload-blobs) for further details.
-
-    ```
-    bosh -e <environment-alias> -n upload-blobs
+    bosh -e vbox add-blob ~/Downloads/jdk-8u144-linux-x64.tar.gz oraclejdk/jdk-8u144-linux-x64.tar.gz
+    bosh -e vbox add-blob ~/Downloads/mysql-connector-java-5.1.34-bin.jar mysqldriver/mysql-connector-java-5.1.34-bin.jar
+    bosh -e vbox add-blob ~/Downloads/wso2is-5.4.0.zip wso2is/wso2is-5.4.0.zip
+    bosh -e vbox add-blob ~/Downloads/wso2is-analytics-5.4.0.zip wso2is_analtyics/wso2is-analytics-5.4.0.zip
     ```
 
-6. Create the BOSH release.
+5. Create the BOSH Dev release.
 
-   - Dev release:
    ```
-   bosh -e <environment-alias> create-release --force
+   bosh -e vbox create-release --force
    ```
    Please refer [BOSH Documentation](https://bosh.io/docs/create-release.html#dev-release) for detailed information on creating a dev release.
    
-   - Final release:
-   ```
-   bosh -e <environment-alias> create-release
-   ```
-   Please refer [BOSH Documentation](https://bosh.io/docs/create-release.html#final-release) for detailed information on creating a final release.
-
 ## Deploy release
 
 1. Setup and configure external product database(s).
@@ -143,87 +129,84 @@ in the form of release blobs.
 3. Upload the deployment pattern 2 BOSH release.
 
     ```
-    bosh -e <environment-alias> upload-release
+    bosh -e vbox upload-release
     ```
 
 4. Upload the desired stemcell directly to BOSH. [bosh.io](http://bosh.io/stemcells) provides a resource to find and download stemcells.
 
+    When uploading the stemcell to BOSH Lite environment created in previous section (see example steps under section [Create Release](#create-release)),
+   
     ```
-    bosh -e <environment-alias> upload-stemcell <URL/local_system_path_to_stemcell>
+    bosh -e vbox upload-stemcell https://bosh.io/d/stemcells/bosh-warden-boshlite-ubuntu-trusty-go_agent
     ```
     
 5. Upload the deployment manifest.
 
-    ```
-    bosh -e <environment-alias> -d wso2is-pattern-2 deploy manifests/<deployment-manifest>.yml
-    ```
+    To upload the deployment manifest relevant to the BOSH environment,
     
+    ```
+    bosh -e vbox -d wso2is-pattern-2 deploy manifests/wso2is-manifest.yml
+    ```
+  
 ## Output
 
 To find the IP addresses of created instances via the BOSH CLI and access the WSO2 Identity Server management console via a web browser,
 
 1. List all the instances within a deployment.
-
+    
+    To find the deployed job instances in the local environment,
     ```
-    bosh -e <environment-alias> -d wso2is-pattern-2 vms
+    bosh -e vbox -d wso2is-pattern-2 vms
     ```
-
+    
+    ![Job instances](images/output.png)
+    
 2. SSH into an instance.
 
+    **e.g.** If the ID of the created instance is `wso2is_1/b549a7ef-75dd-44e2-9a58-3c3f3813bd96`,
+    
     ```
-    bosh -e <environment-alias> -d wso2is-pattern-2 ssh <instance_id>
+    bosh -e vbox -d wso2is-pattern-2 ssh wso2is_1/b549a7ef-75dd-44e2-9a58-3c3f3813bd96
     ```
     
 3. Access the WSO2 Identity Server management console URL using the static IPs of the created instances.
 
+    **e.g.** If the static IPs of the WSO2 Identity Server instances created are 10.244.15.2 and 10.244.15.3,
+    you may access the management console using either,
+    
     ```
-    https://<IP_Address_of_IS_instance_1>:9443/carbon
-    ```
-    or
-    ```
-    https://<IP_Address_of_IS_instance_2>:9443/carbon
-    ```
-4. Access the WSO2 Identity Server Analytics management console URL using the static IPs of the created instances.
-
-    ```
-    https://<IP_Address_of_IS_Analytics_instance_1>:9444/carbon
+    https://10.244.15.2:9443/carbon
     ```
     or
     ```
-    https://<IP_Address_of_IS_Analytics_instance_2>:9444/carbon
+    https://10.244.15.3:9443/carbon
     ```
-
+    
+    Similarly, you can access the WSO2 Identity Server Analytics instances using the corresponding static IP
+    addresses.
+    
 ## Delete deployment
 
 1. Delete the deployment.
 
     ```
-    bosh -e <environment-alias> -d wso2is-pattern-2 delete-deployment
+    bosh -e vbox -d wso2is-pattern-2 delete-deployment
+    ```
+    
+    **e.g.** To delete the WSO2 Identity Server pattern 2 deployment in the BOSH Lite environment,
+    
+    ```
+    bosh -e vbox -d wso2is-pattern-2 delete-deployment
     ```
 
 2. **[Optional]** Cleanup the BOSH release, stemcell, disks and etc.
 
     ```
-    bosh -e <environment-alias> clean-up --all
+    bosh -e vbox clean-up --all
     ```
-
-## BOSH release structure
-
-Structure of the directories and files of the BOSH release is as follows:
-
-```
-└── bosh-release
-    ├── .deployment
-    ├── config
-    ├── dbscripts
-    ├── images
-    ├── jobs
-    ├── manifests
-        ├── wso2is-manifest.yml
-    ├── packages
-    └── README.md
-```
 
 ## References
 
 * [BOSH CLI v2 commands](https://bosh.io/docs/cli-v2.html)
+* [BOSH Lite](https://bosh.io/docs/bosh-lite.html)
+

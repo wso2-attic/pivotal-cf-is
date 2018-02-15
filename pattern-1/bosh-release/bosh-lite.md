@@ -99,11 +99,10 @@ for creating a release with BOSH.
    Property | Description | Default
    -------- | ----------- | -------
    wso2is.user_ds.url | Connection URL of the user data source. | -
-   wso2is.user_ds.driver | Database driver class name of the user data source. | -
    wso2is.registry_ds.url | Connection URL of the registry data source. | -
-   wso2is.registry_ds.driver | Database driver class name of the registry data source. | -
    wso2is.identity_ds.url | Connection URL of the identity data source. | -
-   wso2is.identity_ds.driver | Database driver class name of the identity data source. | -
+   wso2is.bps_ds.url | Connection URL of the BPS data source. | -
+   wso2is.db.driver | Database driver class name of the data source. | -
    wso2is.db.username | Username of the WSO2 Identity Server product database user. | root
    wso2is.db.password | Password of the WSO2 Identity Server product database user. | root
    

@@ -34,12 +34,6 @@ mkdir -p ${run_dir} ${log_dir}
 # provide ownership of the directories 'vcap' user and group
 chown -R vcap:vcap ${run_dir} ${log_dir}
 
-# set variables for your software
-min_heap=<%=properties.wso2is.memory.min_heap %>
-max_heap=<%=properties.wso2is.memory.max_heap %>
-max_permgen=<%=properties.wso2is.memory.max_permgen %>
-export JAVA_OPTS=" -Xmx${max_heap}m -Xms${min_heap}m -XX:MaxPermSize=${max_permgen}m"
-
 debug_log=${log_dir}/${wso2_product}.log
 touch ${debug_log}
 
