@@ -19,6 +19,8 @@
 #
 # ----------------------------------------------------------------------------
 
+set -e
+
 # define variables
 wso2_product=wso2is
 script_dir=$(dirname $0)
@@ -52,17 +54,22 @@ case $1 in
 
   start)
     # kill the previously running instance if any
-    kill -9 `cat ${pid_file}`
+    if [ -f ${pid_file} ]; then
+        kill -9 `cat ${pid_file}`
+    fi
 
-    pushd /var/vcap/packages/oraclejdk/
+    # unpack the JDK distribution and setup the JAVA_HOME
+    cd /var/vcap/packages/oraclejdk/
     archive=`ls jdk*gz`
-    tar -xf ${archive}
-    export JAVA_HOME=`pwd`/jdk1.8.0_144/
+    JAVA_HOME=`pwd`/java
+    mkdir java
+    tar -xf ${archive} -C java/ --strip-components=1
+    export JAVA_HOME
 
     log_debug "JAVA_HOME: ${JAVA_HOME}"
 
-    pushd /var/vcap/packages/${wso2_product}/
-    archive=`ls wso2is*zip`
+    cd /var/vcap/packages/${wso2_product}/
+    archive=`ls ${wso2_product}*zip`
     unzip ${archive}
     cd wso2is*
     wso2_is_home=`pwd`

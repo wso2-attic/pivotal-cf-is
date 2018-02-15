@@ -56,12 +56,11 @@ properties:
       min_heap: 1024
     user_ds:
       url: jdbc:mysql://192.168.50.1:3306/wso2is_db?autoReconnect=true
-      driver: com.mysql.jdbc.Driver
     registry_ds:
       url: jdbc:mysql://192.168.50.1:3306/wso2is_db?autoReconnect=true
-      driver: com.mysql.jdbc.Driver
     identity_ds:
       url: jdbc:mysql://192.168.50.1:3306/wso2is_db?autoReconnect=true
+    db:
       driver: com.mysql.jdbc.Driver
 releases:
 - name: wso2is-release
