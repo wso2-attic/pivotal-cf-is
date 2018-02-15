@@ -71,7 +71,7 @@ jobs:
   - name: wso2is_analytics
 meta:
   director_uuid: <%= `bosh target > /dev/null 2>&1 && bosh status --uuid` %>
-name: wso2is
+name: wso2is-pattern-2
 networks:
 - name: wso2is_network
   subnets:
