@@ -49,23 +49,17 @@ For step-by-step guidelines to manage the BOSH release in specific environments,
 
 In order to create the BOSH release for deployment pattern 1, you must follow the standard steps for creating a release with BOSH.
  
-1. Move to `.deployment` directory of the deployment pattern 1 BOSH release.
+1. Move to root directory of the deployment pattern 1 BOSH release.
 
     ```
-    cd <pivotal-cf-is>/pattern-1/bosh-release/.deployment
+    cd <pivotal-cf-is>/pattern-1/bosh-release/
     ```   
     
 2. Create a BOSH environment and login to it.
 
     Please refer the [BOSH documentation](http://bosh.io/docs/init.html) for instructions on creating a BOSH environment in the desired IaaS.
 
-3. Move back to the root directory of deployment pattern 1 BOSH release (`<pivotal-cf-is>/pattern-1/bosh-release`).
-
-    ```
-    cd ..
-    ```
-
-4. Add the WSO2 Identity Server 5.4.1 WUM updated product distribution, JDK distribution and MySQL JDBC driver in the form of release blobs.
+3. Add the WSO2 Identity Server 5.4.1 WUM updated product distribution, JDK distribution and MySQL JDBC driver in the form of release blobs.
 
     Here, the **environment-alias** refers to the alias provided when saving the created environment, in step 2.
 
@@ -80,14 +74,14 @@ In order to create the BOSH release for deployment pattern 1, you must follow th
     a BOSH release package](https://bosh.io/docs/packages.html) (similar to `<pivotal-cf-is>/pattern-1/bosh-release/packages/mysqldriver`) for the particular
     JDBC driver. Then, you have to upload the relevant JDBC driver in the form of a blob, as above.
 
-5. **[Optional]** If the BOSH release is a final release, upload the blobs (added in step 4). Please refer
+4. **[Optional]** If the BOSH release is a final release, upload the blobs (added in step 4). Please refer
 [BOSH documentation](https://bosh.io/docs/create-release.html#upload-blobs) for further details.
 
     ```
     bosh -e <environment-alias> -n upload-blobs
     ```
 
-6. Create the BOSH release.
+5. Create the BOSH release.
 
    - Dev release:
    ```
@@ -199,7 +193,6 @@ Structure of the directories and files of the BOSH release is as follows:
 
 ```
 └── bosh-release
-    ├── .deployment
     ├── config
     ├── images
     ├── jobs

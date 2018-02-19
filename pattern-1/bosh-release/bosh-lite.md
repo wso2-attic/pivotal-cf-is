@@ -43,10 +43,10 @@ BOSH release locally ([BOSH Lite](https://bosh.io/docs/bosh-lite)).
 In order to create the BOSH release for deployment pattern 1 using BOSH Lite, you must follow the standard steps
 for creating a release with BOSH.
  
-1. Move to `.deployment` directory of the deployment pattern 1 BOSH release.
+1. Move to root directory of the deployment pattern 1 BOSH release.
 
     ```
-    cd <pivotal-cf-is>/pattern-1/bosh-release/.deployment
+    cd <pivotal-cf-is>/pattern-1/bosh-release/
     ```   
     
 2. Create the local BOSH environment and login to it.
@@ -57,13 +57,7 @@ for creating a release with BOSH.
     
     ![BOSH Lite VM](images/bosh-lite.png)
 
-3. Move back to the root directory of deployment pattern 1 BOSH release (`<pivotal-cf-is>/pattern-1/bosh-release`).
-
-    ```
-    cd ..
-    ```
-
-4. Add the WSO2 Identity Server 5.4.1 WUM updated product distribution, JDK distribution and MySQL JDBC driver in the form of release blobs.
+3. Add the WSO2 Identity Server 5.4.1 WUM updated product distribution, JDK distribution and MySQL JDBC driver in the form of release blobs.
 
     Assuming that,
 
@@ -81,7 +75,7 @@ for creating a release with BOSH.
     a BOSH release package](https://bosh.io/docs/packages.html) (similar to `<pivotal-cf-is>/pattern-1/bosh-release/packages/mysqldriver`) for the particular
     JDBC driver. Then, you have to upload the relevant JDBC driver in the form of a blob, as above.
 
-5. Create the BOSH Dev release.
+4. Create the BOSH Dev release.
 
    ```
    bosh -e vbox create-release --force
