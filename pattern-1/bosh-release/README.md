@@ -1,11 +1,11 @@
 # BOSH release for WSO2 Identity Server deployment pattern 1
 
-This directory contains the BOSH release implementation for WSO2 Identity Server 5.4.0
-[deployment pattern 1](https://docs.wso2.com/display/IS540/Deployment+Patterns#DeploymentPatterns-Pattern1-HAclustereddeploymentofWSO2IdentityServer).
+This directory contains the BOSH release implementation for WSO2 Identity Server 5.4.1
+[deployment pattern 1](https://docs.wso2.com/display/IS541/Deployment+Patterns#DeploymentPatterns-Pattern1-HAclustereddeploymentofWSO2IdentityServer).
 
-![WSO2 Identity Server 5.4.0 deployment pattern 1](images/pattern-1.png)
+![WSO2 Identity Server 5.4.1 deployment pattern 1](images/pattern-1.png)
 
-The following sections provide general steps required for managing the WSO2 Identity Server 5.4.0 deployment pattern 1
+The following sections provide general steps required for managing the WSO2 Identity Server 5.4.1 deployment pattern 1
 BOSH release in a BOSH environment deployed in the desired IaaS.
 
 For step-by-step guidelines to manage the BOSH release in specific environments, refer the following:
@@ -32,10 +32,10 @@ For step-by-step guidelines to manage the BOSH release in specific environments,
     
 2. Obtain the following software distributions.
 
-    - WSO2 Identity Server 5.4.0 WUM updated product distribution
+    - WSO2 Identity Server 5.4.1 WUM updated product distribution
     - [Java Development Kit (JDK) 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
     - Relevant Java Database Connectivity (JDBC) connector (e.g. [MySQL JDBC driver](https://dev.mysql.com/downloads/connector/j/5.1.html)
-    if the external database used is MySQL)
+    if the external DBMS used is MySQL)
     
 3. Clone this Git repository.
 
@@ -65,7 +65,7 @@ In order to create the BOSH release for deployment pattern 1, you must follow th
     cd ..
     ```
 
-4. Add the WSO2 Identity Server 5.4.0 WUM updated product distribution, JDK distribution and MySQL JDBC driver in the form of release blobs.
+4. Add the WSO2 Identity Server 5.4.1 WUM updated product distribution, JDK distribution and MySQL JDBC driver in the form of release blobs.
 
     Here, the **environment-alias** refers to the alias provided when saving the created environment, in step 2.
 
@@ -74,6 +74,11 @@ In order to create the BOSH release for deployment pattern 1, you must follow th
     bosh -e <environment-alias> add-blob <local_system_path_to_MySQL_driver> mysqldriver/mysql-connector-java-<version>-bin.jar
     bosh -e <environment-alias> add-blob <local_system_path_to_WSO2_IS_distribution> wso2is/wso2is-<version>.zip
     ```
+    
+    **Note**: For evaluation purposes, the BOSH release implementation has created a release package for MySQL JDBC driver.
+    This assumes that by default, the used external DBMS is MySQL. But if the external DBMS used is of another type, [create
+    a BOSH release package](https://bosh.io/docs/packages.html) (similar to `<pivotal-cf-is>/pattern-1/bosh-release/packages/mysqldriver`) for the particular
+    JDBC driver. Then, you have to upload the relevant JDBC driver in the form of a blob, as above.
 
 5. **[Optional]** If the BOSH release is a final release, upload the blobs (added in step 4). Please refer
 [BOSH documentation](https://bosh.io/docs/create-release.html#upload-blobs) for further details.
@@ -101,7 +106,7 @@ In order to create the BOSH release for deployment pattern 1, you must follow th
 1. Setup and configure external product database(s).
 
     - Currently, it is expected that the external database holds the user management, registry, identity and workflow feature database tables.
-    Please see WSO2 Identity Server [Documentation](https://docs.wso2.com/display/IS540/Setting+Up+Separate+Databases+for+Clustering)
+    Please see WSO2 Identity Server [Documentation](https://docs.wso2.com/display/IS541/Setting+Up+Separate+Databases+for+Clustering)
     for further details.
 
     - Following table shows the external product database configurations, which have been set as properties under WSO2 Identity Server job specifications

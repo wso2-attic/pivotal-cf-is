@@ -1,9 +1,9 @@
 # Managing BOSH Release for WSO2 Identity Server deployment pattern 1 locally (BOSH Lite)
 
-The following sections provide step-by-step guidelines for managing the WSO2 Identity Server 5.4.0 deployment pattern 1
+The following sections provide step-by-step guidelines for managing the WSO2 Identity Server 5.4.1 deployment pattern 1
 BOSH release locally ([BOSH Lite](https://bosh.io/docs/bosh-lite)).
 
-![WSO2 Identity Server 5.4.0 deployment pattern 1](images/pattern-1.png)
+![WSO2 Identity Server 5.4.1 deployment pattern 1](images/pattern-1.png)
 
 ## Contents
 
@@ -25,7 +25,7 @@ BOSH release locally ([BOSH Lite](https://bosh.io/docs/bosh-lite)).
     
 2. Obtain the following software distributions.
 
-    - WSO2 Identity Server 5.4.0 WUM updated product distribution
+    - WSO2 Identity Server 5.4.1 WUM updated product distribution
     - [Java Development Kit (JDK) 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
     - Relevant Java Database Connectivity (JDBC) connector (e.g. [MySQL JDBC driver](https://dev.mysql.com/downloads/connector/j/5.1.html)
     if the external database used is MySQL)
@@ -63,7 +63,7 @@ for creating a release with BOSH.
     cd ..
     ```
 
-4. Add the WSO2 Identity Server 5.4.0 WUM updated product distribution, JDK distribution and MySQL JDBC driver in the form of release blobs.
+4. Add the WSO2 Identity Server 5.4.1 WUM updated product distribution, JDK distribution and MySQL JDBC driver in the form of release blobs.
 
     Assuming that,
 
@@ -73,8 +73,13 @@ for creating a release with BOSH.
     ```
     bosh -e vbox add-blob ~/Downloads/jdk-8u144-linux-x64.tar.gz oraclejdk/jdk-8u144-linux-x64.tar.gz
     bosh -e vbox add-blob ~/Downloads/mysql-connector-java-5.1.34-bin.jar mysqldriver/mysql-connector-java-5.1.34-bin.jar
-    bosh -e vbox add-blob ~/Downloads/wso2is-5.4.0.zip wso2is/wso2is-5.4.0.zip
+    bosh -e vbox add-blob ~/Downloads/wso2is-5.4.1.zip wso2is/wso2is-5.4.1.zip
     ```
+    
+    **Note**: For evaluation purposes, the BOSH release implementation has created a release package for MySQL JDBC driver.
+    This assumes that by default, the used external DBMS is MySQL. But if the external DBMS used is of another type, [create
+    a BOSH release package](https://bosh.io/docs/packages.html) (similar to `<pivotal-cf-is>/pattern-1/bosh-release/packages/mysqldriver`) for the particular
+    JDBC driver. Then, you have to upload the relevant JDBC driver in the form of a blob, as above.
 
 5. Create the BOSH Dev release.
 
@@ -88,7 +93,7 @@ for creating a release with BOSH.
 1. Setup and configure external product database(s).
 
     - Currently, it is expected that the external database holds the user management, registry, identity and workflow feature database tables.
-    Please see WSO2 Identity Server [Documentation](https://docs.wso2.com/display/IS540/Setting+Up+Separate+Databases+for+Clustering)
+    Please see WSO2 Identity Server [Documentation](https://docs.wso2.com/display/IS541/Setting+Up+Separate+Databases+for+Clustering)
     for further details.
 
     - Following table shows the external product database configurations, which have been set as properties under WSO2 Identity Server job specifications
