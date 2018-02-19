@@ -39,7 +39,7 @@
                     <url><%=properties.wso2is_analytics.user_ds.url%></url>
                     <username><%=properties.wso2is_analytics.db.username%></username>
                     <password><%=properties.wso2is_analytics.db.password%></password>
-                    <driverClassName><%=properties.wso2is.db.driver%></driverClassName>
+                    <driverClassName><%=properties.wso2is_analytics.db.driver%></driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>
@@ -60,7 +60,7 @@
                     <url><%=properties.wso2is_analytics.registry_ds.url%></url>
                     <username><%=properties.wso2is_analytics.db.username%></username>
                     <password><%=properties.wso2is_analytics.db.password%></password>
-                    <driverClassName><%=properties.wso2is.db.driver%></driverClassName>
+                    <driverClassName><%=properties.wso2is_analytics.db.driver%></driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>
@@ -69,7 +69,6 @@
                 </configuration>
             </definition>
         </datasource>
-
 
         <!-- For an explanation of the properties, see: http://people.apache.org/~fhanik/jdbc-pool/jdbc-pool.html -->
         <!--datasource>

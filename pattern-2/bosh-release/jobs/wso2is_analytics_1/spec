@@ -3,6 +3,7 @@ name: wso2is_analytics_1
 templates:
   ctl.erb: bin/ctl
   config/bin/load-spark-env-vars.sh: config/bin/load-spark-env-vars.sh
+  config/repository/conf/analytics/my-node-id.dat: config/repository/conf/analytics/my-node-id.dat
   config/repository/conf/analytics/spark/spark-defaults.conf: config/repository/conf/analytics/spark/spark-defaults.conf
   config/repository/conf/axis2/axis2.xml: config/repository/conf/axis2/axis2.xml
   config/repository/conf/datasources/analytics-datasources.erb: config/repository/conf/datasources/analytics-datasources.xml
@@ -25,7 +26,7 @@ properties:
     description: Connection URL of the event store data source
   wso2is_analytics.processed_data_store_ds.url:
     description: Connection URL of the processed data store data source
-  wso2is.db.driver:
+  wso2is_analytics.db.driver:
     description: Database driver class name of the data source
   wso2is_analytics.db.username:
     description: Username of the WSO2 Identity Server Analytics product database user
