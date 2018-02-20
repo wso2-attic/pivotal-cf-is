@@ -1,9 +1,9 @@
 # Managing BOSH Release for WSO2 Identity Server deployment pattern 2 locally (BOSH Lite)
 
-The following sections provide step-by-step guidelines for managing the WSO2 Identity Server 5.4.0 deployment pattern 2
+The following sections provide step-by-step guidelines for managing the WSO2 Identity Server 5.4.1 deployment pattern 2
 BOSH release locally ([BOSH Lite](https://bosh.io/docs/bosh-lite)).
 
-![WSO2 Identity Server 5.4.0 deployment pattern 2](images/pattern-2.png)
+![WSO2 Identity Server 5.4.1 deployment pattern 2](images/pattern-2.png)
 
 ## Contents
 
@@ -25,7 +25,7 @@ BOSH release locally ([BOSH Lite](https://bosh.io/docs/bosh-lite)).
     
 2. Obtain the following software distributions.
 
-    - WSO2 Identity Server 5.4.0 WUM updated product distribution
+    - WSO2 Identity Server 5.4.1 WUM updated product distribution
     - [Java Development Kit (JDK) 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
     - Relevant Java Database Connectivity (JDBC) connector (e.g. [MySQL JDBC driver](https://dev.mysql.com/downloads/connector/j/5.1.html)
     if the external database used is MySQL)
@@ -43,10 +43,10 @@ BOSH release locally ([BOSH Lite](https://bosh.io/docs/bosh-lite)).
 In order to create the BOSH release for deployment pattern 2 using BOSH Lite, you must follow the standard steps
 for creating a release with BOSH.
  
-1. Move to `.deployment` directory of the deployment pattern 2 BOSH release.
+1. Move to root directory of the deployment pattern 2 BOSH release.
 
     ```
-    cd <pivotal-cf-is>/pattern-2/bosh-release/.deployment
+    cd <pivotal-cf-is>/pattern-2/bosh-release/
     ```   
     
 2. Create the local BOSH environment and login to it.
@@ -57,13 +57,7 @@ for creating a release with BOSH.
     
     ![BOSH Lite VM](images/bosh-lite.png)
 
-3. Move back to the root directory of deployment pattern 2 BOSH release (`<pivotal-cf-is>/pattern-2/bosh-release`).
-
-    ```
-    cd ..
-    ```
-
-4. Add the WSO2 Identity Server 5.4.0 and Identity Server Analytics 5.4.0 WUM updated product distributions, JDK distribution and MySQL JDBC driver
+3. Add the WSO2 Identity Server 5.4.1 and Identity Server Analytics 5.4.1 WUM updated product distributions, JDK distribution and MySQL JDBC driver
    in the form of release blobs.
    
     Assuming that,
@@ -74,11 +68,16 @@ for creating a release with BOSH.
     ```
     bosh -e vbox add-blob ~/Downloads/jdk-8u144-linux-x64.tar.gz oraclejdk/jdk-8u144-linux-x64.tar.gz
     bosh -e vbox add-blob ~/Downloads/mysql-connector-java-5.1.34-bin.jar mysqldriver/mysql-connector-java-5.1.34-bin.jar
-    bosh -e vbox add-blob ~/Downloads/wso2is-5.4.0.zip wso2is/wso2is-5.4.0.zip
-    bosh -e vbox add-blob ~/Downloads/wso2is-analytics-5.4.0.zip wso2is_analtyics/wso2is-analytics-5.4.0.zip
+    bosh -e vbox add-blob ~/Downloads/wso2is-5.4.1.zip wso2is/wso2is-5.4.1.zip
+    bosh -e vbox add-blob ~/Downloads/wso2is-analytics-5.4.1.zip wso2is_analtyics/wso2is-analytics-5.4.1.zip
     ```
+    
+    **Note**: For evaluation purposes, the BOSH release implementation has created a release package for MySQL JDBC driver.
+    This assumes that by default, the used external DBMS is MySQL. But if the external DBMS used is of another type, [create
+    a BOSH release package](https://bosh.io/docs/packages.html) (similar to `<pivotal-cf-is>/pattern-2/bosh-release/packages/mysqldriver`) for the particular
+    JDBC driver. Then, you have to upload the relevant JDBC driver in the form of a blob, as above.
 
-5. Create the BOSH Dev release.
+4. Create the BOSH Dev release.
 
    ```
    bosh -e vbox create-release --force
@@ -91,7 +90,7 @@ for creating a release with BOSH.
 
     - Currently, it is expected that the external database holds the user management, registry, identity and workflow feature database tables
     for Identity Server and Identity Server Analytics.
-    Please see WSO2 Identity Server [Documentation](https://docs.wso2.com/display/IS540/Setting+Up+Separate+Databases+for+Clustering)
+    Please see WSO2 Identity Server [Documentation](https://docs.wso2.com/display/IS541/Setting+Up+Separate+Databases+for+Clustering)
     for further details.
 
     - Following table shows the external product database configurations, which have been set as properties under WSO2 Identity Server job specifications
@@ -112,6 +111,7 @@ for creating a release with BOSH.
    wso2is_analytics.registry_ds.url | Connection URL of the Registry data source | -
    wso2is_analytics.event_store_ds.url | Connection URL of the event store data source | -
    wso2is_analytics.processed_data_store_ds.url | Connection URL of the processed data store data source | -
+   wso2is_analytics.db.driver | Database driver class name of the data source | -
    wso2is_analytics.db.username | Username of the WSO2 Identity Server Analytics product database user | root
    wso2is_analytics.db.password | Password of the WSO2 Identity Server Analytics product database user | root
    
