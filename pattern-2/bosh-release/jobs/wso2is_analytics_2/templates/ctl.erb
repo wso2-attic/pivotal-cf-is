@@ -36,7 +36,6 @@ mkdir -p ${run_dir} ${log_dir}
 chown -R vcap:vcap ${run_dir} ${log_dir}
 
 debug_log=${log_dir}/${wso2_product}.log
-touch ${debug_log}
 
 function log_debug() {
   echo `date` $1 >> ${debug_log}
