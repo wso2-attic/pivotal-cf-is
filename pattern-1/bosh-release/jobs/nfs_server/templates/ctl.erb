@@ -1,0 +1,93 @@
+#!/bin/bash
+# ----------------------------------------------------------------------------
+#
+# Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+#
+# WSO2 Inc. licenses this file to you under the Apache License,
+# Version 2.0 (the "License"); you may not use this file except
+# in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+# ----------------------------------------------------------------------------
+
+set +e
+set -xv
+
+script_dir=$(dirname $0)
+job_dir=${script_dir}/..
+
+run_dir=/var/vcap/sys/run/nfs_server
+log_dir=/var/vcap/sys/log/nfs_server
+pid_file=${run_dir}/pid
+
+mkdir -p ${run_dir} ${log_dir}
+chown -R vcap:vcap ${run_dir} ${log_dir}
+
+export NFS_EXPORT_SERVER_DIR_IS=/mnt/nfs-export/wso2is/repository/deployment
+
+export DEBUG_LOG=${log_dir}/nfs_server.log
+
+touch $DEBUG_LOG
+chmod -R 755 /var/vcap/sys
+chmod 777 $DEBUG_LOG
+
+function log_debug() {
+  echo `date` $1 >> $DEBUG_LOG
+}
+
+log_debug "Kicking off ctl script as `whoami` with $1"
+
+# install nfs packages
+
+dpkg -s nfs-kernel-server >/dev/null 2>&1
+if [ $? -ne 0 ] ; then
+  apt-get update
+  apt-get install nfs-kernel-server
+fi
+
+# create the share directory and set permission
+
+mkdir -p ${NFS_EXPORT_SERVER_DIR_IS}
+
+chown nobody:nogroup ${NFS_EXPORT_SERVER_DIR_IS}
+
+# configure the exports
+
+if [ -z "$(cat /etc/exports | grep wso2am )" ]; then
+  echo "${NFS_EXPORT_SERVER_DIR_IS}    *(rw,sync,no_subtree_check)" >> /etc/exports
+fi
+
+exportfs -a
+
+case $1 in
+
+  start)
+
+    service nfs-kernel-server start
+
+    sleep 20
+
+    nfs_pid=`ps aux | grep -w nfsd | grep -v grep | awk '{print$2}'`
+    echo $nfs_pid > ${pid_file}
+
+    ;;
+
+  stop)
+
+    service nfs-kernel-server stop
+
+    ;;
+
+  *)
+    echo "Usage: ctl {start|stop}" ;;
+
+esac

@@ -1,0 +1,7 @@
+check process nfs_server
+  with pidfile /var/vcap/sys/run/nfs_server/pid
+  start program "/var/vcap/jobs/nfs_server/bin/ctl start"
+    with timeout 100 seconds
+  stop program "/var/vcap/jobs/nfs_server/bin/ctl stop"
+    with timeout 30 seconds
+  group vcap
