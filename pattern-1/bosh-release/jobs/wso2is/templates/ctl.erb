@@ -1,0 +1,136 @@
+#!/bin/bash
+# ----------------------------------------------------------------------------
+#
+# Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+#
+# WSO2 Inc. licenses this file to you under the Apache License,
+# Version 2.0 (the "License"); you may not use this file except
+# in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+# ----------------------------------------------------------------------------
+
+set -e
+set -xv
+
+# define variables
+wso2_product=wso2is
+script_dir=$(dirname $0)
+job_dir=${script_dir}/..
+
+run_dir=/var/vcap/sys/run/${wso2_product}
+log_dir=/var/vcap/sys/log/${wso2_product}
+pid_file=${run_dir}/pid
+
+# creates the directories
+mkdir -p ${run_dir} ${log_dir}
+# provide ownership of the directories 'vcap' user and group
+chown -R vcap:vcap ${run_dir} ${log_dir}
+mkdir -p /var/vcap/store/wso2is/data
+export WSO2_IS_DATA_DIR=/var/vcap/store/wso2is/data/wso2is
+
+export JDK_HOME=/var/vcap/packages/openjdk/
+export WSO2_IS_PKG_HOME=/var/vcap/packages/wso2is/
+export WSO2_IS_SERVER_PACKAGE=/var/vcap/packages/wso2is/
+
+# set any environment variables for your software
+export MIN_HEAP=<%= properties.wso2is.memory.min_heap %>
+export MAX_HEAP=<%= properties.wso2is.memory.max_heap %>
+export MAX_PERMGEN=<%= properties.wso2is.memory.max_permgen %>
+export JAVA_OPTS=" -Xmx${MAX_HEAP}m -Xms${MIN_HEAP}m -XX:MaxPermSize=${MAX_PERMGEN}m"
+
+export DEBUG_LOG=${log_dir}/wso2is.log
+
+export NFS_EXPORT_SERVER_DIR=/mnt/nfs-export/wso2is/repository/deployment
+
+export NFS_SHARE_SERVER_DIR=/mnt/nfs-share/wso2is/repository/deployment
+
+touch $DEBUG_LOG
+chmod -R 755 /var/vcap/sys
+chmod 777 $DEBUG_LOG
+
+function log_debug() {
+  echo `date` $1 >> ${debug_log}
+}
+
+log_debug "Kicking off ctl script as `whoami` with $1"
+
+dpkg -s nfs-common >/dev/null 2>&1
+if [ $? -ne 0 ] ; then
+  log_debug "Installing NFS Client"
+  sudo apt-get update
+  sudo apt-get install nfs-common
+fi
+
+mkdir -p ${NFS_SHARE_SERVER_DIR}
+
+# includes start command and stop commands
+case $1 in
+
+  start)
+    # kill the previously running instance if any
+    kill -9 `cat ${pid_file}`
+
+    pushd ${JDK_HOME}
+    archive=`ls OpenJDK*gz`
+    tar -zxvf $archive
+    export JAVA_HOME=`pwd`/jdk8u192-b12
+    export JAVA_BINARY=${JAVA_HOME}/bin/java
+
+    log_debug "JAVA_HOME: ${JAVA_HOME}"
+    log_debug "JAVA_BINARY: ${JAVA_BINARY}"
+
+    pushd ${WSO2_IS_PKG_HOME}
+    archive=`ls wso2is*zip`
+    unzip $archive
+    cd wso2is*
+    WSO2_IS_HOME=`pwd`
+
+    # Here any config files your application needs:
+    cp -Tr ${job_dir}/repository/ ${WSO2_IS_HOME}/repository/
+
+    # Here add any libraries your application needs:
+    cp /var/vcap/packages/jdbcdrivers/* ${WSO2_IS_HOME}/repository/components/lib/
+
+    mkdir /tmp/wso2is
+    mv $WSO2_IS_HOME/repository/deployment/server/ /tmp/wso2is/
+
+    mount -t nfs <%= link("nfs-server").instances[0].address %>:${NFS_EXPORT_SERVER_DIR} ${NFS_SHARE_SERVER_DIR}
+
+    if [ -z "$(ls -A ${NFS_SHARE_SERVER_DIR})" ]; then
+      cp -r /tmp/wso2is/* ${NFS_SHARE_SERVER_DIR}/
+    fi
+
+    ln -s ${NFS_SHARE_SERVER_DIR}/server $WSO2_IS_HOME/repository/deployment
+
+    $WSO2_IS_HOME/bin/wso2server.sh start
+
+    # Sleep for a little while so the server comes up
+    sleep 20
+    WSO2_IS_PID=`ps -ef | grep java | grep -v grep | awk '{print $2}' `
+    echo $WSO2_IS_PID > ${pid_file}
+
+    ;;
+
+  stop)
+
+    kill -9 `cat ${pid_file}`
+    rm -f ${pid_file}
+    sleep 10
+    umount ${NFS_SHARE_SERVER_DIR}
+
+    ;;
+
+  *)
+    echo "Usage: ctl {start|stop}" ;;
+
+esac
