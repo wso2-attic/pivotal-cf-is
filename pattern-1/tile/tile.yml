@@ -22,25 +22,43 @@
 # The high-level description of your tile.
 # Replace these properties with real values.
 #
-name: wso2is-tile
+name: wso2is-tile-pattern-1
 icon_file: resources/wso2-logo.png
-label: WSO2 Identity Server 5.3.0
-description: PCF Tile for WSO2 Identity Server 5.3.0
-# metadata_version: 1.8                 # Optional, defaults to 1.8
+label: WSO2 Identity Server 5.7.0
+description: PCF Tile for WSO2 Identity Server 5.7.0 - Pattern 1
 
-# Global defaults (all optional)
-#
-# org: test-org                         # Name of org to create for your apps
-# space: test-space                     # Name of space to create for your apps
-# apply_open_security_group: true       # Apply open security group, default: false
+stemcell_criteria:
+  os: ubuntu-trusty
+  requires_cpi: false
+  version: '3541'
 
-# Specify the packages to be included in your tile.
-# The format of the section to include depends on the type
-# of package you are describing. For fragments of each type
-# that you can copy & paste, see:
-#
-# http://docs.pivotal.io/tiledev/tile-generator.html
-#
+forms:
+- name: carbon_db
+  label: Carbon DB connection information
+  description: WSO2 API Manager - Carbon Database connection information
+  properties:
+  - name: carbon_jdbc_url
+    type: string
+    label: JDBC URL
+  - name: carbon_db_driver
+    type: dropdown_select
+    label: Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - name: carbon_db_query
+    type: string
+    label: Validation Query
+  - name: carbon_db_username
+    type: string
+    label: Username
+  - name: carbon_db_password
+    type: secret
+    label: Password
+
 packages:
 - name: wso2-is
   type: bosh-release
@@ -83,7 +101,7 @@ packages:
 # applications as environment variables. You can also refer to them
 # elsewhere in this template by using:
 #     (( .properties.<property-name> ))
-# 
+#
 # forms:
 # - name: buildpack_properties
 #   label: Buildpack
