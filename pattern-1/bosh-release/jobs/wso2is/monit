@@ -1,0 +1,5 @@
+check process wso2is
+  with pidfile /var/vcap/sys/run/wso2is/pid
+  start program "/var/vcap/jobs/wso2is/bin/ctl start"
+    with timeout 100 seconds
+  group vcap
