@@ -1,0 +1,23 @@
+# abort script on any command that exit with a non zero value
+set -e
+
+mysql=`echo jdbcdrivers/mysql-connector-java-5.1.*-bin.jar`
+
+if [[ -f $mysql ]] ; then
+  echo "MySQL driver found"
+else
+  echo "MySQL driver not found"
+  exit 1
+fi
+
+mssql=`echo jdbcdrivers/mssql-jdbc-7.0.0.jre8.jar`
+
+if [[ -f $mssql ]] ; then
+  echo "MS SQL driver found"
+else
+  echo "MS SQL driver not found"
+  exit 1
+fi
+
+cp -r $mysql ${BOSH_INSTALL_TARGET}
+cp -r $mssql ${BOSH_INSTALL_TARGET}

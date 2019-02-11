@@ -1,0 +1,8 @@
+---
+name: jdbcdrivers
+
+dependencies: []
+
+files:
+- jdbcdrivers/mysql-connector-java-5.1.*-bin.jar
+- jdbcdrivers/mssql-jdbc-7.0.0.jre8.jar
