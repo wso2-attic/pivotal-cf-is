@@ -33,14 +33,14 @@ stemcell_criteria:
   version: '3541'
 
 forms:
-- name: carbon_db
-  label: Carbon DB connection information
-  description: WSO2 API Manager - Carbon Database connection information
+- name: bps_ds
+  label: BPS Datasource connection information
+  description: WSO2 Identity Server - BPS Datasource connection information
   properties:
-  - name: carbon_jdbc_url
+  - name: bps_jdbc_url
     type: string
     label: JDBC URL
-  - name: carbon_db_driver
+  - name: bps_db_driver
     type: dropdown_select
     label: Driver Class Name
     options:
@@ -49,91 +49,152 @@ forms:
       default: true
     - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
       label: com.microsoft.sqlserver.jdbc.SQLServerDriver
-  - name: carbon_db_query
+  - name: bps_db_query
     type: string
     label: Validation Query
-  - name: carbon_db_username
+  - name: bps_db_username
     type: string
     label: Username
-  - name: carbon_db_password
+  - name: bps_db_password
+    type: secret
+    label: Password
+    forms:
+- name: user_db
+  label: Registry and User Management Datasource connection information
+  description: WSO2 Identity Server - Registry and User Management Datasource connection information
+  properties:
+  - name: user_db_jdbc_url
+    type: string
+    label: JDBC URL
+  - name: user_db_driver
+    type: dropdown_select
+    label: Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - name: user_db_query
+    type: string
+    label: Validation Query
+  - name: user_db_username
+    type: string
+    label: Username
+  - name: user_db_password
+    type: secret
+    label: Password
+- name: conf_reg_db
+  label: Configuration Registry Datasource connection information
+  description: WSO2 Identity Server - Configuration Registry Datasource connection information
+  properties:
+  - name: conf_reg_db_jdbc_url
+    type: string
+    label: JDBC URL
+  - name: conf_reg_db_driver
+    type: dropdown_select
+    label: Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - name: conf_reg_db_query
+    type: string
+    label: Validation Query
+  - name: conf_reg_db_username
+    type: string
+    label: Username
+  - name: conf_reg_db_password
+    type: secret
+    label: Password
+- name: identity_db
+  label: Identity Datasource connection information
+  description: WSO2 Identity Server - Identity Datasource connection information
+  properties:
+  - name: identity_db_jdbc_url
+    type: string
+    label: JDBC URL
+  - name: identity_db_driver
+    type: dropdown_select
+    label: Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - name: identity_db_query
+    type: string
+    label: Validation Query
+  - name: identity_db_username
+    type: string
+    label: Username
+  - name: identity_db_password
     type: secret
     label: Password
 
 packages:
-- name: wso2-is
+- name: routing_release
   type: bosh-release
-  path: ../bosh-release/wso2is-bosh-release.tar.gz
-  jobs:
-  - name: wso2is
+  path: routing-0.178.0.tgz
+
+- name: wso2is
+    instances: 2
     templates:
     - name: wso2is
       release: wso2is-release
+    - name: route_registrar
+      release: routing
+      consumes:
+        nats:
+          from: nats
+          deployment: (( ..cf.deployment_name ))
+    - name: health_check
+      release: wso2is-release
+      colocated: true
+      post_deploy: true
+      run_default: on
+      label: IS Health Check
+      description: Checks if Identity Server is up and running
     memory: 4096
     ephemeral_disk: 4096
     persistent_disk: 16384
     cpu: 2
     static_ip: 1
     max_in_flight: 1
-    properties: {}
-
-# Include stemcell criteria if you don't want to accept the default.
-# Since this stemcell is only used to run pre and post errands, we
-# strongly recommend you leave this alone so that your tile always
-# runs with the latest stemcell.
-#
-# stemcell_criteria:
-#   os: ubuntu-trusty
-#   requires_cpi: false
-#   version: '3062'
-
-# Add properties you want to pass to your applications.
-# Properties specified here will not be configurable by the user.
-#
-# properties:
-# - name: example_property
-#   type: string
-#   default: specify a value
-#   label: Label for the field on the GUI
-#   description: Longer description of the field's purpose
-
-# Uncomment this section if you want to display forms with configurable
-# properties in Ops Manager. These properties will be passed to your
-# applications as environment variables. You can also refer to them
-# elsewhere in this template by using:
-#     (( .properties.<property-name> ))
-#
-# forms:
-# - name: buildpack_properties
-#   label: Buildpack
-#   description: Buildpack_properties
-#   properties:
-#   - name: buildpack_rank
-#     type: integer
-#     default: 0
-#     label: Buildpack rank for this buildpack_rank
-#     description: Ranking of this buildpack relative to others
-
-# Add any dependencies your tile has on other installed products.
-# This is often appropriate when using automatic service provisioning
-# for any of your packages above, with services provided by other
-# products.
-#
-# requires_product_versions:
-# - name: p-mysql
-#   version: '~> 1.7'
-
-# Customize upgrade parameters if the defaults don't meet your needs.
-#
-# update:
-#   canaries: 1
-#   canary_watch_time: 10000-100000
-#   max_in_flight: 1
-#   update_watch_time: 10000-100000
-
-# If prior versions of your tile are installed and configured, their
-# property values will not be overwritten by new defaults provided
-# in this file. If that is your intent, you must do the overwriting
-# explicitly using JavaScript migration functions, like so:
-#
-# migration: |
-#   properties['properties']['.properties.org']['value'] = 'system';
+    properties:
+      wso2is:
+        bps_ds:
+          jdbc_url: (( .properties.bps_ds_jdbc_url.value ))
+          driver: (( .properties.bps_ds_driver.value ))
+          query: (( .properties.bps_ds_query.value ))
+          username: (( .properties.bps_ds_username.value ))
+          password: (( .properties.carbon_db_password.value ))
+        user_db:
+          jdbc_url: (( .properties.user_db_jdbc_url.value ))
+          driver: (( .properties.user_db_driver.value ))
+          query: (( .properties.user_db_query.value ))
+          username: (( .properties.user_db_username.value ))
+          password: (( .properties.user_db_password.value ))
+        conf_reg_db:
+          jdbc_url: (( .properties.conf_reg_db_jdbc_url.value ))
+          driver: (( .properties.conf_reg_db_driver.value ))
+          query: (( .properties.conf_reg_db_query.value ))
+          username: (( .properties.conf_reg_db_username.value ))
+          password: (( .properties.conf_reg_db_password.value ))
+        identity_db:
+          jdbc_url: (( .properties.identity_db_jdbc_url.value ))
+          driver: (( .properties.identity_db_driver.value ))
+          query: (( .properties.identity_db_query.value ))
+          username: (( .properties.identity_db_username.value ))
+          password: (( .properties.identity_db_password.value ))
+      route_registrar:
+        routes:
+        - name: wso2is
+          port: 9763
+          tls_port: 9443
+          registration_interval: 20s
+          uris:
+          - wso2is.(( ..cf.cloud_controller.system_domain.value ))
