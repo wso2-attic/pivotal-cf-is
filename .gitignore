@@ -25,3 +25,7 @@ hs_err_pid*
 **/.dev_builds/
 **/blobs/
 **/dev_releases/
+
+# Content inside deployment
+pattern-*/bosh-release/deployment/*
+!pattern-*/bosh-release/deployment/.gitkeep
