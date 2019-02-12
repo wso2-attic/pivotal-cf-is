@@ -16,18 +16,18 @@
  -->
 
 <!--
-	All carbon based products comes with a LDAP user store. 
-	For this we use an embedded LDAP in carbon based products. 
+	All carbon based products comes with a LDAP user store.
+	For this we use an embedded LDAP in carbon based products.
 	This file contains necessary configurations to control the behavior of embedded LDAP.
 	You may use this file to enable, disable LDAP server, configure connection admin password, etc ...
-	In addition to embedded-ldap server configurations this file also has Kerberos KDC (Key Distribution Center) 
+	In addition to embedded-ldap server configurations this file also has Kerberos KDC (Key Distribution Center)
 	specific configurations.
 -->
 
 <EmbeddedLDAPConfig>
 
-  <!-- 
-	LDAP server configurations 
+  <!--
+	LDAP server configurations
 	==========================
 	This section contains LDAP server specific configurations.
 
@@ -48,7 +48,7 @@
 				            itself.
   -->
   <EmbeddedLDAP>
-    <Property name="enable">false</Property>
+    <Property name="enable">true</Property>
     <Property name="port">${Ports.EmbeddedLDAP.LDAPServerPort}</Property>
     <Property name="instanceId">default</Property>
     <Property name="connectionPassword">admin</Property>
@@ -62,12 +62,12 @@
     <Property name="saslPrincipalName">ldap/localhost@EXAMPLE.COM</Property>
   </EmbeddedLDAP>
 
-  <!-- 
+  <!--
 	Default partition configurations
-	================================ 
-	When embedded LDAP server starts for the first time it will create a default partition. 
+	================================
+	When embedded LDAP server starts for the first time it will create a default partition.
 	Following properties configure values for the default partition.
-	
+
 	Property                        Usage
 	=======                         =====
 	id                              Each partition is given an id. The id given to the default paritition.
@@ -76,16 +76,16 @@
 	kdcPassword                     This parameter is used when KDC (Key Distribution Center) is enabled. In apacheds
                                         KDC also has a server principal. This defines a password for KDC server principal.
 	ldapServerPrinciplePassword     If LDAP server is also defined as a server principal, this will be the password.
-	
+
   -->
   <DefaultPartition>
     <Property name="id">root</Property>
-    <Property name="realm">WSO2.ORG</Property>    
+    <Property name="realm">WSO2.ORG</Property>
     <Property name="kdcPassword">secret</Property>
     <Property name="ldapServerPrinciplePassword">randall</Property>
   </DefaultPartition>
 
-  <!-- 
+  <!--
 	Default partition admin configurations
 	======================================
 	In a multi-tenant scenario each tenant will have a separate partition. Thus tenant admin will be the partition admin.
@@ -110,8 +110,8 @@
     <Property name="passwordType">SHA</Property>
   </PartitionAdmin>
 
-  <!-- 
-	Default partition admin's group configuration 
+  <!--
+	Default partition admin's group configuration
 	=============================================
 	Embedded LDAP is capable of keeping group information also.
 	If LDAP groups are enabled in user store (usr-mgt.xml) group information will be

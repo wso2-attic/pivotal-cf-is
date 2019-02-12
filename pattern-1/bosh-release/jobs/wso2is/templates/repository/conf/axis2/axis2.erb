@@ -73,10 +73,10 @@
     <parameter name="ModulesDirectory">axis2modules</parameter>
 
     <parameter name="userAgent" locked="true">
-        WSO2 Identity Server-5.4.1
+        WSO2 Identity Server-5.7.0
     </parameter>
     <parameter name="server" locked="true">
-        WSO2 Identity Server-5.4.1
+        WSO2 Identity Server-5.7.0
     </parameter>
 
     <!-- ========================================================================-->
@@ -631,7 +631,7 @@
          The clustering domain/group. Nodes in the same group will belong to the same multicast
          domain. There will not be interference between nodes in different groups.
         -->
-        <parameter name="domain">is.wso2.domain</parameter>
+        <parameter name="domain">wso2.carbon.domain</parameter>
 
         <!-- The multicast address to be used -->
         <!--<parameter name="mcastAddress">228.0.0.4</parameter>-->
@@ -652,7 +652,7 @@
         -->
         <!-- The host name or IP address of this member -->
 
-        <parameter name="localMemberHost">10.244.15.2</parameter>
+        <parameter name="localMemberHost"><%= spec.ip %></parameter>
 
         <!--
             The bind adress of this member. The difference between localMemberHost & localMemberBindAddress
@@ -704,15 +704,19 @@
         -->
         <members>
             <member>
-                <hostName>127.0.0.1</hostName>
+                <hostName><%= link("peers").instances[0].address %></hostName>
                 <port>4000</port>
             </member>
             <member>
-                <hostName>10.244.15.3</hostName>
+                <hostName><%= link("peers").instances[1].address %></hostName>
                 <port>4000</port>
             </member>
         </members>
 
+        <!-- <member>
+            <hostName><%= link("peers").instances.map(&:address) %></hostName>
+            <port>4000</port>
+        </member> -->
         <!--
         Enable the groupManagement entry if you need to run this node as a cluster manager.
         Multiple application domains with different GroupManagementAgent implementations
