@@ -37,7 +37,7 @@ forms:
   label: BPS Datasource connection information
   description: WSO2 Identity Server - BPS Datasource connection information
   properties:
-  - name: bps_jdbc_url
+  - name: bps_db_jdbc_url
     type: string
     label: JDBC URL
   - name: bps_db_driver
@@ -141,10 +141,26 @@ packages:
   path: routing-0.178.0.tgz
 
 - name: wso2is
+  type: bosh-release
+  path: wso2is-5.7.0-bosh-release.tgz
+  jobs:
+  - name: nfs_server
+    templates:
+    - name: nfs_server
+      release: wso2is-release
+    memory: 4096
+    ephemeral_disk: 4096
+    persistent_disk: 16384
+    cpu: 2
+    static_ip: 1
+  - name: wso2is
     instances: 2
     templates:
     - name: wso2is
       release: wso2is-release
+      provides:
+        conn: {shared: true}
+      properties: {}
     - name: route_registrar
       release: routing
       consumes:
@@ -167,11 +183,11 @@ packages:
     properties:
       wso2is:
         bps_ds:
-          jdbc_url: (( .properties.bps_ds_jdbc_url.value ))
-          driver: (( .properties.bps_ds_driver.value ))
-          query: (( .properties.bps_ds_query.value ))
-          username: (( .properties.bps_ds_username.value ))
-          password: (( .properties.carbon_db_password.value ))
+          jdbc_url: (( .properties.bps_db_jdbc_url.value ))
+          driver: (( .properties.bps_db_driver.value ))
+          query: (( .properties.bps_db_query.value ))
+          username: (( .properties.bps_db_username.value ))
+          password: (( .properties.bps_db_password.value ))
         user_db:
           jdbc_url: (( .properties.user_db_jdbc_url.value ))
           driver: (( .properties.user_db_driver.value ))
