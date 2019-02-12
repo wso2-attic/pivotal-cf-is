@@ -62,7 +62,7 @@ chown nobody:nogroup ${NFS_EXPORT_SERVER_DIR_IS}
 
 # configure the exports
 
-if [ -z "$(cat /etc/exports | grep wso2am )" ]; then
+if [ -z "$(cat /etc/exports | grep wso2is )" ]; then
   echo "${NFS_EXPORT_SERVER_DIR_IS}    *(rw,sync,no_subtree_check)" >> /etc/exports
 fi
 
