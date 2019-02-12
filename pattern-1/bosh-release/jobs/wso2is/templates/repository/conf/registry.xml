@@ -26,7 +26,6 @@
     <readOnly>false</readOnly>
     <enableCache>true</enableCache>
     <registryRoot>/</registryRoot>
-
     <dbConfig name="wso2registry">
         <dataSource>jdbc/WSO2CarbonDB</dataSource>
     </dbConfig>
@@ -49,7 +48,6 @@
         <instanceId>sharedregistry</instanceId>
         <targetPath>/_system/governance</targetPath>
     </mount>
-
    <handler class="org.wso2.carbon.identity.entitlement.policy.finder.registry.RegistryPolicyHandler">
  <filter class="org.wso2.carbon.identity.entitlement.policy.finder.registry.RegistryPolicyMediaTypeMatcher">
  <property name="mediaType">application/xacml-policy+xml</property>

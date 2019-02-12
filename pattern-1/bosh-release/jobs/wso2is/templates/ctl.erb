@@ -19,22 +19,19 @@
 #
 # ----------------------------------------------------------------------------
 
-set -e
+set +e
 set -xv
 
-# define variables
-wso2_product=wso2is
 script_dir=$(dirname $0)
 job_dir=${script_dir}/..
 
-run_dir=/var/vcap/sys/run/${wso2_product}
-log_dir=/var/vcap/sys/log/${wso2_product}
+run_dir=/var/vcap/sys/run/wso2is
+log_dir=/var/vcap/sys/log/wso2is
 pid_file=${run_dir}/pid
 
-# creates the directories
 mkdir -p ${run_dir} ${log_dir}
-# provide ownership of the directories 'vcap' user and group
 chown -R vcap:vcap ${run_dir} ${log_dir}
+
 mkdir -p /var/vcap/store/wso2is/data
 export WSO2_IS_DATA_DIR=/var/vcap/store/wso2is/data/wso2is
 
@@ -59,7 +56,7 @@ chmod -R 755 /var/vcap/sys
 chmod 777 $DEBUG_LOG
 
 function log_debug() {
-  echo `date` $1 >> ${debug_log}
+  echo `date` $1 >> $DEBUG_LOG
 }
 
 log_debug "Kicking off ctl script as `whoami` with $1"
@@ -73,7 +70,6 @@ fi
 
 mkdir -p ${NFS_SHARE_SERVER_DIR}
 
-# includes start command and stop commands
 case $1 in
 
   start)

@@ -21,6 +21,6 @@
 
 set -e
 
-echo "Exporting WSO2 API-M bosh release..."
+echo "Exporting WSO2 Identity Server bosh release..."
 bosh -e vbox create-release --tarball wso2is-5.7.0-bosh-release.tgz
 echo "DONE!"

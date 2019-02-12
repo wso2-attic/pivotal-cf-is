@@ -13,7 +13,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-        
+
 <UserManager>
     <Realm>
         <Configuration>
@@ -62,7 +62,7 @@
             <Property name="UserRolesCacheEnabled">true</Property>
             <Property name="UserNameUniqueAcrossTenants">false</Property>
         </UserStoreManager>
-	
+
 	    <!-- If product is using an external LDAP as the user store in READ ONLY mode, use following user manager.
 		     In case if user core cache domain is needed to identify uniquely set property
 		     <Property name="UserCoreCacheIdentifier">domain</Property>
@@ -100,7 +100,7 @@
             <Property name="RetryAttempts"/>
             <Property name="ReplaceEscapeCharactersAtUserLogin">true</Property>
         </UserStoreManager-->
-	
+
 	    <!-- Active directory configuration is as follows.
 	         In case if user core cache domain is needed to identify uniquely set property
 	         <Property name="UserCoreCacheIdentifier">domain</Property>
@@ -113,7 +113,7 @@
 	    -->
         <!--UserStoreManager class="org.wso2.carbon.user.core.ldap.ActiveDirectoryUserStoreManager">
             <Property name="TenantManager">org.wso2.carbon.user.core.tenant.CommonHybridLDAPTenantManager</Property>
-            <Property name="ConnectionURL">ldaps://10.100.1.100:636</Property> 
+            <Property name="ConnectionURL">ldaps://10.100.1.100:636</Property>
             <Property name="ConnectionName">CN=admin,CN=Users,DC=WSO2,DC=Com</Property>
             <Property name="ConnectionPassword">A1b2c3d4</Property>
             <Property name="AnonymousBind">false</Property>
@@ -149,8 +149,8 @@
             <Property name="MultiAttributeSeparator">,</Property>
             <Property name="isADLDSRole">false</Property>
             <Property name="userAccountControl">512</Property>
-            <Property name="MaxUserNameListLength">100</Property>     
-            <Property name="MaxRoleNameListLength">100</Property>                     
+            <Property name="MaxUserNameListLength">100</Property>
+            <Property name="MaxRoleNameListLength">100</Property>
             <Property name="MembershipAttributeRange">1500</Property>
             <Property name="kdcEnabled">false</Property>
             <Property name="defaultRealmName">WSO2.ORG</Property>
