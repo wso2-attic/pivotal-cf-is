@@ -601,7 +601,7 @@
     </phaseOrder>
 
     <clustering class="org.wso2.carbon.core.clustering.hazelcast.HazelcastClusteringAgent"
-                enable="false">
+                enable="true">
 
         <!--
            This parameter indicates whether the cluster has to be automatically initalized
@@ -703,20 +703,14 @@
            "membershipScheme" above is set to "wka"
         -->
         <members>
-            <member>
-                <hostName><%= link("peers").instances[0].address %></hostName>
-                <port>4000</port>
-            </member>
-            <member>
-                <hostName><%= link("peers").instances[1].address %></hostName>
-                <port>4000</port>
-            </member>
+          <%- (link("peers").instances.map(&:address)).each do |ip_address| -%>
+          <member>
+              <hostName><%= ip_address %></hostName>
+              <port>4000</port>
+          </member>
+          <%- end -%>
         </members>
 
-        <!-- <member>
-            <hostName><%= link("peers").instances.map(&:address) %></hostName>
-            <port>4000</port>
-        </member> -->
         <!--
         Enable the groupManagement entry if you need to run this node as a cluster manager.
         Multiple application domains with different GroupManagementAgent implementations
