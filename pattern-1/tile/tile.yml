@@ -22,10 +22,10 @@
 # The high-level description of your tile.
 # Replace these properties with real values.
 #
-name: wso2is-tile-pattern-1
+name: wso2is-tile
 icon_file: resources/wso2-logo.png
-label: WSO2 Identity Server 5.7.0
-description: PCF Tile for WSO2 Identity Server 5.7.0 - Pattern 1
+label: WSO2 Identity Server 5.7.0 - Pattern 1
+description: PCF Tile for WSO2 Identity Server 5.7.0
 
 stemcell_criteria:
   os: ubuntu-trusty
