@@ -1,0 +1,8 @@
+---
+name: nfs_server
+templates:
+  ctl.erb: bin/ctl
+
+provides:
+- name: nfs-server
+  type: nfs
