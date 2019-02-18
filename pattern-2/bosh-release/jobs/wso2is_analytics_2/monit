@@ -1,7 +1,0 @@
-check process wso2is_analytics_2
-  with pidfile /var/vcap/sys/run/wso2is_analytics/pid
-  start program "/var/vcap/jobs/wso2is_analytics_2/bin/ctl start"
-    with timeout 100 seconds
-  stop program "/var/vcap/jobs/wso2is_analytics_2/bin/ctl stop"
-    with timeout 30 seconds
-  group vcap
