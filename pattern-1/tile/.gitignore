@@ -1,4 +1,4 @@
 product/
 release/
-
-wsois-tile*
+cache/*
+!cache/.gitkeep
