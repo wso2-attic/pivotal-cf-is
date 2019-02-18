@@ -9,8 +9,6 @@ templates:
   repository/conf/carbon.xml.erb: repository/conf/carbon.xml
   repository/conf/registry.xml.erb: repository/conf/registry.xml
   repository/conf/user-mgt.xml.erb: repository/conf/user-mgt.xml
-  repository/resources/security/client-truststore.jks: repository/resources/security/client-truststore.jks
-  repository/resources/security/wso2carbon.jks: repository/resources/security/wso2carbon.jks
 
 packages:
 - common
