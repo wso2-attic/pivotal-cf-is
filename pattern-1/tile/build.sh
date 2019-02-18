@@ -17,7 +17,4 @@
 #
 # ------------------------------------------------------------------------
 
-rm -rf cache/*
-rm -rf product/releases/*
-rm -rf release/*
 tile build --cache cache/

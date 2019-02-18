@@ -94,69 +94,21 @@ if [ ! -d bosh-deployment ]; then
     git clone https://github.com/cloudfoundry/bosh-deployment bosh-deployment
 fi
 
-# create a directory to hold the configuration files for VirtualBox specific BOSH environment
-if [ ! -d vbox ]; then
-    echo "---> Creating environment directory..."
-    mkdir vbox
-fi
-
-# if forced, delete any existing BOSH environment
-if [ "$1" == "--force" ]; then
-    echo "---> Deleting existing BOSH environment..."
-    bosh delete-env bosh-deployment/bosh.yml \
-        --state vbox/state.json \
-        -o bosh-deployment/virtualbox/cpi.yml \
-        -o bosh-deployment/virtualbox/outbound-network.yml \
-        -o bosh-deployment/bosh-lite.yml \
-        -o bosh-deployment/bosh-lite-runc.yml \
-        -o bosh-deployment/jumpbox-user.yml \
-        --vars-store vbox/creds.yml \
-        -v director_name="Bosh Lite Director" \
-        -v internal_ip=192.168.50.6 \
-        -v internal_gw=192.168.50.1 \
-        -v internal_cidr=192.168.50.0/24 \
-        -v outbound_network_name=NatNetwork
-fi
-
-# create a new BOSH environment with BOSH Lite as the BOSH Director and VirtualBox as the IaaS
-echo "---> Creating the BOSH environment..."
-bosh create-env bosh-deployment/bosh.yml \
-    --state vbox/state.json \
-    -o bosh-deployment/virtualbox/cpi.yml \
-    -o bosh-deployment/virtualbox/outbound-network.yml \
-    -o bosh-deployment/bosh-lite.yml \
-    -o bosh-deployment/bosh-lite-runc.yml \
-    -o bosh-deployment/jumpbox-user.yml \
-    --vars-store vbox/creds.yml \
-    -v director_name="Bosh Lite Director" \
-    -v internal_ip=192.168.50.6 \
-    -v internal_gw=192.168.50.1 \
-    -v internal_cidr=192.168.50.0/24 \
-    -v outbound_network_name=NatNetwork
-
-# set an alias for the created BOSH environment
-echo "---> Setting alias for the environment..."
-bosh -e 192.168.50.6 alias-env vbox --ca-cert <(bosh int vbox/creds.yml --path /director_ssl/ca)
-
-# log into the created BOSH environment
-echo "---> Logging in..."
-bosh -e vbox login --client=admin --client-secret=$(bosh int vbox/creds.yml --path /admin_password)
-
 cd ..
 # add the locally available WSO2 product distribution(s) and dependencies as blobs to the BOSH Director
 echo "---> Adding blobs..."
 
 # add openjdk
-bosh -e vbox add-blob ${distributions}/${jdk_distribution} openjdk/${jdk_distribution}
+bosh add-blob ${distributions}/${jdk_distribution} openjdk/${jdk_distribution}
 # add wso2 product packs
-bosh -e vbox add-blob ${distributions}/${wso2_product_pack_identifier}.zip ${wso2_product}/${wso2_product_pack_identifier}.zip
+bosh add-blob ${distributions}/${wso2_product_pack_identifier}.zip ${wso2_product}/${wso2_product_pack_identifier}.zip
 # add JDBC Drivers
-bosh -e vbox add-blob ${distributions}/${mysql_driver} jdbcdrivers/${mysql_driver}
-bosh -e vbox add-blob ${distributions}/${mssql_driver} jdbcdrivers/${mssql_driver}
+bosh add-blob ${distributions}/${mysql_driver} jdbcdrivers/${mysql_driver}
+bosh add-blob ${distributions}/${mssql_driver} jdbcdrivers/${mssql_driver}
 
 echo "---> Uploading blobs..."
-bosh -e vbox -n upload-blobs
+bosh -n upload-blobs
 
 # create the BOSH release
 echo "---> Creating bosh release..."
-bosh -e vbox create-release --force
+bosh create-release --tarball wso2is-5.7.0-bosh-release.tgz --force
