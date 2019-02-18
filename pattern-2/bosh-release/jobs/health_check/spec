@@ -1,0 +1,9 @@
+---
+name: health_check
+
+templates:
+    run.sh: bin/run
+
+packages: []
+
+properties: {}

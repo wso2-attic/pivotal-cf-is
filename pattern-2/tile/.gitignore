@@ -1,0 +1,4 @@
+product/
+release/
+cache/*
+!cache/.gitkeep
