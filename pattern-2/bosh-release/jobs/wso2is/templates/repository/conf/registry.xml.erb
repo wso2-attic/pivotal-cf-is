@@ -35,7 +35,7 @@
     </dbConfig>
     <remoteInstance url="https://localhost:9443/registry">
         <id>gov</id>
-        <cacheId><%=properties.wso2is.db.username%>@<%=properties.wso2is.user_ds.url%></cacheId>
+        <cacheId><%= p("wso2is.conf_reg_db.username") %>@<%= p("wso2is.conf_reg_db.jdbc_url") %></cacheId>
         <dbConfig>govregistry</dbConfig>
         <readOnly>false</readOnly>
         <enableCache>true</enableCache>

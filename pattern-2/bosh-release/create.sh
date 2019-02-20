@@ -42,8 +42,8 @@ cd ${distributions}
 
 # capture the exact product distribution identifiers
 mysql_driver=$(ls ${mysql_driver})
+mssql_driver=$(ls ${mssql_driver})
 jdk_distribution=$(ls ${jdk_distribution})
-mssql_drive=$(ls ${mssql_driver})
 
 # make copies of the WSO2 original product distributions with the generic WSO2 product identifiers
 if [ ! -f ${wso2_product_pack_identifier}.zip ]; then
