@@ -1,7 +1,7 @@
 #!/bin/bash
 # ----------------------------------------------------------------------------
 #
-# Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+# Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 #
 # WSO2 Inc. licenses this file to you under the Apache License,
 # Version 2.0 (the "License"); you may not use this file except
@@ -19,73 +19,79 @@
 #
 # ----------------------------------------------------------------------------
 
-set -e
+set +e
+set -xv
 
-# define variables
-wso2_product=wso2is_analytics
-wso2_product_pack_identifier=wso2is-analytics
 script_dir=$(dirname $0)
 job_dir=${script_dir}/..
-run_dir=/var/vcap/sys/run/${wso2_product}
-log_dir=/var/vcap/sys/log/${wso2_product}
+
+run_dir=/var/vcap/sys/run/wso2is_analytics_dashboard
+log_dir=/var/vcap/sys/log/wso2is_analytics_dashboard
 pid_file=${run_dir}/pid
 
-# creates the directories
 mkdir -p ${run_dir} ${log_dir}
-# provide ownership of the directories 'vcap' user and group
 chown -R vcap:vcap ${run_dir} ${log_dir}
 
-debug_log=${log_dir}/${wso2_product}.log
+mkdir -p /var/vcap/store/wso2is_analytics/data
+export WSO2_IS_ANALYTICS_DATA_DIR=/var/vcap/store/wso2is_analytics/data/wso2is_analytics
+
+export JDK_HOME=/var/vcap/packages/openjdk/
+export WSO2_IS_ANALYTICS_PKG_HOME=/var/vcap/packages/wso2is_analytics/
+export WSO2_IS_ANALYTICS_SERVER_PACKAGE=/var/vcap/packages/wso2is_analytics/
+
+# set any environment variables for your software
+export MIN_HEAP=<%= properties.wso2is_analytics.memory.min_heap %>
+export MAX_HEAP=<%= properties.wso2is_analytics.memory.max_heap %>
+export MAX_PERMGEN=<%= properties.wso2is_analytics.memory.max_permgen %>
+export JAVA_OPTS=" -Xmx${MAX_HEAP}m -Xms${MIN_HEAP}m -XX:MaxPermSize=${MAX_PERMGEN}m"
+
+export DEBUG_LOG=${log_dir}/wso2is_analytics.log
+
+touch $DEBUG_LOG
+chmod -R 755 /var/vcap/sys
+chmod 777 $DEBUG_LOG
 
 function log_debug() {
-  echo `date` $1 >> ${debug_log}
+  echo `date` $1 >> $DEBUG_LOG
 }
 
 log_debug "Kicking off ctl script as `whoami` with $1"
 
-# includes start command and stop commands
 case $1 in
 
   start)
-    # kill the previously running instance if any
-    if [ -f ${pid_file} ]; then
-        kill -9 `cat ${pid_file}`
-    fi
+    # Kill the previously running instance if any
+    kill -9 `cat ${pid_file}`
 
-    # unpack the JDK distribution and setup the JAVA_HOME
-    cd /var/vcap/packages/oraclejdk/
-    archive=`ls jdk*gz`
-    JAVA_HOME=`pwd`/java
-    mkdir java
-    tar -xf ${archive} -C java/ --strip-components=1
-    export JAVA_HOME
+    pushd ${JDK_HOME}
+    archive=`ls OpenJDK*gz`
+    tar -zxvf $archive
+    export JAVA_HOME=`pwd`/jdk8u192-b12
+    export JAVA_BINARY=${JAVA_HOME}/bin/java
 
     log_debug "JAVA_HOME: ${JAVA_HOME}"
+    log_debug "JAVA_BINARY: ${JAVA_BINARY}"
 
-    cd /var/vcap/packages/${wso2_product}/
-    archive=`ls ${wso2_product_pack_identifier}*zip`
-    unzip ${archive}
-    cd ${wso2_product_pack_identifier}*
-    wso2_is_analytics_home=`pwd`
+    pushd ${WSO2_IS_ANALYTICS_PKG_HOME}
+    archive=`ls wso2is-analytics*zip`
+    unzip $archive
+    cd wso2is-analytics*
+    WSO2_IS_ANALYTICS_HOME=`pwd`
 
-    log_debug "WSO2_IS_HOME: ${wso2_is_analytics_home}"
+    # Here any config files your application needs:
+    cp -Tr ${job_dir}/conf/ ${WSO2_IS_ANALYTICS_HOME}/conf/
+    cp -Tr ${job_dir}/resources/ ${WSO2_IS_ANALYTICS_HOME}/resources/
 
-    # copy all the configuration files that need to be replaced
-    cp -r ${job_dir}/config/bin/* ${wso2_is_analytics_home}/bin/
-    cp -r ${job_dir}/config/repository/conf/* ${wso2_is_analytics_home}/repository/conf/
+    # Here add any libraries your application needs:
+    cp /var/vcap/packages/jdbcdrivers/* ${WSO2_IS_ANALYTICS_HOME}/lib/
 
-    # add any external libraries required during runtime
-    cp /var/vcap/packages/mysqldriver/* ${wso2_is_analytics_home}/repository/components/lib/
+    $WSO2_IS_ANALYTICS_HOME/wso2/dashboard/bin/carbon.sh start
 
-    # start the WSO2 product server
-    ${wso2_is_analytics_home}/bin/wso2server.sh start
-
-    # sleep until the server starts up
+    # Sleep for a little while so the server comes up
     sleep 20
-    wso2_is_pid=`ps -ef | grep java | grep -v grep | awk '{print $2}' `
-    echo ${wso2_is_pid} > ${pid_file}
+    WSO2_IS_PID=`ps -ef | grep java | grep -v grep | awk '{print $2}' `
+    echo $WSO2_IS_PID > ${pid_file}
 
-    log_debug "Process ID: `cat ${pid_file}`"
     ;;
 
   stop)

@@ -17,7 +17,7 @@
   # Carbon Configuration Parameters
 wso2.carbon:
     # value to uniquely identify a server
-  id: wso2-analytics-is
+  id: <%= spec.ip %>
     # server name
   name: WSO2 Analytics Identity Server
     # ports used by this server
@@ -365,7 +365,7 @@ wso2.datasources:
         connectionTestQuery: SELECT 1
         validationTimeout: 30000
         isAutoCommit: false
-        
+
   - name: IS_ANALYTICS_DB
     description: "The data source used for WSO2 IS Analytics statistics"
     jndiConfig:
@@ -373,12 +373,13 @@ wso2.datasources:
     definition:
       type: RDBMS
       configuration:
-        jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/IS_ANALYTICS_DB;AUTO_SERVER=TRUE'
-        username: wso2carbon
-        password: wso2carbon
-        driverClassName: org.h2.Driver
+        jdbcUrl: <%= p("wso2is.analytics_db.jdbc_url") %>
+        username: <%= p("wso2is.analytics_db.username") %>
+        password: <%= p("wso2is.analytics_db.password") %>
+        driverClassName: <%= p("wso2is.analytics_db.driver") %>
         maxPoolSize: 50
         idleTimeout: 60000
+        connectionTestQuery: <%= p("wso2is.analytics_db.query") %>
         validationTimeout: 30000
         isAutoCommit: false
 
@@ -421,7 +422,7 @@ wso2.transport.http:
 
   listenerConfigurations:
     - id: "default-https"
-      host: "0.0.0.0"
+      host: "<%= spec.ip %>"
       port: 9643
       scheme: https
       keyStoreFile: "${carbon.home}/resources/security/wso2carbon.jks"

@@ -17,7 +17,7 @@
   # Carbon Configuration Parameters
 wso2.carbon:
     # value to uniquely identify a server
-  id: wso2-analytics-is
+  id: <%= spec.ip %>
     # server name
   name: WSO2 Analytics Identity Server
     # dashboard type
@@ -238,7 +238,7 @@ wso2.metrics.jdbc:
       # Deleting data older than seven days should be sufficient.
       scheduledCleanup:
         # Enable scheduled cleanup to delete Metrics data in the database.
-        enabled: true
+        enabled: false
 
         # The scheduled job will cleanup all data older than the specified days
         daysToKeep: 3
@@ -408,12 +408,13 @@ wso2.datasources:
       definition:
         type: RDBMS
         configuration:
-          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/IS_ANALYTICS_DB;AUTO_SERVER=TRUE'
-          username: wso2carbon
-          password: wso2carbon
-          driverClassName: org.h2.Driver
+          jdbcUrl: <%= p("wso2is.analytics_db.jdbc_url") %>
+          username: <%= p("wso2is.analytics_db.username") %>
+          password: <%= p("wso2is.analytics_db.password") %>
+          driverClassName: <%= p("wso2is.analytics_db.driver") %>
           maxPoolSize: 50
           idleTimeout: 60000
+          connectionTestQuery: <%= p("wso2is.analytics_db.query") %>
           validationTimeout: 30000
           isAutoCommit: false
 
