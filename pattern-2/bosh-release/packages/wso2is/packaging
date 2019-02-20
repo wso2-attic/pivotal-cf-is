@@ -1,12 +1,12 @@
 # abort script on any command that exit with a non zero value
 set -e
 
-archive=`echo wso2is/wso2is-5.4.1*.zip`
+archive=`echo wso2is/wso2is-5.7.0*.zip`
 
 if [[ -f $archive ]] ; then
-  echo "wso2is-5.4.1 archive found"
+  echo "WSO2 Identity Server archive found"
 else
-  echo "wso2is-5.4.1 archive not found"
+  echo "WSO2 Identity Server archive not found"
   exit 1
 fi
 
