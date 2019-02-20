@@ -1,7 +1,7 @@
 # abort script on any command that exit with a non zero value
 set -e
 
-archive=`echo wso2is_analytics/wso2is-analytics-wso2is-5.7.0*.zip`
+archive=`echo wso2is_analytics/wso2is-analytics-5.7.0*.zip`
 
 if [[ -f $archive ]] ; then
   echo "WSO2 Identity Server Analytics archive found"

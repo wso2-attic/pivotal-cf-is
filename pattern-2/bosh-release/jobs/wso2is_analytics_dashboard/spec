@@ -1,36 +1,42 @@
 ---
-name: wso2is_analytics_1
+name: wso2is_analytics_dashboard
 templates:
   ctl.erb: bin/ctl
-  config/bin/load-spark-env-vars.sh: config/bin/load-spark-env-vars.sh
-  config/repository/conf/analytics/my-node-id.dat: config/repository/conf/analytics/my-node-id.dat
-  config/repository/conf/analytics/spark/spark-defaults.conf: config/repository/conf/analytics/spark/spark-defaults.conf
-  config/repository/conf/axis2/axis2.xml: config/repository/conf/axis2/axis2.xml
-  config/repository/conf/datasources/analytics-datasources.erb: config/repository/conf/datasources/analytics-datasources.xml
-  config/repository/conf/datasources/master-datasources.erb: config/repository/conf/datasources/master-datasources.xml
-  config/repository/conf/event-processor.xml: config/repository/conf/event-processor.xml
-  config/repository/conf/registry.erb: config/repository/conf/registry.xml
-  config/repository/conf/user-mgt.xml: config/repository/conf/user-mgt.xml
+  conf/dashboard/deployment.yaml.erb: conf/dashboard/deployment.yaml
 
 packages:
-- oraclejdk
-- mysqldriver
+- openjdk
+- jdbcdrivers
 - wso2is_analytics
+- common
+
+provides:
+- name: is-analytics-dashboard
+  type: analytics-dashboard-node
+  properties:
+  - route_registrar.routes
 
 properties:
-  wso2is_analytics.user_ds.url:
-    description: Connection URL of the user data source
-  wso2is_analytics.registry_ds.url:
-    description: Connection URL of the Registry data source
-  wso2is_analytics.event_store_ds.url:
-    description: Connection URL of the event store data source
-  wso2is_analytics.processed_data_store_ds.url:
-    description: Connection URL of the processed data store data source
-  wso2is_analytics.db.driver:
-    description: Database driver class name of the data source
-  wso2is_analytics.db.username:
-    description: Username of the WSO2 Identity Server Analytics product database user
-    default: root
-  wso2is_analytics.db.password:
-    description: Password of the WSO2 Identity Server Analytics product database user
-    default: root
+  wso2is_analytics.memory.min_heap:
+    description: "Min Heap in MB"
+    default: 2048
+  wso2is_analytics.memory.max_heap:
+    description: "Max Heap in MB"
+    default: 2048
+  wso2is_analytics.memory.max_permgen:
+    description: "Max permgen in MB"
+    default: 1024
+
+  route_registrar.routes:
+    description: routes registered for WSO2 IS Analytics Dashboard
+
+  wso2is.analytics_db.jdbc_url:
+    description: Analytics Datasource JDBC URL
+  wso2is.analytics_db.username:
+    description: Analytics Datasource username
+  wso2is.analytics_db.password:
+    description: Analytics Datasource password
+  wso2is.analytics_db.driver:
+    description: Analytics Datasource driver class name
+  wso2is.analytics_db.query:
+    description: Analytics Datasource validation query
