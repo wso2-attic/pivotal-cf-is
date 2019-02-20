@@ -10,7 +10,7 @@ else
   exit 1
 fi
 
-mssql=`echo jdbcdrivers/mssql-jdbc-7.0.0.jre8.jar`
+mssql=`echo jdbcdrivers/mssql-jdbc-7.0.*.jre8.jar`
 
 if [[ -f $mssql ]] ; then
   echo "MS SQL driver found"

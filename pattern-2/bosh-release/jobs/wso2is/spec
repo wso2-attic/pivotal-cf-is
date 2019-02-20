@@ -3,34 +3,101 @@ name: wso2is
 templates:
   ctl.erb: bin/ctl
   repository/conf/axis2/axis2.xml.erb: repository/conf/axis2/axis2.xml
-  repository/conf/identity/identity.xml.erb: repository/conf/identity/identity.xml
-  repository/conf/identity/embedded-ldap.xml.erb: repository/conf/identity/embedded-ldap.xml
   repository/conf/datasources/master-datasources.xml.erb: repository/conf/datasources/master-datasources.xml
   repository/conf/datasources/bps-datasources.xml.erb: repository/conf/datasources/bps-datasources.xml
   repository/conf/registry.xml.erb: repository/conf/registry.xml
-  repository/conf/user-mgt.xml.erb: repository/conf/user-mgt.xml
   repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-AuthenticationData.xml.erb: repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-AuthenticationData.xml
   repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-SessionData.xml.erb: repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-SessionData.xml
+  repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-RoleData.xml.erb: repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-RoleData.xml
+  repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-UserData.xml.erb: repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-UserData.xml
 
 packages:
-- openjdk
+- common
 - jdbcdrivers
+- openjdk
 - wso2is
 
+provides:
+- name: wso2is
+  type: wso2is-node
+  properties:
+  - route_registrar.routes
+- name: is-peers
+  type: is-peers
+
+consumes:
+- name: nfs-server
+  type: nfs
+- name: is-peers
+  type: is-peers
+- name: is-analytics-worker
+  type: analytics-worker-node
+
 properties:
-  wso2is.user_ds.url:
-    description: Connection URL of the user data source
-  wso2is.identity_ds.url:
-    description:  Connection URL of the identity data source
-  wso2is.bps_ds.url:
-    description: Connection URL of the BPS data source
-  wso2is.registry_ds.url:
-    description: Connection URL of the Registry data source
-  wso2is.db.driver:
-    description: Database driver class name of the data source
-  wso2is.db.username:
-    description: Username of the WSO2 Identity Server product database user
-    default: root
-  wso2is.db.password:
-    description: Password of the WSO2 Identity Server product database user
-    default: root
+  wso2is.bps_ds.jdbc_url:
+    description: BPS Datasource JDBC URL
+  wso2is.bps_ds.username:
+    description: BPS Datasource username
+  wso2is.bps_ds.password:
+    description: BPS Datasource password
+  wso2is.bps_ds.driver:
+    description: BPS Datasource driver class name
+  wso2is.bps_ds.query:
+    description: BPS Datasource validation query
+
+  wso2is.user_db.jdbc_url:
+    description: Registry and User Management Datasource JDBC URL
+  wso2is.user_db.username:
+    description: Registry and User Management Datasource username
+  wso2is.user_db.password:
+    description: Registry and User Management Datasource password
+  wso2is.user_db.driver:
+    description: Registry and User Management Datasource driver class name
+  wso2is.user_db.query:
+    description: Registry and User Management Datasource validation query
+
+  wso2is.conf_reg_db.jdbc_url:
+    description: Configuration Registry Datasource JDBC URL
+  wso2is.conf_reg_db.username:
+    description: Configuration Registry Datasource username
+  wso2is.conf_reg_db.password:
+    description: Configuration Registry Datasource password
+  wso2is.conf_reg_db.driver:
+    description: Configuration Registry Datasource driver class name
+  wso2is.conf_reg_db.query:
+    description: Configuration Registry Datasource validation query
+
+  wso2is.identity_db.jdbc_url:
+    description: Identity Datasource JDBC URL
+  wso2is.identity_db.username:
+    description: Identity Datasource username
+  wso2is.identity_db.password:
+    description: Identity Datasource password
+  wso2is.identity_db.driver:
+    description: Identity Datasource driver class name
+  wso2is.identity_db.query:
+    description: Identity Datasource validation query
+
+  wso2is.memory.min_heap:
+    description: "Min Heap in MB"
+    default: 2048
+  wso2is.memory.max_heap:
+    description: "Max Heap in MB"
+    default: 2048
+  wso2is.memory.max_permgen:
+    description: "Max permgen in MB"
+    default: 1024
+
+  route_registrar.routes:
+    description: routes registered for WSO2 APIM apps and gateway
+
+  cf.apps_domain:
+    description: Domain shared by the UAA and CF API eg 'bosh-lite.com'
+  cf.nats.host:
+    description: Hostname/IP of NATS
+  cf.nats.port:
+    description: Port that NATS listens on
+  cf.nats.username:
+    description: The user to use when authenticating with NATS
+  cf.nats.password:
+    description: The password to use when authenticating with NATS
