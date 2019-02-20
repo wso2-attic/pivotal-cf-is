@@ -4,4 +4,4 @@ name: wso2is_analytics
 dependencies: []
 
 files:
-- wso2is_analytics/wso2is-analytics-5.4.1*.zip
+- wso2is_analytics/wso2is-analytics-5.7.0*.zip
