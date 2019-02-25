@@ -6,6 +6,8 @@ templates:
   repository/conf/datasources/master-datasources.xml.erb: repository/conf/datasources/master-datasources.xml
   repository/conf/datasources/bps-datasources.xml.erb: repository/conf/datasources/bps-datasources.xml
   repository/conf/registry.xml.erb: repository/conf/registry.xml
+  repository/conf/identity/sso-idp-config.xml.erb: repository/conf/identity/sso-idp-config.xml
+  repository/conf/carbon.xml.erb: repository/conf/carbon.xml
   repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-AuthenticationData.xml.erb: repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-AuthenticationData.xml
   repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-SessionData.xml.erb: repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-SessionData.xml
   repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-RoleData.xml.erb: repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-RoleData.xml

@@ -24,7 +24,7 @@ health_check() {
     fi
 }
 
-carbonHealthCheckEP="https://localhost:9443/carbon/admin/login.jsp"
+carbonHealthCheckEP=<%= p("health_check.endpoint") %>
 COUNTER=0
 
 # While the endpoint is not alive, and the server has been retrying for less than 3 minutes
