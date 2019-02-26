@@ -90,7 +90,7 @@ To log into the created instances, run the following commands in the BOSH direct
 2. List all the instances within a deployment.
 
     ```
-    bosh vms -d <Name>
+    bosh vms -d <name>
     ```
 3. SSH into the vm as follows.
 
