@@ -12,6 +12,8 @@ templates:
   repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-SessionData.xml.erb: repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-SessionData.xml
   repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-RoleData.xml.erb: repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-RoleData.xml
   repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-UserData.xml.erb: repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-UserData.xml
+  repository/deployment/server/webapps/shindig/WEB-INF/web.xml.erb: repository/deployment/server/webapps/shindig/WEB-INF/web.xml
+  repository/deployment/server/jaggeryapps/dashboard/conf/site.json.erb: repository/deployment/server/jaggeryapps/dashboard/conf/site.json
 
 packages:
 - common
@@ -92,14 +94,3 @@ properties:
 
   route_registrar.routes:
     description: routes registered for WSO2 APIM apps and gateway
-
-  cf.apps_domain:
-    description: Domain shared by the UAA and CF API eg 'bosh-lite.com'
-  cf.nats.host:
-    description: Hostname/IP of NATS
-  cf.nats.port:
-    description: Port that NATS listens on
-  cf.nats.username:
-    description: The user to use when authenticating with NATS
-  cf.nats.password:
-    description: The password to use when authenticating with NATS

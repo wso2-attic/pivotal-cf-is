@@ -54,9 +54,9 @@
     <ServiceProvider>
  <Issuer>wso2.my.dashboard</Issuer>
  <AssertionConsumerServiceURLs>
- <AssertionConsumerServiceURL>${carbon.protocol}://<%= p('route_registrar.routes')[0]['uris'][0] %>:9443/dashboard/acs</AssertionConsumerServiceURL>
+ <AssertionConsumerServiceURL>https://<%= p('route_registrar.routes')[0]['uris'][0] %>/dashboard/acs</AssertionConsumerServiceURL>
  </AssertionConsumerServiceURLs>
- <DefaultAssertionConsumerServiceURL>${carbon.protocol}://<%= p('route_registrar.routes')[0]['uris'][0] %>:9443/dashboard/acs</DefaultAssertionConsumerServiceURL>
+ <DefaultAssertionConsumerServiceURL>https://<%= p('route_registrar.routes')[0]['uris'][0] %>/dashboard/acs</DefaultAssertionConsumerServiceURL>
  <SignResponse>true</SignResponse>
  <EnableAudienceRestriction>true</EnableAudienceRestriction>
  <AudiencesList>
