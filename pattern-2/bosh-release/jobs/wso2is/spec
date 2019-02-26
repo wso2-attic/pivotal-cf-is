@@ -3,17 +3,22 @@ name: wso2is
 templates:
   ctl.erb: bin/ctl
   repository/conf/axis2/axis2.xml.erb: repository/conf/axis2/axis2.xml
-  repository/conf/datasources/master-datasources.xml.erb: repository/conf/datasources/master-datasources.xml
-  repository/conf/datasources/bps-datasources.xml.erb: repository/conf/datasources/bps-datasources.xml
-  repository/conf/registry.xml.erb: repository/conf/registry.xml
-  repository/conf/identity/sso-idp-config.xml.erb: repository/conf/identity/sso-idp-config.xml
   repository/conf/carbon.xml.erb: repository/conf/carbon.xml
+  repository/conf/datasources/bps-datasources.xml.erb: repository/conf/datasources/bps-datasources.xml
+  repository/conf/datasources/master-datasources.xml.erb: repository/conf/datasources/master-datasources.xml
+  repository/conf/identity/embedded-ldap.xml: repository/conf/identity/embedded-ldap.xml
+  repository/conf/identity/identity.xml: repository/conf/identity/identity.xml
+  repository/conf/identity/sso-idp-config.xml.erb: repository/conf/identity/sso-idp-config.xml
+  repository/conf/registry.xml.erb: repository/conf/registry.xml
+  repository/conf/user-mgt.xml: repository/conf/user-mgt.xml
   repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-AuthenticationData.xml.erb: repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-AuthenticationData.xml
   repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-SessionData.xml.erb: repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-SessionData.xml
   repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-RoleData.xml.erb: repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-RoleData.xml
   repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-UserData.xml.erb: repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-UserData.xml
-  repository/deployment/server/webapps/shindig/WEB-INF/web.xml.erb: repository/deployment/server/webapps/shindig/WEB-INF/web.xml
   repository/deployment/server/jaggeryapps/dashboard/conf/site.json.erb: repository/deployment/server/jaggeryapps/dashboard/conf/site.json
+  repository/deployment/server/webapps/shindig/WEB-INF/web.xml.erb: repository/deployment/server/webapps/shindig/WEB-INF/web.xml
+  repository/resources/security/client-truststore.jks: repository/resources/security/client-truststore.jks
+  repository/resources/security/wso2carbon.jks: repository/resources/security/wso2carbon.jks
 
 packages:
 - common
