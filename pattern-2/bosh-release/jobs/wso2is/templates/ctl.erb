@@ -48,10 +48,10 @@ export JAVA_OPTS=" -Xmx${MAX_HEAP}m -Xms${MIN_HEAP}m -XX:MaxPermSize=${MAX_PERMG
 export DEBUG_LOG=${log_dir}/wso2is.log
 
 export NFS_EXPORT_SERVER_DIR=/mnt/nfs-export/wso2is/repository/deployment
-export NFS_EXPORT_TENANTS_DIR=/mnt/nfs-export/wso2is/repository
+export NFS_EXPORT_TENANTS_DIR=/mnt/nfs-export/wso2is-tenants/repository
 
 export NFS_SHARE_SERVER_DIR=/mnt/nfs-share/wso2is/repository/deployment
-export NFS_SHARE_TENANTS_DIR=/mnt/nfs-share/wso2is/repository
+export NFS_SHARE_TENANTS_DIR=/mnt/nfs-share/wso2is-tenants/repository
 
 touch $DEBUG_LOG
 chmod -R 755 /var/vcap/sys
@@ -135,6 +135,7 @@ case $1 in
     rm -f ${pid_file}
     sleep 10
     umount ${NFS_SHARE_SERVER_DIR}
+    umount ${NFS_SHARE_TENANTS_DIR}
 
     ;;
 
