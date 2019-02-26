@@ -48,8 +48,10 @@ export JAVA_OPTS=" -Xmx${MAX_HEAP}m -Xms${MIN_HEAP}m -XX:MaxPermSize=${MAX_PERMG
 export DEBUG_LOG=${log_dir}/wso2is.log
 
 export NFS_EXPORT_SERVER_DIR=/mnt/nfs-export/wso2is/repository/deployment
+export NFS_EXPORT_TENANTS_DIR=/mnt/nfs-export/wso2is/repository
 
 export NFS_SHARE_SERVER_DIR=/mnt/nfs-share/wso2is/repository/deployment
+export NFS_SHARE_TENANTS_DIR=/mnt/nfs-share/wso2is/repository
 
 touch $DEBUG_LOG
 chmod -R 755 /var/vcap/sys
@@ -69,6 +71,7 @@ if [ $? -ne 0 ] ; then
 fi
 
 mkdir -p ${NFS_SHARE_SERVER_DIR}
+mkdir -p ${NFS_SHARE_TENANTS_DIR}
 
 case $1 in
 
@@ -97,21 +100,30 @@ case $1 in
     # Here add any libraries your application needs:
     cp /var/vcap/packages/jdbcdrivers/* ${WSO2_IS_HOME}/repository/components/lib/
 
-    mkdir /tmp/wso2is
-    mv $WSO2_IS_HOME/repository/deployment/server/ /tmp/wso2is/
+    mkdir /tmp/wso2is-server
+    mkdir /tmp/wso2is-tenants
+    mv $WSO2_IS_HOME/repository/deployment/server/ /tmp/wso2is-server/
+    mv $WSO2_IS_HOME/repository/tenants/ /tmp/wso2is-tenants/
 
     mount -t nfs <%= link("nfs-server").instances[0].address %>:${NFS_EXPORT_SERVER_DIR} ${NFS_SHARE_SERVER_DIR}
+    mount -t nfs <%= link("nfs-server").instances[0].address %>:${NFS_EXPORT_TENANTS_DIR} ${NFS_SHARE_TENANTS_DIR}
 
     if [ -z "$(ls -A ${NFS_SHARE_SERVER_DIR})" ]; then
-      cp -r /tmp/wso2is/* ${NFS_SHARE_SERVER_DIR}/
+      cp -r /tmp/wso2is-server/* ${NFS_SHARE_SERVER_DIR}/
+    fi
+
+    if [ -z "$(ls -A ${NFS_SHARE_TENANTS_DIR})" ]; then
+      cp -r /tmp/wso2is-tenants/* ${NFS_SHARE_TENANTS_DIR}/
     fi
 
     ln -s ${NFS_SHARE_SERVER_DIR}/server $WSO2_IS_HOME/repository/deployment
+    ln -s ${NFS_SHARE_TENANTS_DIR}/tenants $WSO2_IS_HOME/repository
 
     $WSO2_IS_HOME/bin/wso2server.sh start
 
     # Sleep for a little while so the server comes up
     sleep 20
+    cp ${job_dir}/repository/deployment/server/webapps/shindig/WEB-INF/web.xml ${WSO2_IS_HOME}/repository/deployment/server/webapps/shindig/WEB-INF/web.xml
     WSO2_IS_PID=`ps -ef | grep java | grep -v grep | awk '{print $2}' `
     echo $WSO2_IS_PID > ${pid_file}
 
