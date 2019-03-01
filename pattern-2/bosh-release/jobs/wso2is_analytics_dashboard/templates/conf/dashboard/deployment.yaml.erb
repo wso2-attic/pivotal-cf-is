@@ -422,7 +422,7 @@ wso2.transport.http:
 
   listenerConfigurations:
     - id: "default-https"
-      host: "<%= spec.ip %>"
+      host: "<%= p('route_registrar.routes')[0]['uris'][0] %>"
       port: 9643
       scheme: https
       keyStoreFile: "${carbon.home}/resources/security/wso2carbon.jks"

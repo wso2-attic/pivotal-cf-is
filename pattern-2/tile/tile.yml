@@ -180,19 +180,13 @@ packages:
     static_ip: 1
 
   - name: wso2is_analytics_worker
-    instances: 1
+    instances: 2
     templates:
     - name: wso2is_analytics_worker
       release: wso2is-release
       provides:
         conn: {shared: true}
       properties: {}
-    - name: route_registrar
-      release: routing
-      consumes:
-        nats:
-          from: nats
-          deployment: (( ..cf.deployment_name ))
     - name: health_check
       release: wso2is-release
       colocated: true
@@ -216,14 +210,6 @@ packages:
           query: (( .properties.analytics_db_query.value ))
           username: (( .properties.analytics_db_username.value ))
           password: (( .properties.analytics_db_password.value ))
-      route_registrar:
-        routes:
-        - name: wso2is_analytics_worker
-          port: 7712
-          tls_port: 7612
-          registration_interval: 20s
-          uris:
-          - wso2is-analytics-worker.(( ..cf.cloud_controller.system_domain.value ))
 
   - name: wso2is_analytics_dashboard
     instances: 1
@@ -270,7 +256,6 @@ packages:
           registration_interval: 20s
           uris:
           - wso2is-analytics-dashboard.(( ..cf.cloud_controller.system_domain.value ))
-
   - name: wso2is
     instances: 2
     templates:
