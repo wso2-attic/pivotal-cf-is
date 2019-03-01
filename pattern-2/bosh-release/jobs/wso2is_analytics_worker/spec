@@ -3,8 +3,8 @@ name: wso2is_analytics_worker
 templates:
   ctl.erb: bin/ctl
   conf/worker/deployment.yaml.erb: conf/worker/deployment.yaml
-  repository/resources/security/client-truststore.jks: epository/resources/security/client-truststore.jks
-  repository/resources/security/wso2carbon.jks: epository/resources/security/wso2carbon.jks
+  repository/resources/security/client-truststore.jks: repository/resources/security/client-truststore.jks
+  repository/resources/security/wso2carbon.jks: repository/resources/security/wso2carbon.jks
 
 packages:
 - openjdk
@@ -15,8 +15,6 @@ packages:
 provides:
 - name: is-analytics-worker
   type: analytics-worker-node
-  properties:
-  - route_registrar.routes
 
 properties:
   wso2is_analytics.memory.min_heap:
@@ -28,9 +26,6 @@ properties:
   wso2is_analytics.memory.max_permgen:
     description: "Max permgen in MB"
     default: 1024
-
-  route_registrar.routes:
-    description: routes registered for WSO2 IS Analytics Worker
 
   wso2is.analytics_db.jdbc_url:
     description: Analytics Datasource JDBC URL

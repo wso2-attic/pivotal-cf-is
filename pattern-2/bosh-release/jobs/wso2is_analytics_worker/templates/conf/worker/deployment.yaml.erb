@@ -486,21 +486,21 @@ cluster.config:
     eventPollingInterval: 1000
 
   # Sample of deployment.config for Two node HA
-#deployment.config:
-#  type: ha
-#  eventSyncServer:
-#    host: localhost
-#    port: 9893
-#    advertisedHost: localhost
-#    advertisedPort: 9893
-#    bossThreads: 10
-#    workerThreads: 10
-#  eventSyncClientPool:
-#    maxActive: 10
-#    maxTotal: 10
-#    maxIdle: 10
-#    maxWait: 60000
-#    minEvictableIdleTimeMillis: 120000
+deployment.config:
+ type: ha
+ eventSyncServer:
+   host: <%= spec.ip %>
+   port: 9893
+   advertisedHost: <%= spec.ip %>
+   advertisedPort: 9893
+   bossThreads: 10
+   workerThreads: 10
+ eventSyncClientPool:
+   maxActive: 10
+   maxTotal: 10
+   maxIdle: 10
+   maxWait: 60000
+   minEvictableIdleTimeMillis: 120000
 
   # Sample of deployment.config for Distributed deployment
 #deployment.config:
