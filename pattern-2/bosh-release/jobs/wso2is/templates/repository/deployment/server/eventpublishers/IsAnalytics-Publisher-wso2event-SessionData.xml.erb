@@ -7,7 +7,7 @@
     <property name="protocol">thrift</property>
     <property name="publishingMode">non-blocking</property>
     <property name="publishTimeout">0</property>
-    <property name="receiverURL">tcp://<%= link("is-analytics-worker").p('route_registrar.routes')[0]['uris'][0] %>:7612</property>
+    <property name="receiverURL">tcp://<%= link("is-analytics-worker").instances[0].address %>:7612</property>
     <property encrypted="false" name="password">admin</property>
   </to>
 </eventPublisher>
