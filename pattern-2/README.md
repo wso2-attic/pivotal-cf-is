@@ -24,7 +24,6 @@ For step-by-step guidelines to manage the BOSH release and to build the PCF tile
     - [Git client](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
     - [PCF Tile Generator](https://docs.pivotal.io/tiledev/2-3/tile-generator.html)
 
-
 2. Obtain the following software distributions.
     - [WSO2 Identity Server 5.7.0](https://wso2.com/identity-and-access-management/install/) product distribution
     - [WSO2 Identity Server Analytics 5.7.0](https://wso2.com/identity-and-access-management/install/analytics/) product distribution
@@ -32,7 +31,6 @@ For step-by-step guidelines to manage the BOSH release and to build the PCF tile
     - Relevant Java Database Connectivity (JDBC) drivers
         - [mssql-jdbc-7.0.0.jre8.jar](https://www.microsoft.com/en-us/download/details.aspx?id=57175)
         - [mysql-connector-java-5.1.45-bin.jar](https://dev.mysql.com/downloads/connector/j/)
-
 
 3. Clone this Git repository.
 
@@ -75,7 +73,126 @@ In order to build the CF tile for deployment pattern 2, follow the below steps.
     ```
     Executing this script will generate the tile for WSO2 IS 5.7.0 deployment. The tile will be created in the root of the ```product``` folder under tile directory.
 
-4. Upload the tile to the Pivotal Environment and configure it.
+## Install Identity Server in PCF
+
+1. Log in to PCF Ops Manager and upload the tile built by clicking **Import a Product**.
+
+2. After the tile is uploaded, add the tile to the PCF environment by clicking the + icon next to it.
+![Add a new tile](images/add-new-tile.png)
+
+3. After the tile is added to the environment, click on the Identity Server tile in the PCF environment to add configurations to the setup.               
+![Apply configurations](images/apply-config.png)
+
+  i. AZ and Network Assignments Page:
+  - Place singleton jobs in: Select the AZ in which the Identity server VM needs to run. The broker runs as a singleton job
+  - Balance other jobs in: Select any combination of AZs.
+  - Network: Select pcf-pas-network
+
+  Click save.
+
+  ii. WSO2 Identity Server - BPS Datasource connection information
+
+  - JDBC URL:
+
+    - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
+
+    - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
+
+  - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
+
+  - Validation Query: SELECT 1
+
+  - Username: Username for database
+
+  - Password: Password for database
+
+  Click Save.
+
+  iii. WSO2 Identity Server - Registry and User Management Datasource connection information
+
+  - JDBC URL:
+
+    - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
+
+    - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
+
+  - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
+
+  - Validation Query: SELECT 1
+
+  - Username: Username for database
+
+  - Password: Password for database
+
+  Click Save.
+
+  iv. WSO2 Identity Server - Configuration Registry Datasource connection information
+
+  - JDBC URL:
+
+    - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
+
+    - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
+
+  - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
+
+  - Validation Query: SELECT 1
+
+  - Username: Username for database
+
+  - Password: Password for database
+
+  Click Save.
+
+  v. WSO2 Identity Server - Identity Datasource connection information
+
+  - JDBC URL:
+
+    - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
+
+    - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
+
+  - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
+
+  - Validation Query: SELECT 1
+
+  - Username: Username for database
+
+  - Password: Password for database
+
+  Click Save.
+
+  vi. WSO2 Identity Server - Identity Server Analytics Datasource connection information
+
+  - JDBC URL:
+
+    - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&useSSL=false`
+
+    - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
+
+  - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
+
+  - Validation Query: SELECT 1
+
+  - Username: Username for database
+
+  - Password: Password for database
+
+  Note that the JDBC URL for MySQL does not contain &amp;. Instead, it indicates the & symbol. This is due to the fact that the first two configurations save the configuration data in XML format, and &amp; is used as an escape character. However, this configuration stores its data in YAML and therefore, an escape character is not required.
+
+  Click Save.
+
+  vii. Errands contain health check jobs for the Identity server nodes. These jobs check if the nodes are alive, and responding to requests as expected. These health checks begin running after the relevant nodes have been deployed. The execution of errands are enabled by default. However, users have the option to disable the execution of errands.
+
+  viii. Resource Config contains deployment information for each job. Users have the options to change the number of instances, persistent disk types, VM types, etc. for each job.
+
+  ix. Return to the **Installation Dashboard** in Ops Manager and click **Review Pending Changes**.            
+
+  ![Review pending changes](images/review-pending-changes.png)
+
+  x. Select the checkbox for Identity Server and click Apply Changes.
+
+  ![Apply changes](images/apply-changes.png)
 
 ## Output
 
@@ -107,7 +224,7 @@ To log into the created instances, run the following commands in the BOSH direct
 5. Access the WSO2 Identity Server Analytics management console using the following URL. Here the domain name refers to the domain name of the Pivotal environment where the tile is deployed.
 
     ```
-    https://wso2is.sys.<domain_name>/carbon
+    https://wso2is-analytics-dashboard.sys.<domain_name>/portal
     ```
 
 ## Delete deployment
@@ -117,7 +234,6 @@ To log into the created instances, run the following commands in the BOSH direct
     ```
     bosh -d <name> delete-deployment
     ```
-
 
 ## BOSH release structure
 
