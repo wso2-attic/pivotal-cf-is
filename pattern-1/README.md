@@ -32,7 +32,6 @@ For step-by-step guidelines to manage the BOSH release and to build the PCF tile
         - [mssql-jdbc-7.0.0.jre8.jar](https://www.microsoft.com/en-us/download/details.aspx?id=57175)
         - [mysql-connector-java-5.1.45-bin.jar](https://dev.mysql.com/downloads/connector/j/)
 
-
 3. Clone this Git repository.
 
     ```
@@ -74,8 +73,106 @@ In order to build the CF tile for deployment pattern 1, follow the below steps.
     ```
     Executing this script will generate the tile for WSO2 IS 5.7.0 deployment. The tile will be created in the root of the ```product``` folder under tile directory.
 
-4. Upload the tile to the Pivotal Environment and configure it.
+    ## Install Identity Server in PCF
 
+    1. Log in to PCF Ops Manager and upload the tile built by clicking **Import a Product**.
+
+    2. After the tile is uploaded, add the tile to the PCF environment by clicking the + icon next to it.
+    ![Add a new tile](images/add-new-tile.png)
+
+    3. After the tile is added to the environment, click on the Identity Server tile in the PCF environment to add configurations to the setup.               
+    ![Apply configurations](images/apply-config.png)
+
+      i. AZ and Network Assignments Page:
+      - Place singleton jobs in: Select the AZ in which the Identity server VM needs to run. The broker runs as a singleton job
+      - Balance other jobs in: Select any combination of AZs.
+      - Network: Select pcf-pas-network
+
+      Click save.
+
+      ii. WSO2 Identity Server - BPS Datasource connection information
+
+      - JDBC URL:
+
+        - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
+
+        - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
+
+      - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
+
+      - Validation Query: SELECT 1
+
+      - Username: Username for database
+
+      - Password: Password for database
+
+      Click Save.
+
+      iii. WSO2 Identity Server - Registry and User Management Datasource connection information
+
+      - JDBC URL:
+
+        - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
+
+        - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
+
+      - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
+
+      - Validation Query: SELECT 1
+
+      - Username: Username for database
+
+      - Password: Password for database
+
+      Click Save.
+
+      iv. WSO2 Identity Server - Configuration Registry Datasource connection information
+
+      - JDBC URL:
+
+        - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
+
+        - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
+
+      - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
+
+      - Validation Query: SELECT 1
+
+      - Username: Username for database
+
+      - Password: Password for database
+
+      Click Save.
+
+      v. WSO2 Identity Server - Identity Datasource connection information
+
+      - JDBC URL:
+
+        - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
+
+        - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
+
+      - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
+
+      - Validation Query: SELECT 1
+
+      - Username: Username for database
+
+      - Password: Password for database
+
+      Click Save.
+
+      vi. Errands contain health check jobs for the Identity server nodes. These jobs check if the nodes are alive, and responding to requests as expected. These health checks begin running after the relevant nodes have been deployed. The execution of errands are enabled by default. However, users have the option to disable the execution of errands.
+
+      vii. Resource Config contains deployment information for each job. Users have the options to change the number of instances, persistent disk types, VM types, etc. for each job.
+
+      viii. Return to the **Installation Dashboard** in Ops Manager and click **Review Pending Changes**.            
+
+      ![Review pending changes](images/review-pending-changes.png)
+
+      ix. Select the checkbox for Identity Server and click Apply Changes.
+
+      ![Apply changes](images/apply-changes.png)
 
 ## Output
 
