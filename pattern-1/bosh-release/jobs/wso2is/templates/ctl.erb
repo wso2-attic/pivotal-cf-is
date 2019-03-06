@@ -108,6 +108,9 @@ case $1 in
 
     ln -s ${NFS_SHARE_SERVER_DIR}/server $WSO2_IS_HOME/repository/deployment
 
+    # Create symbolic link for logging
+    ln -s $WSO2_IS_HOME/repository/logs/ ${log_dir}
+
     $WSO2_IS_HOME/bin/wso2server.sh start
 
     # Sleep for a little while so the server comes up
