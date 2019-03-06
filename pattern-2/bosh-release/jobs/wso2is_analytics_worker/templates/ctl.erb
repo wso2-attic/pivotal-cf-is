@@ -85,6 +85,9 @@ case $1 in
     # Here add any libraries your application needs:
     cp /var/vcap/packages/jdbcdrivers/* ${WSO2_IS_ANALYTICS_HOME}/lib/
 
+    # Create symbolic link for logging
+    ln -s $WSO2_IS_ANALYTICS_HOME/wso2/worker/logs ${log_dir}
+
     $WSO2_IS_ANALYTICS_HOME/bin/worker.sh start
 
     # Sleep for a little while so the server comes up
