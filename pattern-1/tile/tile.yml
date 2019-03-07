@@ -28,9 +28,9 @@ label: WSO2 Identity Server 5.7.0 - Pattern 1
 description: PCF Tile for WSO2 Identity Server 5.7.0
 
 stemcell_criteria:
-  os: ubuntu-trusty
+  os: ubuntu-xenial
   requires_cpi: false
-  version: '3541'
+  version: '170.15'
 
 forms:
 - name: bps_ds

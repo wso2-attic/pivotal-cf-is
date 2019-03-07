@@ -65,7 +65,7 @@ dpkg -s nfs-common >/dev/null 2>&1
 if [ $? -ne 0 ] ; then
   log_debug "Installing NFS Client"
   sudo apt-get update
-  sudo apt-get install nfs-common
+  sudo apt-get install nfs-common -y
 fi
 
 mkdir -p ${NFS_SHARE_SERVER_DIR}
