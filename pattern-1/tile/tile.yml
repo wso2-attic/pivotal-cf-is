@@ -52,13 +52,9 @@ forms:
   - name: bps_db_query
     type: string
     label: Validation Query
-  - name: bps_db_username
-    type: string
-    label: Username
-  - name: bps_db_password
-    type: secret
-    label: Password
-    forms:
+  - name: bps_db_credentials
+    label: BPS Datasource Credentials
+    type: simple_credentials
 - name: user_db
   label: Registry and User Management Datasource connection information
   description: WSO2 Identity Server - Registry and User Management Datasource connection information
@@ -78,12 +74,9 @@ forms:
   - name: user_db_query
     type: string
     label: Validation Query
-  - name: user_db_username
-    type: string
-    label: Username
-  - name: user_db_password
-    type: secret
-    label: Password
+  - name: user_db_credentials
+    label: User DB Credentials
+    type: simple_credentials
 - name: conf_reg_db
   label: Configuration Registry Datasource connection information
   description: WSO2 Identity Server - Configuration Registry Datasource connection information
@@ -103,12 +96,9 @@ forms:
   - name: conf_reg_db_query
     type: string
     label: Validation Query
-  - name: conf_reg_db_username
-    type: string
-    label: Username
-  - name: conf_reg_db_password
-    type: secret
-    label: Password
+  - name: conf_reg_db_credentials
+    label: Configuration Registry DB Credentials
+    type: simple_credential
 - name: identity_db
   label: Identity Datasource connection information
   description: WSO2 Identity Server - Identity Datasource connection information
@@ -128,12 +118,9 @@ forms:
   - name: identity_db_query
     type: string
     label: Validation Query
-  - name: identity_db_username
-    type: string
-    label: Username
-  - name: identity_db_password
-    type: secret
-    label: Password
+  - name: identity_db_credentials
+    label: Identity DB Credentials
+    type: simple_credential
 
 packages:
 - name: routing_release
@@ -187,26 +174,26 @@ packages:
           jdbc_url: (( .properties.bps_db_jdbc_url.value ))
           driver: (( .properties.bps_db_driver.value ))
           query: (( .properties.bps_db_query.value ))
-          username: (( .properties.bps_db_username.value ))
-          password: (( .properties.bps_db_password.value ))
+          username: (( .properties.bps_db_credentials.identity ))
+          password: (( .properties.bps_db_credentials.password ))
         user_db:
           jdbc_url: (( .properties.user_db_jdbc_url.value ))
           driver: (( .properties.user_db_driver.value ))
           query: (( .properties.user_db_query.value ))
-          username: (( .properties.user_db_username.value ))
-          password: (( .properties.user_db_password.value ))
+          username: (( .properties.user_db_credentials.identity ))
+          password: (( .properties.user_db_credentials.password ))
         conf_reg_db:
           jdbc_url: (( .properties.conf_reg_db_jdbc_url.value ))
           driver: (( .properties.conf_reg_db_driver.value ))
           query: (( .properties.conf_reg_db_query.value ))
-          username: (( .properties.conf_reg_db_username.value ))
-          password: (( .properties.conf_reg_db_password.value ))
+          username: (( .properties.conf_reg_db_credentials.identity ))
+          password: (( .properties.conf_reg_db_credentials.password ))
         identity_db:
           jdbc_url: (( .properties.identity_db_jdbc_url.value ))
           driver: (( .properties.identity_db_driver.value ))
           query: (( .properties.identity_db_query.value ))
-          username: (( .properties.identity_db_username.value ))
-          password: (( .properties.identity_db_password.value ))
+          username: (( .properties.identity_db_credentials.identity ))
+          password: (( .properties.identity_db_credentials.password ))
       route_registrar:
         routes:
         - name: wso2is
