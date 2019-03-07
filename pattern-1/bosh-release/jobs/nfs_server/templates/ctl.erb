@@ -51,7 +51,7 @@ log_debug "Kicking off ctl script as `whoami` with $1"
 dpkg -s nfs-kernel-server >/dev/null 2>&1
 if [ $? -ne 0 ] ; then
   apt-get update
-  apt-get install nfs-kernel-server
+  apt-get install nfs-kernel-server -y
 fi
 
 # create the share directory and set permission
