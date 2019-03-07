@@ -120,7 +120,7 @@ case $1 in
     ln -s ${NFS_SHARE_TENANTS_DIR}/tenants $WSO2_IS_HOME/repository
 
     # Create symbolic link for logging
-    ln -s $WSO2_IS_HOME/repository/logs/ ${log_dir}
+    ln -s $WSO2_IS_HOME/repository/logs ${log_dir}
 
     $WSO2_IS_HOME/bin/wso2server.sh start
 
