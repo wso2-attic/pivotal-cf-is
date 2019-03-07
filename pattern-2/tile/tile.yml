@@ -201,12 +201,13 @@ packages:
           from: nats
           deployment: (( ..cf.deployment_name ))
     - name: health_check
-      instances: wso2is_analytics_dashboard
+      instances:
+        - wso2is_analytics_dashboard
       release: wso2is-release
       colocated: true
       post_deploy: true
       run_default: on
-      label: IS Health Check
+      label: IS Analytics Dashboard Health Check
       description: Checks if Identity Server Analytics Dashboard is up and running
     memory: 4096
     ephemeral_disk: 4096
@@ -249,7 +250,8 @@ packages:
           from: nats
           deployment: (( ..cf.deployment_name ))
     - name: health_check
-      instances: wso2is
+      instances:
+        - wso2is
       release: wso2is-release
       colocated: true
       post_deploy: true
