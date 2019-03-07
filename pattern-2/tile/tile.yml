@@ -217,6 +217,7 @@ packages:
           from: nats
           deployment: (( ..cf.deployment_name ))
     - name: health_check
+      instances: wso2is_analytics_dashboard
       release: wso2is-release
       colocated: true
       post_deploy: true
@@ -264,6 +265,7 @@ packages:
           from: nats
           deployment: (( ..cf.deployment_name ))
     - name: health_check
+      instances: wso2is
       release: wso2is-release
       colocated: true
       post_deploy: true

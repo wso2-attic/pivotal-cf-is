@@ -168,6 +168,7 @@ packages:
           from: nats
           deployment: (( ..cf.deployment_name ))
     - name: health_check
+      instances: wso2is
       release: wso2is-release
       colocated: true
       post_deploy: true
