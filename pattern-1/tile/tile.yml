@@ -98,7 +98,7 @@ forms:
     label: Validation Query
   - name: conf_reg_db_credentials
     label: Configuration Registry DB Credentials
-    type: simple_credential
+    type: simple_credentials
 - name: identity_db
   label: Identity Datasource connection information
   description: WSO2 Identity Server - Identity Datasource connection information
@@ -120,7 +120,7 @@ forms:
     label: Validation Query
   - name: identity_db_credentials
     label: Identity DB Credentials
-    type: simple_credential
+    type: simple_credentials
 
 packages:
 - name: routing_release
@@ -155,7 +155,8 @@ packages:
           from: nats
           deployment: (( ..cf.deployment_name ))
     - name: health_check
-      instances: wso2is
+      instances:
+       - wso2is
       release: wso2is-release
       colocated: true
       post_deploy: true
