@@ -10,8 +10,8 @@ health_check() {
     then
         status_code=$(curl --write-out %{http_code} --silent --output /dev/null -k ${1})
 
-        # Check if requests to the health check endpoint produces  200 response
-        if [[ "$status_code" -ne 200 ]] ; then
+        # Check if requests to the health check endpoint produces a valid response
+        if [[ "$status_code" -ne <%= p("health_check.status_code") %> ]] ; then
             >&2 echo "WSO2 IS $2 produces an invalid response: $status_code"
             exit 1
         else
@@ -24,13 +24,13 @@ health_check() {
     fi
 }
 
-carbonHealthCheckEP="https://localhost:9443/carbon/admin/login.jsp"
+healthCheckEP=<%= p("health_check.endpoint") %>
 COUNTER=0
 
 # While the endpoint is not alive, and the server has been retrying for less than 3 minutes
 while [ ${isAlive} -eq 0 ]&&[ ${COUNTER} -lt 18 ]; do
     sleep 10s
-    health_check ${carbonHealthCheckEP} Carbon
+    health_check ${healthCheckEP} "<%= p("health_check.name") %>"
     let COUNTER=COUNTER+1
 done
 
