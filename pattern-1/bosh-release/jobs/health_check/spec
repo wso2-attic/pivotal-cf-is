@@ -2,8 +2,14 @@
 name: health_check
 
 templates:
-    run.sh: bin/run
+    run.sh.erb: bin/run
 
 packages: []
 
-properties: {}
+properties:
+  health_check.endpoint:
+    description: Health Check endpoint
+  health_check.name:
+    description: Health Check name
+  health_check.status_code:
+    description: Health Check expected status code
