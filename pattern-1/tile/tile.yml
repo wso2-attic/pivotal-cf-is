@@ -170,6 +170,10 @@ packages:
     static_ip: 1
     max_in_flight: 1
     properties:
+      health_check:
+        endpoint: "https://localhost:9443/carbon/admin/login.jsp"
+        name: "Identity Server Carbon"
+        status_code: 200
       wso2is:
         bps_ds:
           jdbc_url: (( .properties.bps_db_jdbc_url.value ))
