@@ -73,16 +73,12 @@ forms:
   - name: user_db_credentials
     label: Registry and User Management Datasource Credentials
     type: simple_credentials
-- name: conf_reg_db
-  label: Configuration Registry Datasource connection information
-  description: WSO2 Identity Server - Configuration Registry Datasource connection information
-  properties:
   - name: conf_reg_db_jdbc_url
     type: string
-    label: JDBC URL
+    label: Registry Datasource JDBC URL
   - name: conf_reg_db_driver
     type: dropdown_select
-    label: Driver Class Name
+    label: Registry Datasource Driver Class Name
     options:
     - name: com.mysql.jdbc.Driver
       label: com.mysql.jdbc.Driver
@@ -91,20 +87,16 @@ forms:
       label: com.microsoft.sqlserver.jdbc.SQLServerDriver
   - name: conf_reg_db_query
     type: string
-    label: Validation Query
+    label: Registry Datasource Validation Query
   - name: conf_reg_db_credentials
     label: Configuration Registry DB Credentials
     type: simple_credentials
-- name: identity_db
-  label: Identity Datasource connection information
-  description: WSO2 Identity Server - Identity Datasource connection information
-  properties:
   - name: identity_db_jdbc_url
     type: string
-    label: JDBC URL
+    label: Identity Datasource JDBC URL
   - name: identity_db_driver
     type: dropdown_select
-    label: Driver Class Name
+    label: Identity Datasource Driver Class Name
     options:
     - name: com.mysql.jdbc.Driver
       label: com.mysql.jdbc.Driver
@@ -113,9 +105,9 @@ forms:
       label: com.microsoft.sqlserver.jdbc.SQLServerDriver
   - name: identity_db_query
     type: string
-    label: Validation Query
+    label: Identity Datasource Validation Query
   - name: identity_db_credentials
-    label: Identity DB Credentials
+    label: Identity Datasource Credentials
     type: simple_credentials
 - name: Certificate Information
   label: Trusted CA certificate
