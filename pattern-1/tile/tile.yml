@@ -33,16 +33,16 @@ stemcell_criteria:
   version: '170.15'
 
 forms:
-- name: bps_ds
-  label: BPS Datasource connection information
-  description: WSO2 Identity Server - BPS Datasource connection information
+- name: Database configurations
+  label: Database configurations
+  description: Database configurations
   properties:
   - name: bps_db_jdbc_url
     type: string
-    label: JDBC URL
+    label: BPS Datasource JDBC URL
   - name: bps_db_driver
     type: dropdown_select
-    label: Driver Class Name
+    label: BPS Datasource Driver Class Name
     options:
     - name: com.mysql.jdbc.Driver
       label: com.mysql.jdbc.Driver
@@ -51,20 +51,16 @@ forms:
       label: com.microsoft.sqlserver.jdbc.SQLServerDriver
   - name: bps_db_query
     type: string
-    label: Validation Query
+    label: BPS Datasource Validation Query
   - name: bps_db_credentials
     label: BPS Datasource Credentials
     type: simple_credentials
-- name: user_db
-  label: Registry and User Management Datasource connection information
-  description: WSO2 Identity Server - Registry and User Management Datasource connection information
-  properties:
   - name: user_db_jdbc_url
     type: string
-    label: JDBC URL
+    label: Registry and User Management Datasource JDBC URL
   - name: user_db_driver
     type: dropdown_select
-    label: Driver Class Name
+    label: Registry and User Management Datasource Driver Class Name
     options:
     - name: com.mysql.jdbc.Driver
       label: com.mysql.jdbc.Driver
@@ -73,9 +69,9 @@ forms:
       label: com.microsoft.sqlserver.jdbc.SQLServerDriver
   - name: user_db_query
     type: string
-    label: Validation Query
+    label: Registry and User Management Datasource Validation Query
   - name: user_db_credentials
-    label: User DB Credentials
+    label: Registry and User Management Datasource Credentials
     type: simple_credentials
 - name: conf_reg_db
   label: Configuration Registry Datasource connection information
