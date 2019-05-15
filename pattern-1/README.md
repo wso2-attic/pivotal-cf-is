@@ -73,106 +73,110 @@ In order to build the CF tile for deployment pattern 1, follow the below steps.
     ```
     Executing this script will generate the tile for WSO2 IS 5.7.0 deployment. The tile will be created in the root of the ```product``` folder under tile directory.
 
-    ## Install Identity Server in PCF
+## Install Identity Server in PCF
 
-    1. Log in to PCF Ops Manager and upload the tile built by clicking **Import a Product**.
+  1. Log in to PCF Ops Manager and upload the tile built by clicking **Import a Product**.
 
-    2. After the tile is uploaded, add the tile to the PCF environment by clicking the + icon next to it.
-    ![Add a new tile](images/add-new-tile.png)
+  2. After the tile is uploaded, add the tile to the PCF environment by clicking the + icon next to it.
+  ![Add a new tile](images/add-new-tile.png)
 
-    3. After the tile is added to the environment, click on the Identity Server tile in the PCF environment to add configurations to the setup.               
-    ![Apply configurations](images/apply-config.png)
+  3. After the tile is added to the environment, click on the Identity Server tile in the PCF environment to add configurations to the setup.
 
-      i. AZ and Network Assignments Page:
-      - Place singleton jobs in: Select the AZ in which the Identity server VM needs to run. The broker runs as a singleton job
-      - Balance other jobs in: Select any combination of AZs.
-      - Network: Select pcf-pas-network
+  i. AZ and Network Assignments Page:               
+  ![AZ and network assignments](images/az-and-network-assignments.png)
+  - Place singleton jobs in: Select the AZ in which the Identity server VM needs to run. The broker runs as a singleton job
+  - Balance other jobs in: Select any combination of AZs.
+  - Network: Select pcf-pas-network
 
-      Click save.
+  Click save.
 
-      ii. WSO2 Identity Server - BPS Datasource connection information
+  ii. Datasource configurayions.              
+  ![Datasource configurations](images/datasource-configurations.png)
 
-      - JDBC URL:
+  - WSO2 Identity Server - BPS Datasource connection information
 
-        - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
+    - **JDBC URL**:
 
-        - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
+      - **MySQL**: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
 
-      - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
+      - **MS SQL**: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
 
-      - Validation Query: SELECT 1
+    - **Driver Class Name**: Select the class name of the JDBC driver relevant to the database being used.
 
-      - Username: Username for database
+    - **Validation Query**: SELECT 1
 
-      - Password: Password for database
+    - **Username**: Username for database
 
-      Click Save.
+    - **Password**: Password for database
 
-      iii. WSO2 Identity Server - Registry and User Management Datasource connection information
+  - WSO2 Identity Server - Registry and User Management Datasource connection information
 
-      - JDBC URL:
+    - **JDBC URL**:
 
-        - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
+      - **MySQL**: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
 
-        - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
+      - **MS SQL**: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
 
-      - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
+    - **Driver Class Name**: Select the class name of the JDBC driver relevant to the database being used.
 
-      - Validation Query: SELECT 1
+    - **Validation Query**: SELECT 1
 
-      - Username: Username for database
+    - **Username**: Username for database
 
-      - Password: Password for database
+    - **Password**: Password for database
 
-      Click Save.
+  - WSO2 Identity Server - Configuration Registry Datasource connection information
 
-      iv. WSO2 Identity Server - Configuration Registry Datasource connection information
+    - **JDBC URL**:
 
-      - JDBC URL:
+      - **MySQL**: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
 
-        - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
+      - **MS SQL**: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
 
-        - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
+    - **Driver Class Name**: Select the class name of the JDBC driver relevant to the database being used.
 
-      - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
+    - **Validation Query**: SELECT 1
 
-      - Validation Query: SELECT 1
+    - **Username**: Username for database
 
-      - Username: Username for database
+    - **Password**: Password for database
 
-      - Password: Password for database
+  - WSO2 Identity Server - Identity Datasource connection information
 
-      Click Save.
+    - **JDBC URL**:
 
-      v. WSO2 Identity Server - Identity Datasource connection information
+      - **MySQL**: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
 
-      - JDBC URL:
+      - **MS SQL**: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
 
-        - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
+    - **Driver Class Name**: Select the class name of the JDBC driver relevant to the database being used.
 
-        - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
+    - **Validation Query**: SELECT 1
 
-      - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
+    - **Username**: Username for database
 
-      - Validation Query: SELECT 1
+    - **Password**: Password for database
 
-      - Username: Username for database
+  Click Save.
 
-      - Password: Password for database
+  iii. Trusted CA certificate
+  ![Trusted CA certificate](images/trusted-ca-certificate.png)
 
-      Click Save.
+  vi. Errands contain health check jobs for the Identity server nodes. These jobs check if the nodes are alive, and responding to requests as expected. These health checks begin running after the relevant nodes have been deployed. The execution of errands are enabled by default. However, users have the option to disable the execution of errands.
 
-      vi. Errands contain health check jobs for the Identity server nodes. These jobs check if the nodes are alive, and responding to requests as expected. These health checks begin running after the relevant nodes have been deployed. The execution of errands are enabled by default. However, users have the option to disable the execution of errands.
+  vii. Resource Config contains deployment information for each job. Users have the options to change the number of instances, persistent disk types, VM types, etc. for each job.
 
-      vii. Resource Config contains deployment information for each job. Users have the options to change the number of instances, persistent disk types, VM types, etc. for each job.
+  viii. Return to the **Installation Dashboard** in Ops Manager and click **Review Pending Changes**.            
 
-      viii. Return to the **Installation Dashboard** in Ops Manager and click **Review Pending Changes**.            
+  ![Review pending changes](images/review-pending-changes.png)
 
-      ![Review pending changes](images/review-pending-changes.png)
+  ix. Select the checkbox for Identity Server and click Apply Changes.
 
-      ix. Select the checkbox for Identity Server and click Apply Changes.
+  ![Apply changes](images/apply-changes.png)
 
-      ![Apply changes](images/apply-changes.png)
+  Add the trusted certificate of the domain here.
+
+  Click save.
 
 ## Output
 
