@@ -88,6 +88,9 @@ properties:
   route_registrar.routes:
     description: routes registered for WSO2 APIM apps and gateway
 
+  wso2is.certs.value:
+    description: Trusted CA certificate
+
   cf.apps_domain:
     description: Domain shared by the UAA and CF API eg 'bosh-lite.com'
   cf.nats.host:
