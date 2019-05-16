@@ -90,7 +90,7 @@ In order to build the CF tile for deployment pattern 1, follow the below steps.
 
   Click save.
 
-  ii. Datasource configurayions.              
+  ii. Datasource configurations.              
   ![Datasource configurations](images/datasource-configurations.png)
 
   - WSO2 Identity Server - BPS Datasource connection information
