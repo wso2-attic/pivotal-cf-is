@@ -29,6 +29,10 @@ run_dir=/var/vcap/sys/run/wso2is
 log_dir=/var/vcap/sys/log/wso2is
 pid_file=${run_dir}/pid
 
+CA_CERT="<%= p("wso2is.certs.value") %>"
+ALIAS='custom'
+TRUSTSTORE_PASSWORD='wso2carbon'
+
 mkdir -p ${run_dir} ${log_dir}
 chown -R vcap:vcap ${run_dir} ${log_dir}
 
@@ -85,6 +89,8 @@ case $1 in
     export JAVA_HOME=`pwd`/jdk8u192-b12
     export JAVA_BINARY=${JAVA_HOME}/bin/java
 
+    KEYTOOL=`pwd`/jdk8u192-b12/jre/bin/keytool
+
     log_debug "JAVA_HOME: ${JAVA_HOME}"
     log_debug "JAVA_BINARY: ${JAVA_BINARY}"
 
@@ -93,6 +99,8 @@ case $1 in
     unzip $archive
     cd wso2is*
     WSO2_IS_HOME=`pwd`
+
+    KEYSTORE_PATH=${WSO2_IS_HOME}/resources/security/client-truststore.jks
 
     # Here any config files your application needs:
     cp -Tr ${job_dir}/repository/ ${WSO2_IS_HOME}/repository/
@@ -121,6 +129,14 @@ case $1 in
 
     # Create symbolic link for logging
     ln -s $WSO2_IS_HOME/repository/logs ${log_dir}
+
+    #write the cert details to a file
+    echo ${CA_CERT} >> tmp.cert
+
+    ${KEYTOOL} -import -noprompt -trustcacerts -alias ${ALIAS} -file tmp.cert \
+      -storetype JKS -keystore ${KEYSTORE_PATH} -storepass ${TRUSTSTORE_PASSWORD}
+
+    rm tmp.cert
 
     $WSO2_IS_HOME/bin/wso2server.sh start
 

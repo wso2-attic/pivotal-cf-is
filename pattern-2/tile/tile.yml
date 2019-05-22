@@ -127,6 +127,14 @@ forms:
   - name: analytics_db_credentials
     label: Identity Server Analytics Datasource Credentials
     type: simple_credentials
+- name: Certificate Information
+  label: Trusted CA certificate
+  description: Trusted CA certificate
+  properties:
+  - name: ca_cert
+    label: These certificates will be trusted by the deployed services
+    type: ca_certificate
+    configurable: true
 
 packages:
 - name: routing_release
@@ -163,6 +171,8 @@ packages:
     max_in_flight: 1
     properties:
       wso2is:
+        certs:
+          value: (( .properties.ca_cert.value ))
         analytics_db:
           jdbc_url: (( .properties.analytics_db_jdbc_url.value ))
           driver: (( .properties.analytics_db_driver.value ))
@@ -205,6 +215,8 @@ packages:
         name: "Identity Server Analytics Portal"
         status_code: 200
       wso2is:
+        certs:
+          value: (( .properties.ca_cert.value ))
         analytics_db:
           jdbc_url: (( .properties.analytics_db_jdbc_url.value ))
           driver: (( .properties.analytics_db_driver.value ))
@@ -254,6 +266,8 @@ packages:
         name: "Identity Server Carbon"
         status_code: 200
       wso2is:
+        certs:
+          value: (( .properties.ca_cert.value ))
         bps_ds:
           jdbc_url: (( .properties.bps_db_jdbc_url.value ))
           driver: (( .properties.bps_db_driver.value ))
