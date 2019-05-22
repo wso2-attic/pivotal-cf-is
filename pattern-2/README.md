@@ -80,117 +80,113 @@ In order to build the CF tile for deployment pattern 2, follow the below steps.
 2. After the tile is uploaded, add the tile to the PCF environment by clicking the + icon next to it.
 ![Add a new tile](images/add-new-tile.png)
 
-3. After the tile is added to the environment, click on the Identity Server tile in the PCF environment to add configurations to the setup.               
-![Apply configurations](images/apply-config.png)
+3. After the tile is added to the environment, click on the Identity Server tile in the PCF environment to add configurations to the setup.
 
-  i. AZ and Network Assignments Page:
+  i. AZ and Network Assignments Page
+  ![AZ and network assignments](images/az-and-network-assignments.png)
+
   - Place singleton jobs in: Select the AZ in which the Identity server VM needs to run. The broker runs as a singleton job
   - Balance other jobs in: Select any combination of AZs.
   - Network: Select pcf-pas-network
 
   Click save.
 
-  ii. WSO2 Identity Server - BPS Datasource connection information
+  ii. Datasource configurations
+  ![Datasource configurations](images/datasource-configurations.png)
 
-  - JDBC URL:
+  - WSO2 Identity Server - BPS Datasource connection information
 
-    - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
+    - JDBC URL:
 
-    - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
+      - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
 
-  - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
+      - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
 
-  - Validation Query: SELECT 1
+    - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
 
-  - Username: Username for database
+    - Validation Query: SELECT 1
 
-  - Password: Password for database
+    - Username: Username for database
 
-  Click Save.
+    - Password: Password for database
 
-  iii. WSO2 Identity Server - Registry and User Management Datasource connection information
+  - WSO2 Identity Server - Registry and User Management Datasource connection information
 
-  - JDBC URL:
+    - JDBC URL:
 
-    - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
+      - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
 
-    - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
+      - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
 
-  - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
+    - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
 
-  - Validation Query: SELECT 1
+    - Validation Query: SELECT 1
 
-  - Username: Username for database
+    - Username: Username for database
 
-  - Password: Password for database
+    - Password: Password for database
 
-  Click Save.
+  - WSO2 Identity Server - Configuration Registry Datasource connection information
 
-  iv. WSO2 Identity Server - Configuration Registry Datasource connection information
+    - JDBC URL:
 
-  - JDBC URL:
+      - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
 
-    - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
+      - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
 
-    - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
+    - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
 
-  - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
+    - Validation Query: SELECT 1
 
-  - Validation Query: SELECT 1
+    - Username: Username for database
 
-  - Username: Username for database
+    - Password: Password for database
 
-  - Password: Password for database
+  - WSO2 Identity Server - Identity Datasource connection information
 
-  Click Save.
+    - JDBC URL:
 
-  v. WSO2 Identity Server - Identity Datasource connection information
+      - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
 
-  - JDBC URL:
+      - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
 
-    - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&amp;useSSL=false`
+    - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
 
-    - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
+    - Validation Query: SELECT 1
 
-  - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
+    - Username: Username for database
 
-  - Validation Query: SELECT 1
+    - Password: Password for database
 
-  - Username: Username for database
+  - WSO2 Identity Server - Identity Server Analytics Datasource connection information
 
-  - Password: Password for database
+    - JDBC URL:
 
-  Click Save.
+      - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&useSSL=false`
 
-  vi. WSO2 Identity Server - Identity Server Analytics Datasource connection information
+      - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
 
-  - JDBC URL:
+    - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
 
-    - MySQL: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&useSSL=false`
+    - Validation Query: SELECT 1
 
-    - MS SQL: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
+    - Username: Username for database
 
-  - Driver Class Name: Select the class name of the JDBC driver relevant to the database being used.
+    - Password: Password for database
 
-  - Validation Query: SELECT 1
-
-  - Username: Username for database
-
-  - Password: Password for database
-
-  Note that the JDBC URL for MySQL does not contain &amp;. Instead, it indicates the & symbol. This is due to the fact that the first two configurations save the configuration data in XML format, and &amp; is used as an escape character. However, this configuration stores its data in YAML and therefore, an escape character is not required.
+  > Note that the JDBC URL for MySQL does not contain &amp;. Instead, it indicates the & symbol. This is due to the fact that the first two configurations save the configuration data in XML format, and &amp; is used as an escape character. However, this configuration stores its data in YAML and therefore, an escape character is not required.
 
   Click Save.
 
-  vii. Errands contain health check jobs for the Identity server nodes. These jobs check if the nodes are alive, and responding to requests as expected. These health checks begin running after the relevant nodes have been deployed. The execution of errands are enabled by default. However, users have the option to disable the execution of errands.
+  iii. Errands contain health check jobs for the Identity server nodes. These jobs check if the nodes are alive, and responding to requests as expected. These health checks begin running after the relevant nodes have been deployed. The execution of errands are enabled by default. However, users have the option to disable the execution of errands.
 
-  viii. Resource Config contains deployment information for each job. Users have the options to change the number of instances, persistent disk types, VM types, etc. for each job.
+  iv. Resource Config contains deployment information for each job. Users have the options to change the number of instances, persistent disk types, VM types, etc. for each job.
 
-  ix. Return to the **Installation Dashboard** in Ops Manager and click **Review Pending Changes**.            
+  v. Return to the **Installation Dashboard** in Ops Manager and click **Review Pending Changes**.            
 
   ![Review pending changes](images/review-pending-changes.png)
 
-  x. Select the checkbox for Identity Server and click Apply Changes.
+  vi. Select the checkbox for Identity Server and click Apply Changes.
 
   ![Apply changes](images/apply-changes.png)
 
