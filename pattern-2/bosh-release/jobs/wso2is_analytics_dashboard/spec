@@ -3,8 +3,6 @@ name: wso2is_analytics_dashboard
 templates:
   ctl.erb: bin/ctl
   conf/dashboard/deployment.yaml.erb: conf/dashboard/deployment.yaml
-  repository/resources/security/client-truststore.jks: repository/resources/security/client-truststore.jks
-  repository/resources/security/wso2carbon.jks: repository/resources/security/wso2carbon.jks
 
 packages:
 - openjdk
@@ -42,3 +40,6 @@ properties:
     description: Analytics Datasource driver class name
   wso2is.analytics_db.query:
     description: Analytics Datasource validation query
+
+  wso2is.certs.value:
+    description: Trusted CA certificate
