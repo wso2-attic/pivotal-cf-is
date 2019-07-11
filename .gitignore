@@ -34,10 +34,12 @@ pattern-*/bosh-release/deployment/*
 **/releases/*
 
 **/tile/product/
-**/tile/cache/
 !**/tile/product/.gitkeep
+**/tile/cache/
+!**/tile/cache/.gitkeep
 **/tile/release/
-**/tile/routing-0.178.0.tgz
+**/tile/routing-0.188.0.tgz
+**/tile/bpm-release-1.1.0.tgz
 **/tile/wso2is-5.7.0*
 **/tile/tile-history.yml
 

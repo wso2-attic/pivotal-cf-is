@@ -27,7 +27,7 @@ set -e
 : ${wso2_product_version:="5.7.0"}
 : ${wso2_product_pack_identifier:="${wso2_product}-${wso2_product_version}"}
 : ${wso2_product_distribution:=${wso2_product_pack_identifier}"*.zip"}
-: ${jdk_distribution:="OpenJDK8U-jdk_x64_linux_hotspot_8u192b12.tar.gz"}
+: ${jdk_distribution:="OpenJDK8U-jdk_x64_linux_hotspot_8u212b04.tar.gz"}
 : ${mysql_driver:="mysql-connector-java-5.1.*-bin.jar"}
 : ${mssql_driver:="mssql-jdbc-7.0.0.jre8.jar"}
 
