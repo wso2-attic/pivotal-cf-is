@@ -120,7 +120,10 @@ forms:
 packages:
 - name: routing_release
   type: bosh-release
-  path: routing-0.178.0.tgz
+  path: routing-0.188.0.tgz
+- name: bpm_release
+  type: bosh-release
+  path: bpm-release-1.1.0.tgz
 
 - name: wso2is
   type: bosh-release
@@ -128,6 +131,8 @@ packages:
   jobs:
   - name: nfs_server
     templates:
+    - name: bpm
+      release: bpm
     - name: nfs_server
       release: wso2is-release
     memory: 4096
@@ -204,3 +209,6 @@ packages:
           registration_interval: 20s
           uris:
           - wso2is.(( ..cf.cloud_controller.system_domain.value ))
+          router_group: wso2is
+          external_port: 9443
+          server_cert_domain_san: localhost
