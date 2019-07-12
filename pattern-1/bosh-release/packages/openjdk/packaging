@@ -1,7 +1,7 @@
 # abort script on any command that exit with a non zero value
 set -e
 
-archive=`echo openjdk/OpenJDK8U-jdk_x64_linux_hotspot_8u192b12.tar.gz`
+archive=`echo openjdk/OpenJDK8U-jdk_x64_linux_hotspot_8u212b04.tar.gz`
 
 if [[ -f $archive ]] ; then
   echo "Open JDK archive found"
