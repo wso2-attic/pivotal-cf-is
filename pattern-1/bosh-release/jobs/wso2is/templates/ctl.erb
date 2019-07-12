@@ -90,10 +90,10 @@ case $1 in
     pushd ${JDK_HOME}
     archive=`ls OpenJDK*gz`
     tar -zxvf $archive
-    export JAVA_HOME=`pwd`/jdk8u192-b12
+    export JAVA_HOME=`pwd`/jdk8u212-b04
     export JAVA_BINARY=${JAVA_HOME}/bin/java
 
-    KEYTOOL=`pwd`/jdk8u192-b12/jre/bin/keytool
+    KEYTOOL=`pwd`/jdk8u212-b04/jre/bin/keytool
 
     log_debug "JAVA_HOME: ${JAVA_HOME}"
     log_debug "JAVA_BINARY: ${JAVA_BINARY}"
