@@ -19,7 +19,6 @@
 #
 # ----------------------------------------------------------------------------
 
-set +e
 set -xv
 
 script_dir=$(dirname $0)
@@ -50,8 +49,22 @@ log_debug "Kicking off ctl script as `whoami` with $1"
 
 dpkg -s nfs-kernel-server >/dev/null 2>&1
 if [ $? -ne 0 ] ; then
+  chmod 1777 /tmp
   apt-get update
-  apt-get install nfs-kernel-server -y
+  if [ $? -ne 0 ] ; then
+    log_debug "apt-get update failed"
+  fi
+  log_debug "Installing nfs-common"
+  apt-get install nfs-common=1:1.2.8-9ubuntu12 -y
+  if [ $? -ne 0 ] ; then
+    log_debug "Installing nfs-common failed"
+  fi
+
+  log_debug "Installing nfs-kernel-server"
+  apt-get install nfs-kernel-server=1:1.2.8-9ubuntu12 -y
+  if [ $? -ne 0 ] ; then
+    log_debug "Installing nfs-kernel-server failed"
+  fi
 fi
 
 # create the share directory and set permission
