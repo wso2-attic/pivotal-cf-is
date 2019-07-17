@@ -131,8 +131,6 @@ packages:
   jobs:
   - name: nfs_server
     templates:
-    - name: bpm
-      release: bpm
     - name: nfs_server
       release: wso2is-release
     memory: 4096
@@ -143,11 +141,10 @@ packages:
   - name: wso2is
     instances: 2
     templates:
+    - name: bpm
+      release: bpm
     - name: wso2is
       release: wso2is-release
-      provides:
-        conn: {shared: true}
-      properties: {}
     - name: route_registrar
       release: routing
       consumes:
@@ -155,8 +152,7 @@ packages:
           from: nats
           deployment: (( ..cf.deployment_name ))
     - name: health_check
-      instances:
-       - wso2is
+      instances: [wso2is]
       release: wso2is-release
       colocated: true
       post_deploy: true
