@@ -105,6 +105,10 @@ case $1 in
     WSO2_IS_HOME=`pwd`
     KEYSTORE_PATH=${WSO2_IS_HOME}/resources/security/client-truststore.jks
 
+    # Unzip shindig.war archive
+    unzip -d ${WSO2_IS_HOME}/repository/deployment/server/webapps/shindig ${WSO2_IS_HOME}/repository/deployment/server/webapps/shindig.war
+    rm ${WSO2_IS_HOME}/repository/deployment/server/webapps/shindig.war
+
     # Here any config files your application needs:
     cp -Tr ${job_dir}/repository/ ${WSO2_IS_HOME}/repository/
 
