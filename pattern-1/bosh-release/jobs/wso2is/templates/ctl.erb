@@ -103,7 +103,8 @@ case $1 in
     unzip $archive
     cd wso2is*
     WSO2_IS_HOME=`pwd`
-    KEYSTORE_PATH=${WSO2_IS_HOME}/resources/security/client-truststore.jks
+    KEYSTORE_PATH=${WSO2_IS_HOME}/repository/resources/security/wso2carbon.jks
+    TRUSTSTORE_PATH=${WSO2_IS_HOME}/repository/resources/security/client-truststore.jks
 
     # Unzip shindig.war archive
     unzip -d ${WSO2_IS_HOME}/repository/deployment/server/webapps/shindig ${WSO2_IS_HOME}/repository/deployment/server/webapps/shindig.war
@@ -134,6 +135,9 @@ case $1 in
 
     ${KEYTOOL} -import -noprompt -trustcacerts -alias ${ALIAS} -file tmp.cert \
       -storetype JKS -keystore ${KEYSTORE_PATH} -storepass ${TRUSTSTORE_PASSWORD}
+
+    ${KEYTOOL} -import -noprompt -trustcacerts -alias ${ALIAS} -file tmp.cert \
+      -storetype JKS -keystore ${TRUSTSTORE_PATH} -storepass ${TRUSTSTORE_PASSWORD}
 
     rm tmp.cert
 
