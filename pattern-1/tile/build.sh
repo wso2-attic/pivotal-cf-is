@@ -17,4 +17,7 @@
 #
 # ------------------------------------------------------------------------
 
+rm cache/wso2is.tgz
+rm -rf product
+rm -rf release
 tile build --cache cache/
