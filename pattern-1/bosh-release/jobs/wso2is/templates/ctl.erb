@@ -46,7 +46,11 @@ export WSO2_IS_SERVER_PACKAGE=/var/vcap/packages/wso2is/
 export MIN_HEAP=<%= properties.wso2is.memory.min_heap %>
 export MAX_HEAP=<%= properties.wso2is.memory.max_heap %>
 export MAX_PERMGEN=<%= properties.wso2is.memory.max_permgen %>
-export JAVA_OPTS=" -Xmx${MAX_HEAP}m -Xms${MIN_HEAP}m -XX:MaxPermSize=${MAX_PERMGEN}m"
+
+export JAVA_OPTS=" -Xmx${MAX_HEAP}m -Xms${MIN_HEAP}m \
+  -XX:MaxPermSize=${MAX_PERMGEN}m -Djdk.tls.ephemeralDHKeySize=2048 \
+  -Djdk.tls.rejectClientInitiatedRenegotiation=true \
+  -Dhttpclient.hostnameVerifier=Strict"
 
 export DEBUG_LOG=${log_dir}/wso2is.log
 
