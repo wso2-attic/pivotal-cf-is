@@ -38,12 +38,14 @@
                    connectionUploadTimeout="120000"
                    maxKeepAliveRequests="200"
                    acceptCount="200"
-                   server="WSO2 Carbon Server"
+                   server="<%= p('route_registrar.routes')[0]['uris'][0] %> Server"
                    compression="on"
                    compressionMinSize="2048"
                    noCompressionUserAgents="gozilla, traviata"
                    compressableMimeType="text/html,text/javascript,application/x-javascript,application/javascript,application/xml,text/css,application/xslt+xml,text/xsl,image/gif,image/jpg,image/jpeg"
-                   URIEncoding="UTF-8"/>
+                   URIEncoding="UTF-8"
+                   ciphers="TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_DHE_RSA_WITH_AES_128_GCM_SHA256"
+                   />
 
         <!--
         optional attributes:
@@ -56,7 +58,7 @@
                    proxyPort="443"
                    bindOnInit="false"
                    sslProtocol="TLS"
-                   sslEnabledProtocols="TLSv1,TLSv1.1,TLSv1.2"
+                   sslEnabledProtocols="TLSv1.2"
                    maxHttpHeaderSize="8192"
                    acceptorThreadCount="2"
                    maxThreads="250"
@@ -66,7 +68,7 @@
                    connectionUploadTimeout="120000"
                    maxKeepAliveRequests="200"
                    acceptCount="200"
-                   server="WSO2 Carbon Server"
+                   server="<%= p('route_registrar.routes')[0]['uris'][0] %> Server"
                    clientAuth="want"
                    compression="on"
                    scheme="https"
@@ -77,7 +79,9 @@
                    compressableMimeType="text/html,text/javascript,application/x-javascript,application/javascript,application/xml,text/css,application/xslt+xml,text/xsl,image/gif,image/jpg,image/jpeg"
                    keystoreFile="${carbon.home}/repository/resources/security/wso2carbon.jks"
                    keystorePass="wso2carbon"
-                   URIEncoding="UTF-8"/>
+                   URIEncoding="UTF-8"
+                   ciphers="TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_DHE_RSA_WITH_AES_128_GCM_SHA256"
+                   />
 
 
         <Engine name="Catalina" defaultHost="localhost">
