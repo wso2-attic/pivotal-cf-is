@@ -8,9 +8,11 @@ templates:
   repository/conf/identity/sso-idp-config.xml.erb: repository/conf/identity/sso-idp-config.xml
   repository/conf/datasources/master-datasources.xml.erb: repository/conf/datasources/master-datasources.xml
   repository/conf/datasources/bps-datasources.xml.erb: repository/conf/datasources/bps-datasources.xml
-  repository/conf/tomcat/catalina-server.xml: repository/conf/tomcat/catalina-server.xml
+  repository/conf/tomcat/catalina-server.xml.erb: repository/conf/tomcat/catalina-server.xml
+  repository/conf/tomcat/context.xml: repository/conf/tomcat/context.xml
   repository/conf/carbon.xml.erb: repository/conf/carbon.xml
   repository/conf/consent-mgt-config.xml.erb: repository/conf/consent-mgt-config.xml
+  repository/conf/log4j.properties: repository/conf/log4j.properties
   repository/conf/registry.xml.erb: repository/conf/registry.xml
   repository/conf/user-mgt.xml.erb: repository/conf/user-mgt.xml
   repository/deployment/server/jaggeryapps/dashboard/conf/site.json.erb: repository/deployment/server/jaggeryapps/dashboard/conf/site.json
