@@ -90,9 +90,6 @@ properties:
   wso2is.memory.max_heap:
     description: "Max Heap in MB"
     default: 2048
-  wso2is.memory.max_permgen:
-    description: "Max permgen in MB"
-    default: 1024
 
   route_registrar.routes:
     description: routes registered for WSO2 APIM apps and gateway
