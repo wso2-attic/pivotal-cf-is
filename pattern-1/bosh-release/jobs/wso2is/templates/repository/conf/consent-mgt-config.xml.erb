@@ -18,22 +18,23 @@
     <DataSource>
         <!-- Include a data source name (jndiConfigName) from the set of data sources defined in master-datasources
         .xml -->
-        <Name>jdbc/WSO2IdentityDS</Name>
+        <!-- todo: make this optional. Make DataSource name configurable-->
+        <Name>jdbc/WSO2ConsentDS</Name>
     </DataSource>
     <PIIController>
-        <PiiController>change-me</PiiController>
-        <Contact>change-me</Contact>
-        <Email>change-me</Email>
-        <Phone>change-me</Phone>
+        <PiiController><%= p("wso2is.consent_mgt_conf.piicontroller") %></PiiController>
+        <Contact><%= p("wso2is.consent_mgt_conf.contact") %></Contact>
+        <Email><%= p("wso2is.consent_mgt_conf.email") %></Email>
+        <Phone><%= p("wso2is.consent_mgt_conf.phone") %></Phone>
         <OnBehalf>false</OnBehalf>
-        <PiiControllerUrl>change-me</PiiControllerUrl>
+        <PiiControllerUrl><%= p("wso2is.consent_mgt_conf.piicontroller_url") %></PiiControllerUrl>
         <Address>
-            <Country>change-me</Country>
-            <Locality>change-me</Locality>
-            <Region>change-me</Region>
-            <PostOfficeBoxNumber>change-me</PostOfficeBoxNumber>
-            <PostalCode>change-me</PostalCode>
-            <StreetAddress>change-me</StreetAddress>
+            <Country><%= p("wso2is.consent_mgt_conf.country") %></Country>
+            <Locality><%= p("wso2is.consent_mgt_conf.locality") %></Locality>
+            <Region><%= p("wso2is.consent_mgt_conf.region") %></Region>
+            <PostOfficeBoxNumber><%= p("wso2is.consent_mgt_conf.postoffice_box_number") %></PostOfficeBoxNumber>
+            <PostalCode><%= p("wso2is.consent_mgt_conf.postalcode") %></PostalCode>
+            <StreetAddress><%= p("wso2is.consent_mgt_conf.street_address") %></StreetAddress>
         </Address>
     </PIIController>
     <SearchLimits>
