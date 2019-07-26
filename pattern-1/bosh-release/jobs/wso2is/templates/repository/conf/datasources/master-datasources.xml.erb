@@ -91,6 +91,27 @@
             </definition>
         </datasource>
 
+        <datasource>
+            <name>WSO2_CONSENT_DS</name>
+            <description>The datasource used for consent data</description>
+            <jndiConfig>
+                <name>jdbc/WSO2ConsentDS</name>
+            </jndiConfig>
+            <definition type="RDBMS">
+                <configuration>
+                    <url><%= p("wso2is.consent_mgt_conf.consent_db.jdbc_url") %></url>
+                    <username><%= p("wso2is.consent_mgt_conf.consent_db.username") %></username>
+                    <password><%= p("wso2is.consent_mgt_conf.consent_db.password") %></password>
+                    <driverClassName><%= p("wso2is.consent_mgt_conf.consent_db.driver") %></driverClassName>
+                    <maxActive>50</maxActive>
+                    <maxWait>60000</maxWait>
+                    <testOnBorrow>true</testOnBorrow>
+                    <validationQuery><%= p("wso2is.consent_mgt_conf.consent_db.query") %></validationQuery>
+                    <validationInterval>30000</validationInterval>
+                </configuration>
+            </definition>
+        </datasource>
+
         <!-- For an explanation of the properties, see: http://people.apache.org/~fhanik/jdbc-pool/jdbc-pool.html -->
         <!--datasource>
             <name>SAMPLE_DATA_SOURCE</name>
