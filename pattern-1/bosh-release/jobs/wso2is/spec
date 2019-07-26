@@ -97,13 +97,47 @@ properties:
   wso2is.certs.value:
     description: Trusted CA certificate
 
-  cf.apps_domain:
-    description: Domain shared by the UAA and CF API eg 'bosh-lite.com'
-  cf.nats.host:
-    description: Hostname/IP of NATS
-  cf.nats.port:
-    description: Port that NATS listens on
-  cf.nats.username:
-    description: The user to use when authenticating with NATS
-  cf.nats.password:
-    description: The password to use when authenticating with NATS
+  wso2is.consent_mgt_conf.consent_db.jdbc_url:
+    description: Consent Datasource JDBC URL
+  wso2is.consent_mgt_conf.consent_db.username:
+    description: Consent Datasource username
+  wso2is.consent_mgt_conf.consent_db.password:
+    description: Consent Datasource password
+  wso2is.consent_mgt_conf.consent_db.driver:
+    description: Consent Datasource driver class name
+  wso2is.consent_mgt_conf.consent_db.query:
+    description: Consent Datasource validation query
+
+  wso2is.consent_mgt_conf.piicontroller:
+    description: PII Controller
+    default: change-me
+  wso2is.consent_mgt_conf.contact:
+    description: Contact
+    default: change-me
+  wso2is.consent_mgt_conf.email:
+    description: Email
+    default: change-me
+  wso2is.consent_mgt_conf.phone:
+    description: Phone
+    default: change-me
+  wso2is.consent_mgt_conf.piicontroller_url:
+    description: PII Controller URL
+    default: change-me
+  wso2is.consent_mgt_conf.country:
+    description: Country
+    default: change-me
+  wso2is.consent_mgt_conf.locality:
+    description: Locality
+    default: change-me
+  wso2is.consent_mgt_conf.region:
+    description: Region
+    default: change-me
+  wso2is.consent_mgt_conf.postoffice_box_number:
+    description: Post office box number
+    default: change-me
+  wso2is.consent_mgt_conf.postalcode:
+    description: Postal Code
+    default: change-me
+  wso2is.consent_mgt_conf.street_address:
+    description: Street Address
+    default: change-me
