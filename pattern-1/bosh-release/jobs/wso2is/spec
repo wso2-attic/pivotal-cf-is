@@ -12,6 +12,7 @@ templates:
   repository/conf/tomcat/context.xml: repository/conf/tomcat/context.xml
   repository/conf/carbon.xml.erb: repository/conf/carbon.xml
   repository/conf/consent-mgt-config.xml.erb: repository/conf/consent-mgt-config.xml
+  repository/conf/health-check-config.xml: repository/conf/health-check-config.xml
   repository/conf/log4j.properties: repository/conf/log4j.properties
   repository/conf/registry.xml.erb: repository/conf/registry.xml
   repository/conf/user-mgt.xml.erb: repository/conf/user-mgt.xml
