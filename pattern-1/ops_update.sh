@@ -88,7 +88,7 @@ fi
 echo "Uploading new tile..."
 cd tile/product
 product_dir=$(pwd)
-: ${product_tile:="wso2apim-tile-0.0.*.pivotal"}
+: ${product_tile:="wso2is*.pivotal"}
 
 # capture the exact product distribution identifiers
 product_tile=$(ls ${product_tile})
