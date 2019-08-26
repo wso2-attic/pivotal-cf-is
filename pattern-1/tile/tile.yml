@@ -237,7 +237,7 @@ packages:
     max_in_flight: 1
     properties:
       health_check:
-        endpoint: "https://localhost:9443/carbon/admin/login.jsp"
+        endpoint: "https://localhost:9443/api/health-check/v1.0/health"
         name: "Identity Server Carbon"
         status_code: 200
       wso2is:
