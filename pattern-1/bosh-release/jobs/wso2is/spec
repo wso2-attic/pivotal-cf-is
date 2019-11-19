@@ -92,6 +92,13 @@ properties:
     description: "Max Heap in MB"
     default: 2048
 
+  wso2is.admin.password:
+    description: wso2is password
+    default: admin
+  wso2is.admin.username:
+    description: wso2is username
+    default: admin
+
   route_registrar.routes:
     description: routes registered for WSO2 APIM apps and gateway
 
