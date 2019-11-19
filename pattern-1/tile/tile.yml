@@ -187,6 +187,23 @@ forms:
     type: ca_certificate
     configurable: true
 
+- name: License key
+  label: License key
+  description: License key
+  properties:
+    - name: license_key
+      label: License key for WSO2 subscription
+      type: text
+      configurable: true
+
+- name: Admin credentials
+  label: Admin credentials
+  description: Admin credentials
+  properties:
+  - name: admin_credentials
+    label: Identity Server Admin Credentials
+    type: simple_credentials
+
 packages:
 - name: routing_release
   type: bosh-release
@@ -241,6 +258,11 @@ packages:
         name: "Identity Server Carbon"
         status_code: 200
       wso2is:
+        admin:
+          username: (( .properties.admin_credentials.identity ))
+          password: (( .properties.admin_credentials.password ))
+        license_key:
+          value: (( .properties.license_key.value ))
         certs:
           value: (( .properties.ca_cert.value ))
         bps_ds:
