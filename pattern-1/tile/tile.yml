@@ -113,24 +113,6 @@ forms:
   label: Consent Management Configurations
   description: Consent Management Configurations
   properties:
-  - name: consent_db_jdbc_url
-    type: string
-    label: Consent Datasource JDBC URL
-  - name: consent_db_driver
-    type: dropdown_select
-    label: Consent Datasource Driver Class Name
-    options:
-    - name: com.mysql.jdbc.Driver
-      label: com.mysql.jdbc.Driver
-      default: true
-    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
-  - name: consent_db_query
-    type: string
-    label: Consent Datasource Validation Query
-  - name: consent_db_credentials
-    label: Consent Datasource Credentials
-    type: simple_credentials
   - name: consent_mgt_config
     label: Enable custom consent configurations
     type: selector
@@ -291,11 +273,11 @@ packages:
           password: (( .properties.identity_db_credentials.password ))
         consent_mgt_conf:
           consent_db:
-            jdbc_url: (( .properties.consent_db_jdbc_url.value ))
-            driver: (( .properties.consent_db_driver.value ))
-            query: (( .properties.consent_db_query.value ))
-            username: (( .properties.consent_db_credentials.identity ))
-            password: (( .properties.consent_db_credentials.password ))
+            jdbc_url: (( .properties.identity_db_jdbc_url.value ))
+            driver: (( .properties.identity_db_driver.value ))
+            query: (( .properties.identity_db_query.value ))
+            username: (( .properties.identity_db_credentials.identity ))
+            password: (( .properties.identity_db_credentials.password ))
           piicontroller: (( .properties.consent_mgt_config.custom_option.piicontroller.value ))
           contact: (( .properties.consent_mgt_config.custom_option.contact.value ))
           email: (( .properties.consent_mgt_config.custom_option.email.value ))
