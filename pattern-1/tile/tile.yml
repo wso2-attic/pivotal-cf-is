@@ -36,30 +36,12 @@ forms:
   label: Database configurations
   description: Database configurations
   properties:
-  - name: bps_db_jdbc_url
-    type: string
-    label: BPS Datasource JDBC URL
-  - name: bps_db_driver
-    type: dropdown_select
-    label: BPS Datasource Driver Class Name
-    options:
-    - name: com.mysql.jdbc.Driver
-      label: com.mysql.jdbc.Driver
-      default: true
-    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
-  - name: bps_db_query
-    type: string
-    label: BPS Datasource Validation Query
-  - name: bps_db_credentials
-    label: BPS Datasource Credentials
-    type: simple_credentials
   - name: user_db_jdbc_url
     type: string
-    label: Registry and User Management Datasource JDBC URL
+    label: User Management and Registry Datasource JDBC URL
   - name: user_db_driver
     type: dropdown_select
-    label: Registry and User Management Datasource Driver Class Name
+    label: User Management and Registry Datasource Driver Class Name
     options:
     - name: com.mysql.jdbc.Driver
       label: com.mysql.jdbc.Driver
@@ -68,34 +50,16 @@ forms:
       label: com.microsoft.sqlserver.jdbc.SQLServerDriver
   - name: user_db_query
     type: string
-    label: Registry and User Management Datasource Validation Query
+    label: User Management and Registry Datasource Validation Query
   - name: user_db_credentials
-    label: Registry and User Management Datasource Credentials
-    type: simple_credentials
-  - name: conf_reg_db_jdbc_url
-    type: string
-    label: Registry Datasource JDBC URL
-  - name: conf_reg_db_driver
-    type: dropdown_select
-    label: Registry Datasource Driver Class Name
-    options:
-    - name: com.mysql.jdbc.Driver
-      label: com.mysql.jdbc.Driver
-      default: true
-    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
-  - name: conf_reg_db_query
-    type: string
-    label: Registry Datasource Validation Query
-  - name: conf_reg_db_credentials
-    label: Configuration Registry DB Credentials
+    label: User Management and Registry Datasource Credentials
     type: simple_credentials
   - name: identity_db_jdbc_url
     type: string
-    label: Identity Datasource JDBC URL
+    label: Identity and Consent Management Datasource JDBC URL
   - name: identity_db_driver
     type: dropdown_select
-    label: Identity Datasource Driver Class Name
+    label: Identity and Consent Management Datasource Driver Class Name
     options:
     - name: com.mysql.jdbc.Driver
       label: com.mysql.jdbc.Driver
@@ -104,9 +68,27 @@ forms:
       label: com.microsoft.sqlserver.jdbc.SQLServerDriver
   - name: identity_db_query
     type: string
-    label: Identity Datasource Validation Query
+    label: Identity and Consent Management Datasource Validation Query
   - name: identity_db_credentials
-    label: Identity Datasource Credentials
+    label: Identity and Consent Management Datasource Credentials
+    type: simple_credentials
+  - name: bps_db_jdbc_url
+    type: string
+    label: Business Process Datasource JDBC URL
+  - name: bps_db_driver
+    type: dropdown_select
+    label: Business Process Datasource Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - name: bps_db_query
+    type: string
+    label: Business Process Datasource Validation Query
+  - name: bps_db_credentials
+    label: Business Process Datasource Credentials
     type: simple_credentials
 
 - name: Consent Management Configurations
@@ -168,15 +150,6 @@ forms:
     label: These certificates will be trusted by the deployed services
     type: ca_certificate
     configurable: true
-
-- name: License key
-  label: License key
-  description: License key
-  properties:
-    - name: license_key
-      label: License key for WSO2 subscription
-      type: text
-      configurable: true
 
 - name: Admin credentials
   label: Admin credentials
@@ -243,8 +216,6 @@ packages:
         admin:
           username: (( .properties.admin_credentials.identity ))
           password: (( .properties.admin_credentials.password ))
-        license_key:
-          value: (( .properties.license_key.value ))
         certs:
           value: (( .properties.ca_cert.value ))
         bps_ds:
@@ -260,11 +231,11 @@ packages:
           username: (( .properties.user_db_credentials.identity ))
           password: (( .properties.user_db_credentials.password ))
         conf_reg_db:
-          jdbc_url: (( .properties.conf_reg_db_jdbc_url.value ))
-          driver: (( .properties.conf_reg_db_driver.value ))
-          query: (( .properties.conf_reg_db_query.value ))
-          username: (( .properties.conf_reg_db_credentials.identity ))
-          password: (( .properties.conf_reg_db_credentials.password ))
+          jdbc_url: (( .properties.user_db_jdbc_url.value ))
+          driver: (( .properties.user_db_driver.value ))
+          query: (( .properties.user_db_query.value ))
+          username: (( .properties.user_db_credentials.identity ))
+          password: (( .properties.user_db_credentials.password ))
         identity_db:
           jdbc_url: (( .properties.identity_db_jdbc_url.value ))
           driver: (( .properties.identity_db_driver.value ))
